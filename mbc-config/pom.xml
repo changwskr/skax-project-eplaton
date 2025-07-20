@@ -118,9 +118,6 @@
                                 <copy todir="${project.basedir}/bin" failonerror="false">
                                     <fileset dir="${project.build.directory}/classes" includes="**/*.class" />
                                 </copy>
-                                <copy todir="${project.basedir}/bin" failonerror="false">
-                                    <fileset dir="${project.build.directory}/test-classes" includes="**/*.class" />
-                                </copy>
                             </target>
                         </configuration>
                     </execution>
