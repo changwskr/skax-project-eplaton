@@ -84,25 +84,45 @@ public class DataInitializer implements CommandLineRunner {
     private void checkInitialData() {
         logger.info("초기 데이터 확인 중...", "DataInitializer");
 
-        // 사용자 데이터 확인
-        int userCount = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM USER_INFO", Integer.class);
-        logger.info("사용자 데이터: " + userCount + "건", "DataInitializer");
+        try {
+            // 사용자 데이터 확인
+            int userCount = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM USER_INFO", Integer.class);
+            logger.info("사용자 데이터: " + userCount + "건", "DataInitializer");
+        } catch (Exception e) {
+            logger.warn("사용자 데이터 확인 실패: " + e.getMessage(), "DataInitializer");
+        }
 
-        // 계정 데이터 확인
-        int accountCount = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM ACCOUNT", Integer.class);
-        logger.info("계정 데이터: " + accountCount + "건", "DataInitializer");
+        try {
+            // 계정 데이터 확인
+            int accountCount = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM ACCOUNT", Integer.class);
+            logger.info("계정 데이터: " + accountCount + "건", "DataInitializer");
+        } catch (Exception e) {
+            logger.warn("계정 데이터 확인 실패: " + e.getMessage(), "DataInitializer");
+        }
 
-        // 시스템 코드 확인
-        int codeCount = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM SYSTEM_CODE", Integer.class);
-        logger.info("시스템 코드: " + codeCount + "건", "DataInitializer");
+        try {
+            // 시스템 코드 확인
+            int codeCount = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM SYSTEM_CODE", Integer.class);
+            logger.info("시스템 코드: " + codeCount + "건", "DataInitializer");
+        } catch (Exception e) {
+            logger.warn("시스템 코드 확인 실패: " + e.getMessage(), "DataInitializer");
+        }
 
-        // 사용자-계정 매핑 확인
-        int mappingCount = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM USER_ACCOUNT", Integer.class);
-        logger.info("사용자-계정 매핑: " + mappingCount + "건", "DataInitializer");
+        try {
+            // 사용자-계정 매핑 확인
+            int mappingCount = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM USER_ACCOUNT", Integer.class);
+            logger.info("사용자-계정 매핑: " + mappingCount + "건", "DataInitializer");
+        } catch (Exception e) {
+            logger.warn("사용자-계정 매핑 확인 실패: " + e.getMessage(), "DataInitializer");
+        }
 
-        // 로그 데이터 확인
-        int logCount = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM SYSTEM_LOG", Integer.class);
-        logger.info("시스템 로그: " + logCount + "건", "DataInitializer");
+        try {
+            // 로그 데이터 확인
+            int logCount = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM SYSTEM_LOG", Integer.class);
+            logger.info("시스템 로그: " + logCount + "건", "DataInitializer");
+        } catch (Exception e) {
+            logger.warn("시스템 로그 확인 실패: " + e.getMessage(), "DataInitializer");
+        }
     }
 
     /**
