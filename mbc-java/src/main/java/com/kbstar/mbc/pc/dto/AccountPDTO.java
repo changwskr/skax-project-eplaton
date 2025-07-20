@@ -7,95 +7,268 @@
 
 package com.kbstar.mbc.pc.dto;
 
-import java.util.Date;
-
 import com.kbstar.ksa.infra.po.NewAbstractDTO;
-import com.kbstar.ksa.infra.po.annotation.NewGPath;
 
 /**
- * Account DTO for Process Component
- * 
- * Program Name: AccountPDTO.java
- * Description: Account data transfer object for process component
- * 
- * Change History:
- * <ul>
- * <li>2008-08-26::Initial::First Creation
- * </ul>
+ * AccountPDTO class
  */
-@NewGPath(name = "Account")
 public class AccountPDTO extends NewAbstractDTO {
 
-	private static final long serialVersionUID = 1L;
+	private String accountId;
+	private String accountName;
+	private String accountType;
+	private String accountStatus;
+	private String accountBalance;
+	private String accountCurrency;
+	private String accountOpenDate;
+	private String accountCloseDate;
+	private String accountOwner;
+	private String accountManager;
+	private String accountBranch;
+	private String accountProduct;
+	private String accountInterestRate;
+	private String accountFee;
+	private String accountLimit;
+	private String accountOverdraft;
+	private String accountLastTransaction;
+	private String accountLastBalance;
+	private String accountLastInterest;
+	private String accountLastFee;
+	private String accountLastLimit;
+	private String accountLastOverdraft;
+	private String accountLastTransactionDate;
+	private String accountLastBalanceDate;
+	private String accountLastInterestDate;
+	private String accountLastFeeDate;
+	private String accountLastLimitDate;
+	private String accountLastOverdraftDate;
 
-	private String accountNumber; // Account number
-
-	private String name; // Name
-
-	private String identificationNumber; // ID number
-
-	private Float interestRate; // Interest rate
-
-	private Date lastTransaction; // Last transaction date
-
-	private String password; // Password
-
-	private String netAmount; // Balance
-
-	public String getAccountNumber() {
-		return accountNumber;
+	public AccountPDTO() {
+		// Default constructor
 	}
 
-	public void setAccountNumber(String accountNumber) {
-		this.accountNumber = accountNumber;
+	// Getters and setters
+	public String getAccountId() {
+		return accountId;
 	}
 
-	public String getIdentificationNumber() {
-		return identificationNumber;
+	public void setAccountId(String accountId) {
+		this.accountId = accountId;
 	}
 
-	public void setIdentificationNumber(String identificationNumber) {
-		this.identificationNumber = identificationNumber;
+	public String getAccountName() {
+		return accountName;
 	}
 
-	public Float getInterestRate() {
-		return interestRate;
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
 	}
 
-	public void setInterestRate(Float interestRate) {
-		this.interestRate = interestRate;
+	public String getAccountType() {
+		return accountType;
 	}
 
-	public Date getLastTransaction() {
-		return lastTransaction;
+	public void setAccountType(String accountType) {
+		this.accountType = accountType;
 	}
 
-	public void setLastTransaction(Date lastTransaction) {
-		this.lastTransaction = lastTransaction;
+	public String getAccountStatus() {
+		return accountStatus;
 	}
 
-	public String getName() {
-		return name;
+	public void setAccountStatus(String accountStatus) {
+		this.accountStatus = accountStatus;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getAccountBalance() {
+		return accountBalance;
 	}
 
-	public String getNetAmount() {
-		return netAmount;
+	public void setAccountBalance(String accountBalance) {
+		this.accountBalance = accountBalance;
 	}
 
-	public void setNetAmount(String netAmount) {
-		this.netAmount = netAmount;
+	public String getAccountCurrency() {
+		return accountCurrency;
 	}
 
-	public String getPassword() {
-		return password;
+	public void setAccountCurrency(String accountCurrency) {
+		this.accountCurrency = accountCurrency;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public String getAccountOpenDate() {
+		return accountOpenDate;
 	}
 
+	public void setAccountOpenDate(String accountOpenDate) {
+		this.accountOpenDate = accountOpenDate;
+	}
+
+	public String getAccountCloseDate() {
+		return accountCloseDate;
+	}
+
+	public void setAccountCloseDate(String accountCloseDate) {
+		this.accountCloseDate = accountCloseDate;
+	}
+
+	public String getAccountOwner() {
+		return accountOwner;
+	}
+
+	public void setAccountOwner(String accountOwner) {
+		this.accountOwner = accountOwner;
+	}
+
+	public String getAccountManager() {
+		return accountManager;
+	}
+
+	public void setAccountManager(String accountManager) {
+		this.accountManager = accountManager;
+	}
+
+	public String getAccountBranch() {
+		return accountBranch;
+	}
+
+	public void setAccountBranch(String accountBranch) {
+		this.accountBranch = accountBranch;
+	}
+
+	public String getAccountProduct() {
+		return accountProduct;
+	}
+
+	public void setAccountProduct(String accountProduct) {
+		this.accountProduct = accountProduct;
+	}
+
+	public String getAccountInterestRate() {
+		return accountInterestRate;
+	}
+
+	public void setAccountInterestRate(String accountInterestRate) {
+		this.accountInterestRate = accountInterestRate;
+	}
+
+	public String getAccountFee() {
+		return accountFee;
+	}
+
+	public void setAccountFee(String accountFee) {
+		this.accountFee = accountFee;
+	}
+
+	public String getAccountLimit() {
+		return accountLimit;
+	}
+
+	public void setAccountLimit(String accountLimit) {
+		this.accountLimit = accountLimit;
+	}
+
+	public String getAccountOverdraft() {
+		return accountOverdraft;
+	}
+
+	public void setAccountOverdraft(String accountOverdraft) {
+		this.accountOverdraft = accountOverdraft;
+	}
+
+	public String getAccountLastTransaction() {
+		return accountLastTransaction;
+	}
+
+	public void setAccountLastTransaction(String accountLastTransaction) {
+		this.accountLastTransaction = accountLastTransaction;
+	}
+
+	public String getAccountLastBalance() {
+		return accountLastBalance;
+	}
+
+	public void setAccountLastBalance(String accountLastBalance) {
+		this.accountLastBalance = accountLastBalance;
+	}
+
+	public String getAccountLastInterest() {
+		return accountLastInterest;
+	}
+
+	public void setAccountLastInterest(String accountLastInterest) {
+		this.accountLastInterest = accountLastInterest;
+	}
+
+	public String getAccountLastFee() {
+		return accountLastFee;
+	}
+
+	public void setAccountLastFee(String accountLastFee) {
+		this.accountLastFee = accountLastFee;
+	}
+
+	public String getAccountLastLimit() {
+		return accountLastLimit;
+	}
+
+	public void setAccountLastLimit(String accountLastLimit) {
+		this.accountLastLimit = accountLastLimit;
+	}
+
+	public String getAccountLastOverdraft() {
+		return accountLastOverdraft;
+	}
+
+	public void setAccountLastOverdraft(String accountLastOverdraft) {
+		this.accountLastOverdraft = accountLastOverdraft;
+	}
+
+	public String getAccountLastTransactionDate() {
+		return accountLastTransactionDate;
+	}
+
+	public void setAccountLastTransactionDate(String accountLastTransactionDate) {
+		this.accountLastTransactionDate = accountLastTransactionDate;
+	}
+
+	public String getAccountLastBalanceDate() {
+		return accountLastBalanceDate;
+	}
+
+	public void setAccountLastBalanceDate(String accountLastBalanceDate) {
+		this.accountLastBalanceDate = accountLastBalanceDate;
+	}
+
+	public String getAccountLastInterestDate() {
+		return accountLastInterestDate;
+	}
+
+	public void setAccountLastInterestDate(String accountLastInterestDate) {
+		this.accountLastInterestDate = accountLastInterestDate;
+	}
+
+	public String getAccountLastFeeDate() {
+		return accountLastFeeDate;
+	}
+
+	public void setAccountLastFeeDate(String accountLastFeeDate) {
+		this.accountLastFeeDate = accountLastFeeDate;
+	}
+
+	public String getAccountLastLimitDate() {
+		return accountLastLimitDate;
+	}
+
+	public void setAccountLastLimitDate(String accountLastLimitDate) {
+		this.accountLastLimitDate = accountLastLimitDate;
+	}
+
+	public String getAccountLastOverdraftDate() {
+		return accountLastOverdraftDate;
+	}
+
+	public void setAccountLastOverdraftDate(String accountLastOverdraftDate) {
+		this.accountLastOverdraftDate = accountLastOverdraftDate;
+	}
 }

@@ -21,4 +21,12 @@ public class NewKBData {
     public int hashCode() {
         return super.hashCode();
     }
+
+    public NewGenericDto getInputGenericDto() {
+        return new NewGenericDto();
+    }
+
+    public NewGenericDto getOutputGenericDto() {
+        return new NewGenericDto();
+    }
 }

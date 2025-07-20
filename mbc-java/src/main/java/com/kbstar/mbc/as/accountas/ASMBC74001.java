@@ -54,7 +54,8 @@ public class ASMBC74001 implements NewIApplicationService {
 	public NewKBData execute(NewKBData reqData) throws NewBusinessException {
 
 		// 1.AccountPDTO 생성
-		AccountPDTO accountPDTO = reqData.getInputGenericDto().using(NewGenericDto.INDATA).get(AccountPDTO.class);
+		AccountPDTO accountPDTO = (AccountPDTO) reqData.getInputGenericDto().using(NewGenericDto.INDATA)
+				.get("AccountPDTO");
 
 		// 2.PC호출
 		new PCAccount().deleteAccount(accountPDTO);

@@ -16,15 +16,12 @@ public class DCUserPilot implements IDCUserPilot {
 		System.out.println("##########################In the getListUser process####################");
 
 		try {
-			List<UserPilot> UserList = NewSqlMapper.getSqlMapClient().queryForList("userpilot.getListUser",
+			List<UserPilot> UserList = (List<UserPilot>) NewSqlMapper.getSqlMapClient().queryForList(
+					"userpilot.getListUser",
 					NewObjectUtil.copyForClass(UserPilot.class, userpilotDDTO));
 			return NewObjectUtil.copyForList(UserPilot.class, UserList);
-		} catch (NewRecordNotFoundException e) {
+		} catch (Exception e) {
 			throw new NewBusinessException("B0000001", "processCode", e);
-		} catch (NewPersistenceException e) {
-			throw new NewBusinessException("B0000002", "processCode", e);
-		} catch (NewFrameworkException e) {
-			throw new NewBusinessException("B0000002", "processCode", e);
 		}
 	}
 
@@ -61,11 +58,7 @@ public class DCUserPilot implements IDCUserPilot {
 
 			}
 
-		} catch (NewRecordNotFoundException e) {
-			throw new NewBusinessException("B0000001", "processCode", e);
-		} catch (NewPersistenceException e) {
-			throw new NewBusinessException("B0000002", "processCode", e);
-		} catch (NewFrameworkException e) {
+		} catch (Exception e) {
 			throw new NewBusinessException("B0000002", "processCode", e);
 		}
 	}
@@ -74,14 +67,10 @@ public class DCUserPilot implements IDCUserPilot {
 		System.out.println("##########################In the getListDept process####################");
 
 		try {
-			return NewSqlMapper.getSqlMapClient().queryForList("userpilot.getListDept",
+			return (List<UserPilot>) NewSqlMapper.getSqlMapClient().queryForList("userpilot.getListDept",
 					NewObjectUtil.copyForClass(UserPilot.class, userpilotDDTO));
-		} catch (NewRecordNotFoundException e) {
+		} catch (Exception e) {
 			throw new NewBusinessException("B0000001", "processCode", e);
-		} catch (NewPersistenceException e) {
-			throw new NewBusinessException("B0000002", "processCode", e);
-		} catch (NewFrameworkException e) {
-			throw new NewBusinessException("B0000002", "processCode", e);
 		}
 	}
 }

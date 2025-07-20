@@ -1,14 +1,9 @@
 package com.kbstar.ksa.exception;
 
 /**
- * New Business Exception class
- * 
- * This is a stub implementation to replace the missing KSA framework
- * BusinessException
+ * Stub class for BusinessException
  */
 public class NewBusinessException extends Exception {
-
-    private String errorCode;
 
     public NewBusinessException() {
         super();
@@ -18,9 +13,12 @@ public class NewBusinessException extends Exception {
         super(message);
     }
 
-    public NewBusinessException(String errorCode, String message) {
-        super(message);
-        this.errorCode = errorCode;
+    public NewBusinessException(String message, String code) {
+        super(message + " (Code: " + code + ")");
+    }
+
+    public NewBusinessException(String message, String code, Throwable cause) {
+        super(message + " (Code: " + code + ")", cause);
     }
 
     public NewBusinessException(Throwable cause) {
@@ -29,13 +27,5 @@ public class NewBusinessException extends Exception {
 
     public NewBusinessException(String message, Throwable cause) {
         super(message, cause);
-    }
-
-    public String getErrorCode() {
-        return errorCode;
-    }
-
-    public void setErrorCode(String errorCode) {
-        this.errorCode = errorCode;
     }
 }

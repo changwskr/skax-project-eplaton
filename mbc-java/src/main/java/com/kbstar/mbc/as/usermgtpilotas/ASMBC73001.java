@@ -40,7 +40,8 @@ public class ASMBC73001 implements NewIApplicationService {
 			case 12:
 
 				UserPilotPDTO userpilotPDTO = new UserPilotPDTO();
-				userpilotPDTO = reqData.getInputGenericDto().using(NewGenericDto.INDATA).get(UserPilotPDTO.class);
+				userpilotPDTO = (UserPilotPDTO) reqData.getInputGenericDto().using(NewGenericDto.INDATA)
+						.get("UserPilotPDTO");
 
 				try {
 					// Call PC
@@ -51,7 +52,9 @@ public class ASMBC73001 implements NewIApplicationService {
 					e.printStackTrace();
 				}
 				// Add User element to /UserData in OutData
-				reqData.getOutputGenericDto().using(NewGenericDto.OUTDATA).addNode("/UserData").add(resUsers);
+				NewGenericDto outputDto = reqData.getOutputGenericDto().using(NewGenericDto.OUTDATA);
+				outputDto.addNode("/UserData");
+				outputDto.add(resUsers);
 
 				break;
 
@@ -76,7 +79,7 @@ public class ASMBC73001 implements NewIApplicationService {
 			case 17:
 
 				UserPilotDDTO userpilotDDTO = (UserPilotDDTO) reqData.getInputGenericDto()
-						.using("/KB-Message/Individual/InData/UserData").get(UserPilotDDTO.class);
+						.using("/KB-Message/Individual/InData/UserData").get("UserPilotDDTO");
 
 				try {
 					// Call DC
@@ -87,7 +90,9 @@ public class ASMBC73001 implements NewIApplicationService {
 					e.printStackTrace();
 				}
 
-				reqData.getOutputGenericDto().using(NewGenericDto.OUTDATA).addNode("/UserData").add(resUsers);
+				NewGenericDto outputDto2 = reqData.getOutputGenericDto().using(NewGenericDto.OUTDATA);
+				outputDto2.addNode("/UserData");
+				outputDto2.add(resUsers);
 				return reqData;
 			// readDeptDAO readdeptdao = new readDeptDAO();
 			// readdeptdao.excute(reqData);

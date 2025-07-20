@@ -30,35 +30,35 @@ public class ASMBC75Z03 implements NewIApplicationService {
 		NewGenericDto inDto = reqData.getInputGenericDto()
 				.using(NewGenericDto.INDATA);
 
-		String TransactionId = NewApplicationContext
-				.get(NewApplicationContext.Key.StndTelgmRecvTranCd);
+		String TransactionId = (String) NewApplicationContext
+				.get(NewApplicationContext.StndTelgmRecvTranCd);
 		String rsux = TransactionId.substring(8, 10);
 
 		// Transaction code R/S/U/X inquiry
 		if (rsux != null && rsux.equals("R0")) {
 
-			Map<String, String> attrMap = inDto.getAttributeMap();
+			Map<String, Object> attrMap = inDto.getAttributeMap();
 
 			// Request page number, page line count to DDTO
-			pageDdto.setDmndPageNo(attrMap.get("dmndPageNo"));
-			pageDdto.setPageLineCnt(attrMap.get("pageLineCnt"));
+			pageDdto.setDmndPageNo((String) attrMap.get("dmndPageNo"));
+			pageDdto.setPageLineCnt((String) attrMap.get("pageLineCnt"));
 
 			logger.debug("TotalLineCount = " + attrMap.get("totalLineCnt"));
 
-			idcuser = new com.kbstar.mbc.dc.usermgtdc.User();
+			idcuser = new com.kbstar.mbc.dc.usermgtdc.DCUser();
 
 			// DC call
 			resPage = idcuser.getListPage(pageDdto);
 
 			// Output DDTO total line count and output line count setting
 			if (resPage.size() > 0) {
-				outDto.addAttribute("totalLineCnt", resPage.get(0)
-						.getTotalLineCnt());
-				outDto.addAttribute("outptLineCnt", resPage.get(0)
-						.getOutptLineCnt());
+				outDto.addAttribute("totalLineCnt", String.valueOf(resPage.get(0)
+						.getTotalLineCnt()));
+				outDto.addAttribute("outptLineCnt", String.valueOf(resPage.get(0)
+						.getOutptLineCnt()));
 			}
 
-			outDto.addAttribute("dmndPageNo", attrMap.get("dmndPageNo"));
+			outDto.addAttribute("dmndPageNo", (String) attrMap.get("dmndPageNo"));
 
 			// Page information list data output
 			reqData.getOutputGenericDto().using(NewGenericDto.OUTDATA)
@@ -66,7 +66,7 @@ public class ASMBC75Z03 implements NewIApplicationService {
 
 		}
 
-		return null;
+		return reqData;
 	}
 
 }

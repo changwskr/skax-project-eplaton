@@ -27,7 +27,8 @@ public class ASMBC72002 implements NewIApplicationService {
 
 	public NewKBData execute(NewKBData reqData) throws NewBusinessException {
 		// TODO 코드 구현 및 메서드 추가
-		AccountPDTO accountPDTO = reqData.getInputGenericDto().using(NewGenericDto.INDATA).get(AccountPDTO.class);
+		AccountPDTO accountPDTO = (AccountPDTO) reqData.getInputGenericDto().using(NewGenericDto.INDATA)
+				.get("AccountPDTO");
 
 		List<AccountPDTO> resAccountPDTOs = new PCAccount().getListAccount(accountPDTO);
 

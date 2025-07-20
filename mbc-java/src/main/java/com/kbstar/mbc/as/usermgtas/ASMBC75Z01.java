@@ -37,7 +37,7 @@ public class ASMBC75Z01 implements NewIApplicationService {
 		IDCUser idcuser = null;
 
 		// 표준전문 Common 영역의 거래코드를 가져온다.
-		String TransactionId = NewApplicationContext.get(NewApplicationContext.Key.StndTelgmRecvTranCd);
+		String TransactionId = (String) NewApplicationContext.get(NewApplicationContext.StndTelgmRecvTranCd);
 		String rsux = TransactionId.substring(8, 10);
 
 		// 거래코드가 R/S/U/X 중 어떤 것인지 판단
@@ -53,43 +53,43 @@ public class ASMBC75Z01 implements NewIApplicationService {
 			List<NewGenericDto> userList = input.getGenericDtos("User");
 			UserDDTO[] userDDTOs = new UserDDTO[userList.size()];
 			UserDDTO userDDTO = null;
-			Map<String, String> userAttr = null;
+			Map<String, Object> userAttr = null;
 			logger.debug("userList.size() = " + userList.size());
 			for (int i = 0; i < userList.size(); i++) {
 				userDDTO = new UserDDTO();
 				userAttr = userList.get(i).getAttributeMap();
 				logger.debug("uID =" + userAttr.get("uID"));
 
-				userDDTO.setUserID(userAttr.get("uID"));
-				userDDTO.setUserName(userAttr.get("userName"));
-				userDDTO.setUserPwd(userAttr.get("userPwd"));
-				userDDTO.setUserDstcd(userAttr.get("userDstcd"));
-				userDDTO.setSsno(userAttr.get("ssno"));
-				userDDTO.setLangDstcd(userAttr.get("langDstcd"));
-				userDDTO.setDvsnNo(userAttr.get("dvsnNo"));
-				userDDTO.setDvsnName(userAttr.get("dvsnName"));
-				userDDTO.setJobclDstcd(userAttr.get("jobclDstcd"));
-				userDDTO.setJobclName(userAttr.get("jobclName"));
-				userDDTO.setInstiCd(userAttr.get("instiCd"));
-				userDDTO.setInstiName(userAttr.get("instiName"));
-				userDDTO.setTelno(userAttr.get("telno"));
-				userDDTO.setCphnNo(userAttr.get("cphnNo"));
-				userDDTO.setEmad(userAttr.get("emad"));
-				userDDTO.setFaxNo(userAttr.get("faxNo"));
-				userDDTO.setBrdt(userAttr.get("brdt"));
-				userDDTO.setAddr(userAttr.get("addr"));
-				userDDTO.setZip(userAttr.get("zip"));
-				userDDTO.setEmalRecvYn(userAttr.get("emalRecvYn"));
-				userDDTO.setSmsRecvYn(userAttr.get("sMSRecvYn"));
-				userDDTO.setUseYn(userAttr.get("useYn"));
-				userDDTO.setPrcssStusDstcd(userAttr.get("prcssStusDstcd"));
-				userDDTO.setEntcoYmd(userAttr.get("entcoYmd"));
-				userDDTO.setRtireYmd(userAttr.get("rtireYmd"));
-				userDDTO.setRegiYmd(userAttr.get("regiYmd"));
-				userDDTO.setRegsntID(userAttr.get("regsntID"));
-				userDDTO.setAmndrID(userAttr.get("amndrID"));
-				userDDTO.setAmndYmd(userAttr.get("amndYmd"));
-				userDDTO.setCrud(userAttr.get("crud"));
+				userDDTO.setUserID((String) userAttr.get("uID"));
+				userDDTO.setUserName((String) userAttr.get("userName"));
+				userDDTO.setUserPwd((String) userAttr.get("userPwd"));
+				userDDTO.setUserDstcd((String) userAttr.get("userDstcd"));
+				userDDTO.setSsno((String) userAttr.get("ssno"));
+				userDDTO.setLangDstcd((String) userAttr.get("langDstcd"));
+				userDDTO.setDvsnNo((String) userAttr.get("dvsnNo"));
+				userDDTO.setDvsnName((String) userAttr.get("dvsnName"));
+				userDDTO.setJobclDstcd((String) userAttr.get("jobclDstcd"));
+				userDDTO.setJobclName((String) userAttr.get("jobclName"));
+				userDDTO.setInstiCd((String) userAttr.get("instiCd"));
+				userDDTO.setInstiName((String) userAttr.get("instiName"));
+				userDDTO.setTelno((String) userAttr.get("telno"));
+				userDDTO.setCphnNo((String) userAttr.get("cphnNo"));
+				userDDTO.setEmad((String) userAttr.get("emad"));
+				userDDTO.setFaxNo((String) userAttr.get("faxNo"));
+				userDDTO.setBrdt((String) userAttr.get("brdt"));
+				userDDTO.setAddr((String) userAttr.get("addr"));
+				userDDTO.setZip((String) userAttr.get("zip"));
+				userDDTO.setEmalRecvYn((String) userAttr.get("emalRecvYn"));
+				userDDTO.setSmsRecvYn((String) userAttr.get("sMSRecvYn"));
+				userDDTO.setUseYn((String) userAttr.get("useYn"));
+				userDDTO.setPrcssStusDstcd((String) userAttr.get("prcssStusDstcd"));
+				userDDTO.setEntcoYmd((String) userAttr.get("entcoYmd"));
+				userDDTO.setRtireYmd((String) userAttr.get("rtireYmd"));
+				userDDTO.setRegiYmd((String) userAttr.get("regiYmd"));
+				userDDTO.setRegsntID((String) userAttr.get("regsntID"));
+				userDDTO.setAmndrID((String) userAttr.get("amndrID"));
+				userDDTO.setAmndYmd((String) userAttr.get("amndYmd"));
+				userDDTO.setCrud((String) userAttr.get("crud"));
 
 				userDDTOs[i] = userDDTO;
 			}
@@ -102,13 +102,13 @@ public class ASMBC75Z01 implements NewIApplicationService {
 			UserDDTO userDDTO = new UserDDTO();
 			NewGenericDto subDto = reqData.getInputGenericDto().using(NewGenericDto.INDATA);
 
-			Map<String, String> attrMap = subDto.getAttributeMap();
+			Map<String, Object> attrMap = subDto.getAttributeMap();
 			if (subDto != null) {
-				userDDTO.setUserDstcd(attrMap.get("userDstcd"));
-				userDDTO.setUserName(attrMap.get("userName"));
-				userDDTO.setUserID(attrMap.get("uID"));
-				userDDTO.setDvsnName(attrMap.get("dvsnName"));
-				userDDTO.setUseYn(attrMap.get("useYn"));
+				userDDTO.setUserDstcd((String) attrMap.get("userDstcd"));
+				userDDTO.setUserName((String) attrMap.get("userName"));
+				userDDTO.setUserID((String) attrMap.get("uID"));
+				userDDTO.setDvsnName((String) attrMap.get("dvsnName"));
+				userDDTO.setUseYn((String) attrMap.get("useYn"));
 			}
 			idcuser = new DCUser();
 			resUsers = idcuser.getListUser(userDDTO);

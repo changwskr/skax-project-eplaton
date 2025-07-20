@@ -19,7 +19,7 @@ public class ASMBC759Z1 implements NewIApplicationService {
 
 	public NewKBData execute(NewKBData reqData) throws NewBusinessException {
 
-		String tranCd = NewApplicationContext.get(NewApplicationContext.Key.StndTelgmRecvTranCd);
+		String tranCd = (String) NewApplicationContext.get(NewApplicationContext.StndTelgmRecvTranCd);
 		String tranCdPost = tranCd.substring(8, 10);
 
 		if (tranCdPost != null) {
@@ -39,11 +39,12 @@ public class ASMBC759Z1 implements NewIApplicationService {
 				 * String fileIdnfr = (String)paramMap.get("fileIdnfr");
 				 * String kywrCtnt = (String)paramMap.get("kywrCtnt");
 				 */
-				ResourceCopyDDTO rsrcCopyDDTO = reqData.getInputGenericDto().using(NewGenericDto.INDATA + "/Params")
-						.get(ResourceCopyDDTO.class);
+				ResourceCopyDDTO rsrcCopyDDTO = (ResourceCopyDDTO) reqData.getInputGenericDto()
+						.using(NewGenericDto.INDATA + "/Params")
+						.get("ResourceCopyDDTO");
 				List<ResourceCopyDDTO> rsrcCopyDDTOs = cdRsrcCopy.getListResourceInfo(rsrcCopyDDTO);
 
-				reqData.getOutputGenericDto().using(NewGenericDto.OUTDATA).addNode("/PageGridGroup").add(rsrcCopyDDTOs);
+				reqData.getOutputGenericDto().using(NewGenericDto.OUTDATA).add(rsrcCopyDDTOs);
 			}
 			// Resource copy processing
 			else if (tranCdPost.equals("R0")) {

@@ -2,67 +2,41 @@
 package com.kbstar.mbc.dc.usermgtdc;
 
 import com.kbstar.ksa.infra.po.NewAbstractDTO;
-import com.kbstar.ksa.infra.po.annotation.NewGPath;
 
-@NewGPath(name = "tree")
+/**
+ * Tree class
+ */
 public class Tree extends NewAbstractDTO {
 
-    private static final long serialVersionUID = 1L;
+    private String treeId;
+    private String treeName;
+    private String parentId;
 
-    private String nodeid;
-    private String parentid;
-    private String text;
-    private String textcolor;
-    private String imageid;
-
-    public String getImageid() {
-
-        return imageid;
+    public Tree() {
+        // Default constructor
     }
 
-    public void setImageid(String imageid) {
-
-        this.imageid = imageid;
+    public String getTreeId() {
+        return treeId;
     }
 
-    public String getNodeid() {
-
-        return nodeid;
+    public void setTreeId(String treeId) {
+        this.treeId = treeId;
     }
 
-    public void setNodeid(String nodeid) {
-
-        this.nodeid = nodeid;
+    public String getTreeName() {
+        return treeName;
     }
 
-    public String getParentid() {
-
-        return parentid;
+    public void setTreeName(String treeName) {
+        this.treeName = treeName;
     }
 
-    public void setParentid(String parentid) {
-
-        this.parentid = parentid;
+    public String getParentId() {
+        return parentId;
     }
 
-    public String getText() {
-
-        return text;
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
     }
-
-    public void setText(String text) {
-
-        this.text = text;
-    }
-
-    public String getTextcolor() {
-
-        return textcolor;
-    }
-
-    public void setTextcolor(String textcolor) {
-
-        this.textcolor = textcolor;
-    }
-
 }

@@ -45,10 +45,11 @@ public class ASMBC72001 implements NewIApplicationService {
 	 * <br>
 	 * [상세설명]
 	 * 
-	 * @param KBData
-	 *               <ul>
-	 *               <li>accountNumber //계좌번호
-	 *               </ul>
+	 * //@param KBData
+	 * <ul>
+	 * <li>accountNumber //계좌번호
+	 * </ul>
+	 * 
 	 * @return KBData
 	 *         <ul>
 	 *         <li>accountNumber //계좌번호
@@ -65,14 +66,16 @@ public class ASMBC72001 implements NewIApplicationService {
 		if (logger.isDebugEnabled())
 			logger.debug(this.getClass().getName() + ", log test입니다.");
 		// 1.AccountPDTO 생성
-		AccountPDTO accountPDTO = reqData.getInputGenericDto()
-				.using(NewGenericDto.INDATA).get(AccountPDTO.class);
+		AccountPDTO accountPDTO = (AccountPDTO) reqData.getInputGenericDto()
+				.using(NewGenericDto.INDATA).get("AccountPDTO");
 
 		// 2.PC호출
 		AccountPDTO resAccountPDTO = new PCAccount().getAccount(accountPDTO);
 
 		// 3.결과를 OUTDATA에 set
-		reqData.getOutputGenericDto().using(NewGenericDto.OUTDATA).add(resAccountPDTO);
+		java.util.List<AccountPDTO> resultList = new java.util.ArrayList<>();
+		resultList.add(resAccountPDTO);
+		reqData.getOutputGenericDto().using(NewGenericDto.OUTDATA).add(resultList);
 		return reqData;
 	}
 

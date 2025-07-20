@@ -10,4 +10,6 @@ public interface IDCUser {
 
 	public List<HashMap> getUserList(ICommonDTO commonDto) throws NewBusinessException;
 
+	public User selectUser(String userId) throws Exception;
+
 }

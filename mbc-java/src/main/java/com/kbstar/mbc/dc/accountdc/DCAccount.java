@@ -66,13 +66,7 @@ public class DCAccount implements NewIDomainComponent {
 			Account account = (Account) NewSqlMapper.getSqlMapClient()
 					.queryForObject("account.getAccount", NewObjectUtil.copyForClass(Account.class, accountDDTO));
 			return NewObjectUtil.copyForClass(AccountDDTO.class, account);
-		} catch (NewTooManyRowsException e) {
-			throw new NewBusinessException("B0100001", "processCode", e);
-		} catch (NewPKDuplicationException e) {
-			throw new NewBusinessException("B0100001", "processCode", e);
-		} catch (NewPersistenceException e) {
-			throw new NewBusinessException("B0100001", "processCode", e);
-		} catch (NewFrameworkException e) {
+		} catch (Exception e) {
 			throw new NewBusinessException("B0100001", "processCode", e);
 		}
 	}
@@ -103,11 +97,7 @@ public class DCAccount implements NewIDomainComponent {
 					NewObjectUtil.copyForClass(Account.class, accountDDTO));
 			if (logger.isDebugEnabled())
 				logger.debug(this.getClass().getName() + ", update count = " + count);
-		} catch (NewPKDuplicationException e) {
-			throw new NewBusinessException("B0000002", "processCode", e);
-		} catch (NewPersistenceException e) {
-			throw new NewBusinessException("B0000002", "processCode", e);
-		} catch (NewFrameworkException e) {
+		} catch (Exception e) {
 			throw new NewBusinessException("B0000002", "processCode", e);
 		}
 	}
@@ -132,11 +122,7 @@ public class DCAccount implements NewIDomainComponent {
 					NewObjectUtil.copyForClass(Account.class, accountDDTO));
 			if (logger.isDebugEnabled())
 				logger.debug(this.getClass().getName() + ", delete count = " + count);
-		} catch (NewRecordNotFoundException e) {
-			throw new NewBusinessException("B0000001", "processCode", e);
-		} catch (NewPersistenceException e) {
-			throw new NewBusinessException("B0000002", "processCode", e);
-		} catch (NewFrameworkException e) {
+		} catch (Exception e) {
 			throw new NewBusinessException("B0000002", "processCode", e);
 		}
 	}
@@ -165,25 +151,18 @@ public class DCAccount implements NewIDomainComponent {
 		try {
 			NewSqlMapper.getSqlMapClient().insert("account.createAccount",
 					NewObjectUtil.copyForClass(Account.class, accountDDTO));
-		} catch (NewRecordNotFoundException e) {
-			throw new NewBusinessException("B0000001", "processCode", e);
-		} catch (NewPersistenceException e) {
-			throw new NewBusinessException("B0000002", "processCode", e);
-		} catch (NewFrameworkException e) {
+		} catch (Exception e) {
 			throw new NewBusinessException("B0000002", "processCode", e);
 		}
 	}
 
 	public List<AccountDDTO> getListAccount(AccountDDTO accountDDTO) throws NewBusinessException {
 		try {
-			List<Account> accountList = NewSqlMapper.getSqlMapClient().queryForList("account.getListAccount",
+			List<Account> accountList = (List<Account>) NewSqlMapper.getSqlMapClient().queryForList(
+					"account.getListAccount",
 					NewObjectUtil.copyForClass(Account.class, accountDDTO));
 			return NewObjectUtil.copyForList(AccountDDTO.class, accountList);
-		} catch (NewRecordNotFoundException e) {
-			throw new NewBusinessException("B0000001", "processCode", e);
-		} catch (NewPersistenceException e) {
-			throw new NewBusinessException("B0000002", "processCode", e);
-		} catch (NewFrameworkException e) {
+		} catch (Exception e) {
 			throw new NewBusinessException("B0000002", "processCode", e);
 		}
 	}

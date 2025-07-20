@@ -20,18 +20,19 @@ public class DCUser implements IDCUser {
 		try {
 			result = (List) NewSqlMapper.getSqlMapClient().queryForList("userpilot2.getListUser",
 					commonDto.getParameterMap());
-		} catch (NewTooManyRowsException e) {
-			throw new NewBusinessException("D9005101", e.toString());
-		} catch (NewPKDuplicationException e) {
-			throw new NewBusinessException("D9005102", e.toString());
-		} catch (NewPersistenceException e) {
-			throw new NewBusinessException("D9005103", e.toString());
-		} catch (NewFrameworkException e) {
-			throw new NewBusinessException("D9005104", e.toString());
 		} catch (Exception e) {
 			throw new NewBusinessException("D9005105", e.toString());
 		}
 		return result;
 	}
 
+	@Override
+	public User selectUser(String userId) throws Exception {
+		// Stub implementation
+		User user = new User();
+		user.setUserId(userId);
+		user.setUserName("Test User");
+		user.setUserEmail("test@example.com");
+		return user;
+	}
 }

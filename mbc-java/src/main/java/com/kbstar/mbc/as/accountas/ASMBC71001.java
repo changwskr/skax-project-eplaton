@@ -23,7 +23,7 @@ public class ASMBC71001 implements NewIApplicationService {
 		// TODO 코드 구현 및 메서드 추가
 
 		AccountPDTO accountPDTO = (AccountPDTO) reqData.getInputGenericDto().using(NewGenericDto.INDATA)
-				.get(AccountPDTO.class);
+				.get("AccountPDTO");
 
 		new PCAccount().createAccount(accountPDTO);
 		return null;

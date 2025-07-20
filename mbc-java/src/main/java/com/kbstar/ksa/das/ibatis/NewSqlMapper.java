@@ -1,15 +1,36 @@
 package com.kbstar.ksa.das.ibatis;
 
 /**
- * New SqlMapper class
- * 
- * This is a stub implementation to replace the missing KSA framework SqlMapper
+ * Stub class for SqlMapper
  */
 public class NewSqlMapper {
 
     public NewSqlMapper() {
-        // Default constructor
+        // Stub constructor
     }
 
-    // SqlMapper methods can be added here as needed
+    // Add stub methods as needed
+    public Object queryForObject(String statementName, Object parameterObject) {
+        return null;
+    }
+
+    public Object queryForList(String statementName, Object parameterObject) {
+        return null;
+    }
+
+    public int update(String statementName, Object parameterObject) {
+        return 0;
+    }
+
+    public int insert(String statementName, Object parameterObject) {
+        return 0;
+    }
+
+    public int delete(String statementName, Object parameterObject) {
+        return 0;
+    }
+
+    public static NewSqlMapClient getSqlMapClient() {
+        return new NewSqlMapClient();
+    }
 }

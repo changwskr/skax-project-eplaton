@@ -38,7 +38,7 @@ public class ASMBC75Z02 implements NewIApplicationService {
                 NewGenericDto input = reqData.getInputGenericDto().using(NewGenericDto.INDATA);
                 NewGenericDto output = reqData.getOutputGenericDto().using(NewGenericDto.OUTDATA);
 
-                Map<String, String> attrMap = input.getAttributeMap();
+                Map<String, Object> attrMap = input.getAttributeMap();
 
                 logger.debug("testString = " + attrMap.get("testString"));
                 logger.debug("testInt = " + attrMap.get("testInt"));
@@ -49,215 +49,215 @@ public class ASMBC75Z02 implements NewIApplicationService {
                 logger.debug("nodeid = " + attrMap.get("nodeid"));
 
                 // Get Common transaction code from ApplicationContext
-                String TransactionId = NewApplicationContext.get(NewApplicationContext.Key.StndTelgmRecvTranCd);
+                String TransactionId = (String) NewApplicationContext.get(NewApplicationContext.StndTelgmRecvTranCd);
                 String rsux = TransactionId.substring(8, 10);
 
                 System.out.println(
-                                "StndCicsTrncd :" + NewApplicationContext.get(NewApplicationContext.Key.StndCicsTrncd));
+                                "StndCicsTrncd :" + NewApplicationContext.get(NewApplicationContext.StndCicsTrncd));
                 System.out.println(
                                 "StndIntnlStndTelgmLen :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndIntnlStndTelgmLen));
+                                                                .get(NewApplicationContext.StndIntnlStndTelgmLen));
                 System.out.println(
                                 "StndTranBaseYmd :"
-                                                + NewApplicationContext.get(NewApplicationContext.Key.StndTranBaseYmd));
-                System.out.println("StndGuIdNo :" + NewApplicationContext.get(NewApplicationContext.Key.StndGuIdNo));
+                                                + NewApplicationContext.get(NewApplicationContext.StndTranBaseYmd));
+                System.out.println("StndGuIdNo :" + NewApplicationContext.get(NewApplicationContext.StndGuIdNo));
                 System.out.println("StndTelgmDmndDstcd :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndTelgmDmndDstcd));
+                                + NewApplicationContext.get(NewApplicationContext.StndTelgmDmndDstcd));
                 System.out.println("StndTelgmFmatDstcd :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndTelgmFmatDstcd));
+                                + NewApplicationContext.get(NewApplicationContext.StndTelgmFmatDstcd));
                 System.out.println(
                                 "StndTelgmValdYmd :" + NewApplicationContext
-                                                .get(NewApplicationContext.Key.StndTelgmValdYmd));
+                                                .get(NewApplicationContext.StndTelgmValdYmd));
                 // System.out.println("StndHdrSpareArea :" +
                 // NewApplicationContext.get(NewApplicationContext.Key.StndHdrSpareArea));
                 System.out.println(
-                                "StndGroupCoCd :" + NewApplicationContext.get(NewApplicationContext.Key.StndGroupCoCd));
+                                "StndGroupCoCd :" + NewApplicationContext.get(NewApplicationContext.StndGroupCoCd));
                 System.out
                                 .println("StndTelgmRecvTranCd :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndTelgmRecvTranCd));
+                                                                .get(NewApplicationContext.StndTelgmRecvTranCd));
                 System.out.println("StndPrcssRtdTranCd :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndPrcssRtdTranCd));
-                System.out.println("StndScrenNo :" + NewApplicationContext.get(NewApplicationContext.Key.StndScrenNo));
+                                + NewApplicationContext.get(NewApplicationContext.StndPrcssRtdTranCd));
+                System.out.println("StndScrenNo :" + NewApplicationContext.get(NewApplicationContext.StndScrenNo));
                 System.out.println(
                                 "StndOsidInstiCd :"
-                                                + NewApplicationContext.get(NewApplicationContext.Key.StndOsidInstiCd));
+                                                + NewApplicationContext.get(NewApplicationContext.StndOsidInstiCd));
                 System.out.println(
-                                "StndTranSerno :" + NewApplicationContext.get(NewApplicationContext.Key.StndTranSerno));
+                                "StndTranSerno :" + NewApplicationContext.get(NewApplicationContext.StndTranSerno));
                 System.out.println("StndInoPartlDstcd :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndInoPartlDstcd));
+                                + NewApplicationContext.get(NewApplicationContext.StndInoPartlDstcd));
                 System.out.println(
                                 "StndCmpxTranDmndDstcd :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndCmpxTranDmndDstcd));
+                                                                .get(NewApplicationContext.StndCmpxTranDmndDstcd));
                 System.out.println(
                                 "StndSysOperEvirnDstcd :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndSysOperEvirnDstcd));
+                                                                .get(NewApplicationContext.StndSysOperEvirnDstcd));
                 System.out
                                 .println("StndItsmMoniTagetYn :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndItsmMoniTagetYn));
+                                                                .get(NewApplicationContext.StndItsmMoniTagetYn));
                 System.out.println("StndTranPtrnDstcd :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndTranPtrnDstcd));
+                                + NewApplicationContext.get(NewApplicationContext.StndTranPtrnDstcd));
                 System.out.println("StndRbndTranYn :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndRbndTranYn));
+                                + NewApplicationContext.get(NewApplicationContext.StndRbndTranYn));
                 System.out
                                 .println("StndTermlWaitRqstYn :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndTermlWaitRqstYn));
+                                                                .get(NewApplicationContext.StndTermlWaitRqstYn));
                 System.out.println(
                                 "StndOgtranRstrYn :" + NewApplicationContext
-                                                .get(NewApplicationContext.Key.StndOgtranRstrYn));
+                                                .get(NewApplicationContext.StndOgtranRstrYn));
                 System.out.println(
                                 "StndOgtranGuIdNo :" + NewApplicationContext
-                                                .get(NewApplicationContext.Key.StndOgtranGuIdNo));
-                System.out.println("StndBnkCd :" + NewApplicationContext.get(NewApplicationContext.Key.StndBnkCd));
+                                                .get(NewApplicationContext.StndOgtranGuIdNo));
+                System.out.println("StndBnkCd :" + NewApplicationContext.get(NewApplicationContext.StndBnkCd));
                 System.out.println(
-                                "StndTranBrncd :" + NewApplicationContext.get(NewApplicationContext.Key.StndTranBrncd));
+                                "StndTranBrncd :" + NewApplicationContext.get(NewApplicationContext.StndTranBrncd));
                 System.out.println("StndFeePrcssBrncd :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndFeePrcssBrncd));
+                                + NewApplicationContext.get(NewApplicationContext.StndFeePrcssBrncd));
                 System.out.println("StndRelayChnlDstcd :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndRelayChnlDstcd));
+                                + NewApplicationContext.get(NewApplicationContext.StndRelayChnlDstcd));
                 System.out.println(
-                                "StndChnlDstcd :" + NewApplicationContext.get(NewApplicationContext.Key.StndChnlDstcd));
+                                "StndChnlDstcd :" + NewApplicationContext.get(NewApplicationContext.StndChnlDstcd));
                 // System.out.println("StndChnlDBzwkDstcd :" +
                 // NewApplicationContext.get(NewApplicationContext.Key.StndChnlDBzwkDstcd));
                 System.out.println(
-                                "StndMdiaDstcd :" + NewApplicationContext.get(NewApplicationContext.Key.StndMdiaDstcd));
+                                "StndMdiaDstcd :" + NewApplicationContext.get(NewApplicationContext.StndMdiaDstcd));
                 System.out.println(
-                                "StndLangDstcd :" + NewApplicationContext.get(NewApplicationContext.Key.StndLangDstcd));
-                System.out.println("StndTrmno :" + NewApplicationContext.get(NewApplicationContext.Key.StndTrmno));
+                                "StndLangDstcd :" + NewApplicationContext.get(NewApplicationContext.StndLangDstcd));
+                System.out.println("StndTrmno :" + NewApplicationContext.get(NewApplicationContext.StndTrmno));
                 System.out.println(
-                                "StndUserEmpid :" + NewApplicationContext.get(NewApplicationContext.Key.StndUserEmpid));
+                                "StndUserEmpid :" + NewApplicationContext.get(NewApplicationContext.StndUserEmpid));
                 System.out.println(
                                 "StndTermlOprtrno :" + NewApplicationContext
-                                                .get(NewApplicationContext.Key.StndTermlOprtrno));
+                                                .get(NewApplicationContext.StndTermlOprtrno));
                 System.out.println(
                                 "StndTermlSpvsrNo :" + NewApplicationContext
-                                                .get(NewApplicationContext.Key.StndTermlSpvsrNo));
+                                                .get(NewApplicationContext.StndTermlSpvsrNo));
                 System.out.println("StndN1StSpvsrBrncd :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndN1StSpvsrBrncd));
+                                + NewApplicationContext.get(NewApplicationContext.StndN1StSpvsrBrncd));
                 System.out.println("StndN2NdSpvsrBrncd :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndN2NdSpvsrBrncd));
+                                + NewApplicationContext.get(NewApplicationContext.StndN2NdSpvsrBrncd));
                 System.out.println("StndN2NdSpvsrTrmno :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndN2NdSpvsrTrmno));
+                                + NewApplicationContext.get(NewApplicationContext.StndN2NdSpvsrTrmno));
                 System.out.println(
                                 "StndInptMsgPtrnDstcd :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndInptMsgPtrnDstcd));
+                                                                .get(NewApplicationContext.StndInptMsgPtrnDstcd));
                 System.out.println("StndInptMsgCtnnYn :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndInptMsgCtnnYn));
+                                + NewApplicationContext.get(NewApplicationContext.StndInptMsgCtnnYn));
                 System.out.println(
                                 "StndInptMsgSerno :" + NewApplicationContext
-                                                .get(NewApplicationContext.Key.StndInptMsgSerno));
+                                                .get(NewApplicationContext.StndInptMsgSerno));
                 System.out.println("StndInptMsgWritYms :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndInptMsgWritYms));
+                                + NewApplicationContext.get(NewApplicationContext.StndInptMsgWritYms));
                 System.out.println("StndAthorFnshDstcd :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndAthorFnshDstcd));
+                                + NewApplicationContext.get(NewApplicationContext.StndAthorFnshDstcd));
                 System.out
                                 .println("StndSpvsrAthorDstcd :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndSpvsrAthorDstcd));
+                                                                .get(NewApplicationContext.StndSpvsrAthorDstcd));
                 System.out.println("StndN1StSpvsrEmpid :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndN1StSpvsrEmpid));
+                                + NewApplicationContext.get(NewApplicationContext.StndN1StSpvsrEmpid));
                 System.out.println("StndN2NdSpvsrEmpid :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndN2NdSpvsrEmpid));
+                                + NewApplicationContext.get(NewApplicationContext.StndN2NdSpvsrEmpid));
                 System.out
                                 .println("StndSpvsrAResnNoitm :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndSpvsrAResnNoitm));
+                                                                .get(NewApplicationContext.StndSpvsrAResnNoitm));
                 System.out.println(
                                 "StndSpvsrAthorResnCd :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndSpvsrAthorResnCd));
+                                                                .get(NewApplicationContext.StndSpvsrAthorResnCd));
                 System.out.println(
-                                "StndClsngAfYn :" + NewApplicationContext.get(NewApplicationContext.Key.StndClsngAfYn));
+                                "StndClsngAfYn :" + NewApplicationContext.get(NewApplicationContext.StndClsngAfYn));
                 // System.out.println("StndBnkbkTranYn :" +
                 // NewApplicationContext.get(NewApplicationContext.Key.StndBnkbkTranYn));
                 System.out.println("StndLsdtTranYn :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndLsdtTranYn));
-                System.out.println("StndIdtrek :" + NewApplicationContext.get(NewApplicationContext.Key.StndIdtrek));
+                                + NewApplicationContext.get(NewApplicationContext.StndLsdtTranYn));
+                System.out.println("StndIdtrek :" + NewApplicationContext.get(NewApplicationContext.StndIdtrek));
                 System.out.println(
                                 "StndBzoprDdDstcd :" + NewApplicationContext
-                                                .get(NewApplicationContext.Key.StndBzoprDdDstcd));
+                                                .get(NewApplicationContext.StndBzoprDdDstcd));
                 System.out.println(
                                 "StndSodBbrnPtrnDstcd :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndSodBbrnPtrnDstcd));
+                                                                .get(NewApplicationContext.StndSodBbrnPtrnDstcd));
                 System.out.println(
                                 "StndSodUserPtrnDstcd :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndSodUserPtrnDstcd));
+                                                                .get(NewApplicationContext.StndSodUserPtrnDstcd));
                 System.out.println("StndInotAbilYn :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndInotAbilYn));
+                                + NewApplicationContext.get(NewApplicationContext.StndInotAbilYn));
                 System.out.println(
                                 "StndNoRtaUserYn :"
-                                                + NewApplicationContext.get(NewApplicationContext.Key.StndNoRtaUserYn));
+                                                + NewApplicationContext.get(NewApplicationContext.StndNoRtaUserYn));
                 System.out.println("StndTranDscnDmndYn :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndTranDscnDmndYn));
+                                + NewApplicationContext.get(NewApplicationContext.StndTranDscnDmndYn));
                 System.out.println(
                                 "StndCallgPgmName :" + NewApplicationContext
-                                                .get(NewApplicationContext.Key.StndCallgPgmName));
+                                                .get(NewApplicationContext.StndCallgPgmName));
                 System.out.println("StndRecvLuName :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndRecvLuName));
+                                + NewApplicationContext.get(NewApplicationContext.StndRecvLuName));
                 System.out.println(
-                                "StndCnclDstcd :" + NewApplicationContext.get(NewApplicationContext.Key.StndCnclDstcd));
+                                "StndCnclDstcd :" + NewApplicationContext.get(NewApplicationContext.StndCnclDstcd));
                 System.out.println("StndCnclPtrnDstcd :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndCnclPtrnDstcd));
+                                + NewApplicationContext.get(NewApplicationContext.StndCnclPtrnDstcd));
                 System.out
                                 .println("StndTranCcResnDstcd :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndTranCcResnDstcd));
+                                                                .get(NewApplicationContext.StndTranCcResnDstcd));
                 System.out.println("StndTranCcResnCtnt :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndTranCcResnCtnt));
+                                + NewApplicationContext.get(NewApplicationContext.StndTranCcResnCtnt));
                 System.out.println(
-                                "StndOgtranYms :" + NewApplicationContext.get(NewApplicationContext.Key.StndOgtranYms));
+                                "StndOgtranYms :" + NewApplicationContext.get(NewApplicationContext.StndOgtranYms));
                 System.out.println(
                                 "StndCnclRstrInfoCtnt :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndCnclRstrInfoCtnt));
+                                                                .get(NewApplicationContext.StndCnclRstrInfoCtnt));
                 System.out.println("StndDscnTranDstcd :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndDscnTranDstcd));
+                                + NewApplicationContext.get(NewApplicationContext.StndDscnTranDstcd));
                 System.out.println("StndIdiviDataEdtYn :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndIdiviDataEdtYn));
-                System.out.println("StndOpbrnCd :" + NewApplicationContext.get(NewApplicationContext.Key.StndOpbrnCd));
+                                + NewApplicationContext.get(NewApplicationContext.StndIdiviDataEdtYn));
+                System.out.println("StndOpbrnCd :" + NewApplicationContext.get(NewApplicationContext.StndOpbrnCd));
                 // System.out.println("StndCncutIScopAddr :" +
                 // NewApplicationContext.get(NewApplicationContext.Key.StndCncutIScopAddr));
                 System.out
                                 .println("StndOutptDPtrnDstcd :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndOutptDPtrnDstcd));
+                                                                .get(NewApplicationContext.StndOutptDPtrnDstcd));
                 System.out.println(
                                 "StndOutptMsgPtrnDstcd :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndOutptMsgPtrnDstcd));
+                                                                .get(NewApplicationContext.StndOutptMsgPtrnDstcd));
                 System.out.println("StndOutptMsgCtnnYn :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndOutptMsgCtnnYn));
+                                + NewApplicationContext.get(NewApplicationContext.StndOutptMsgCtnnYn));
                 System.out.println("StndOutptMsgSerno :"
-                                + NewApplicationContext.get(NewApplicationContext.Key.StndOutptMsgSerno));
+                                + NewApplicationContext.get(NewApplicationContext.StndOutptMsgSerno));
                 System.out
                                 .println("StndOutptMsgWritYms :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndOutptMsgWritYms));
+                                                                .get(NewApplicationContext.StndOutptMsgWritYms));
                 System.out
                                 .println("StndUserPaNotacrdYn :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndUserPaNotacrdYn));
-                System.out.println("StndErrcd :" + NewApplicationContext.get(NewApplicationContext.Key.StndErrcd));
-                System.out.println("StndTreatCd :" + NewApplicationContext.get(NewApplicationContext.Key.StndTreatCd));
+                                                                .get(NewApplicationContext.StndUserPaNotacrdYn));
+                System.out.println("StndErrcd :" + NewApplicationContext.get(NewApplicationContext.StndErrcd));
+                System.out.println("StndTreatCd :" + NewApplicationContext.get(NewApplicationContext.StndTreatCd));
                 System.out
                                 .println("StndCncutDscnRqstYn :"
                                                 + NewApplicationContext
-                                                                .get(NewApplicationContext.Key.StndCncutDscnRqstYn));
+                                                                .get(NewApplicationContext.StndCncutDscnRqstYn));
                 // System.out.println("StndComSpareArea :" +
                 // NewApplicationContext.get(NewApplicationContext.Key.StndComSpareArea));
 
                 // Check transaction code for R/S/U/X
                 if (rsux != null && rsux.equals("R0")) {
 
-                        treeDDTO.setNodeid(attrMap.get("nodeid"));
+                        treeDDTO.setNodeid((String) attrMap.get("nodeid"));
 
                         idcuser = new DCUser();
                         resTrees = idcuser.getListTree(treeDDTO);
@@ -268,13 +268,13 @@ public class ASMBC75Z02 implements NewIApplicationService {
 
                         for (int i = 0; i < 3; i++) {
                                 for (int j = 0; j < 5; j++) {
-                                        NewGenericDto treeout = output.addNode("treeGrid");
+                                        output.addNode("treeGrid");
                                         // Set attributes for tree DTO
 
-                                        treeout.addAttribute("treeId", "10" + i + j);
-                                        treeout.addAttribute("treeNm", "data=treeGridlevel" + j + ";level=" + j);
-                                        treeout.addAttribute("treeCol1", "treeCol1");
-                                        treeout.addAttribute("treeCol2", "treeCol2");
+                                        output.addAttribute("treeId", "10" + i + j);
+                                        output.addAttribute("treeNm", "data=treeGridlevel" + j + ";level=" + j);
+                                        output.addAttribute("treeCol1", "treeCol1");
+                                        output.addAttribute("treeCol2", "treeCol2");
 
                                 }
                         }

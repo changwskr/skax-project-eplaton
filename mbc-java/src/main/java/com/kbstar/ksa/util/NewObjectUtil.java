@@ -1,5 +1,8 @@
 package com.kbstar.ksa.util;
 
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  * Stub class for ObjectUtil
  */
@@ -28,5 +31,15 @@ public class NewObjectUtil {
         if (obj1 == null || obj2 == null)
             return false;
         return obj1.equals(obj2);
+    }
+
+    public static <T> T copyForClass(Class<T> targetClass, Object source) {
+        // Stub implementation - returns null for now
+        return null;
+    }
+
+    public static <T> List<T> copyForList(Class<T> targetClass, List<?> sourceList) {
+        // Stub implementation - returns empty list for now
+        return new ArrayList<>();
     }
 }

@@ -1,16 +1,32 @@
 package com.kbstar.ksa.das.ibatis;
 
 /**
- * New SqlMapClient class
- * 
- * This is a stub implementation to replace the missing KSA framework
- * SqlMapClient
+ * Stub class for SqlMapClient
  */
 public class NewSqlMapClient {
 
     public NewSqlMapClient() {
-        // Default constructor
+        // Stub constructor
     }
 
-    // SqlMapClient methods can be added here as needed
+    // Add stub methods as needed
+    public Object queryForObject(String statementName, Object parameterObject) {
+        return null;
+    }
+
+    public Object queryForList(String statementName, Object parameterObject) {
+        return null;
+    }
+
+    public int update(String statementName, Object parameterObject) {
+        return 0;
+    }
+
+    public int insert(String statementName, Object parameterObject) {
+        return 0;
+    }
+
+    public int delete(String statementName, Object parameterObject) {
+        return 0;
+    }
 }
