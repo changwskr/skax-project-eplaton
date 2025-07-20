@@ -13,6 +13,7 @@
     <description>SKAX Project Eplaton - Spring Boot Multi Module Project</description>
 
     <modules>
+        <module>ksa-lib</module>
         <module>mbc01-java</module>
         <module>mbc-config</module>
         <module>mbc-java</module>
@@ -49,6 +50,12 @@
             </dependency>
 
             <!-- Internal modules -->
+            <dependency>
+                <groupId>com.kbstar.mbc</groupId>
+                <artifactId>ksa-lib</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.kbstar.mbc</groupId>
                 <artifactId>mbc01-java</artifactId>
