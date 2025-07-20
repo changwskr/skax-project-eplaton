@@ -1,47 +1,47 @@
 package com.kbstar.mbc.pc.dto;
 
-import com.kbstar.ksa.infra.po.AbstractDTO;
-import com.kbstar.ksa.infra.po.annotation.GPath;
+import com.kbstar.ksa.infra.po.NewAbstractDTO;
+import com.kbstar.ksa.infra.po.annotation.NewGPath;
 
-@GPath(name ="User")
-public class UserPilotPDTO extends AbstractDTO {
+@NewGPath(name = "User")
+public class UserPilotPDTO extends NewAbstractDTO {
 
-private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 1L;
+
 	private String userID;
-	
+
 	private String userName;
-	
+
 	private String userPassword;
-	
+
 	private String identificationNumber;
-	
+
 	private String userCode;
-	
+
 	private String userCodeName;
-	
+
 	private String deptCode;
-	
+
 	private String deptName;
-	
+
 	private String rankCode;
-	
+
 	private String rankName;
-	
+
 	private String enterDate;
-	
+
 	private String birthDate;
-	
+
 	private String mobileNo;
-	
+
 	private String email;
-	
+
 	private String address;
-	
+
 	private String usage;
-	
+
 	private String crud;
-	
+
 	public String getAddress() {
 		return address;
 	}

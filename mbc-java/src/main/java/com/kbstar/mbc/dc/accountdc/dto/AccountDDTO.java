@@ -9,7 +9,7 @@ package com.kbstar.mbc.dc.accountdc.dto;
 
 import java.util.Date;
 
-import com.kbstar.ksa.infra.po.AbstractDTO;
+import com.kbstar.ksa.infra.po.NewAbstractDTO;
 
 /**
  * <br>
@@ -24,7 +24,7 @@ import com.kbstar.ksa.infra.po.AbstractDTO;
  * <li>2008-08-26::KB Bank::Initial Creation
  * </ul>
  */
-public class AccountDDTO extends AbstractDTO {
+public class AccountDDTO extends NewAbstractDTO {
 
 	private static final long serialVersionUID = 1L;
 

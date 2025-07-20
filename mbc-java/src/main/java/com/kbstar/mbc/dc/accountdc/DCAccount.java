@@ -9,17 +9,17 @@ package com.kbstar.mbc.dc.accountdc;
 
 import java.util.List;
 
-import com.kbstar.ksa.das.PKDuplicationException;
-import com.kbstar.ksa.das.PersistenceException;
-import com.kbstar.ksa.das.RecordNotFoundException;
-import com.kbstar.ksa.das.TooManyRowsException;
-import com.kbstar.ksa.das.ibatis.SqlMapper;
-import com.kbstar.ksa.exception.BusinessException;
-import com.kbstar.ksa.exception.FrameworkException;
-import com.kbstar.ksa.logger.IKesaLogger;
-import com.kbstar.ksa.logger.KesaLogHelper;
-import com.kbstar.ksa.oltp.biz.IDomainComponent;
-import com.kbstar.ksa.util.ObjectUtil;
+import com.kbstar.ksa.das.NewPKDuplicationException;
+import com.kbstar.ksa.das.NewPersistenceException;
+import com.kbstar.ksa.das.NewRecordNotFoundException;
+import com.kbstar.ksa.das.NewTooManyRowsException;
+import com.kbstar.ksa.das.ibatis.NewSqlMapper;
+import com.kbstar.ksa.exception.NewBusinessException;
+import com.kbstar.ksa.exception.NewFrameworkException;
+import com.kbstar.ksa.logger.NewIKesaLogger;
+import com.kbstar.ksa.logger.NewKesaLogHelper;
+import com.kbstar.ksa.oltp.biz.NewIDomainComponent;
+import com.kbstar.ksa.util.NewObjectUtil;
 import com.kbstar.mbc.dc.accountdc.dto.AccountDDTO;
 
 /**
@@ -35,8 +35,8 @@ import com.kbstar.mbc.dc.accountdc.dto.AccountDDTO;
  * <li>2008-08-26::전체::최초작성
  * </ul>
  */
-public class DCAccount implements IDomainComponent {
-	IKesaLogger logger = KesaLogHelper.getBiz();
+public class DCAccount implements NewIDomainComponent {
+	NewIKesaLogger logger = NewKesaLogHelper.getBiz();
 
 	/**
 	 * <br>
@@ -61,19 +61,19 @@ public class DCAccount implements IDomainComponent {
 	 *         <li>netAmount //잔액
 	 *         </ul>
 	 */
-	public AccountDDTO getAccount(AccountDDTO accountDDTO) throws BusinessException {
+	public AccountDDTO getAccount(AccountDDTO accountDDTO) throws NewBusinessException {
 		try {
-			Account account = (Account) SqlMapper.getSqlMapClient()
-					.queryForObject("account.getAccount", ObjectUtil.copyForClass(Account.class, accountDDTO));
-			return ObjectUtil.copyForClass(AccountDDTO.class, account);
-		} catch (TooManyRowsException e) {
-			throw new BusinessException("B0100001", "processCode", e);
-		} catch (PKDuplicationException e) {
-			throw new BusinessException("B0100001", "processCode", e);
-		} catch (PersistenceException e) {
-			throw new BusinessException("B0100001", "processCode", e);
-		} catch (FrameworkException e) {
-			throw new BusinessException("B0100001", "processCode", e);
+			Account account = (Account) NewSqlMapper.getSqlMapClient()
+					.queryForObject("account.getAccount", NewObjectUtil.copyForClass(Account.class, accountDDTO));
+			return NewObjectUtil.copyForClass(AccountDDTO.class, account);
+		} catch (NewTooManyRowsException e) {
+			throw new NewBusinessException("B0100001", "processCode", e);
+		} catch (NewPKDuplicationException e) {
+			throw new NewBusinessException("B0100001", "processCode", e);
+		} catch (NewPersistenceException e) {
+			throw new NewBusinessException("B0100001", "processCode", e);
+		} catch (NewFrameworkException e) {
+			throw new NewBusinessException("B0100001", "processCode", e);
 		}
 	}
 
@@ -97,18 +97,18 @@ public class DCAccount implements IDomainComponent {
 	 *                    </ul>
 	 * @return void
 	 */
-	public void updateAccount(AccountDDTO accountDDTO) throws BusinessException {
+	public void updateAccount(AccountDDTO accountDDTO) throws NewBusinessException {
 		try {
-			int count = SqlMapper.getSqlMapClient().update("account.updateAccount",
-					ObjectUtil.copyForClass(Account.class, accountDDTO));
+			int count = NewSqlMapper.getSqlMapClient().update("account.updateAccount",
+					NewObjectUtil.copyForClass(Account.class, accountDDTO));
 			if (logger.isDebugEnabled())
 				logger.debug(this.getClass().getName() + ", update count = " + count);
-		} catch (PKDuplicationException e) {
-			throw new BusinessException("B0000002", "processCode", e);
-		} catch (PersistenceException e) {
-			throw new BusinessException("B0000002", "processCode", e);
-		} catch (FrameworkException e) {
-			throw new BusinessException("B0000002", "processCode", e);
+		} catch (NewPKDuplicationException e) {
+			throw new NewBusinessException("B0000002", "processCode", e);
+		} catch (NewPersistenceException e) {
+			throw new NewBusinessException("B0000002", "processCode", e);
+		} catch (NewFrameworkException e) {
+			throw new NewBusinessException("B0000002", "processCode", e);
 		}
 	}
 
@@ -126,18 +126,18 @@ public class DCAccount implements IDomainComponent {
 	 *                    </ul>
 	 * @return void
 	 */
-	public void deleteAccount(AccountDDTO accountDDTO) throws BusinessException {
+	public void deleteAccount(AccountDDTO accountDDTO) throws NewBusinessException {
 		try {
-			int count = SqlMapper.getSqlMapClient().delete("account.deleteAccount",
-					ObjectUtil.copyForClass(Account.class, accountDDTO));
+			int count = NewSqlMapper.getSqlMapClient().delete("account.deleteAccount",
+					NewObjectUtil.copyForClass(Account.class, accountDDTO));
 			if (logger.isDebugEnabled())
 				logger.debug(this.getClass().getName() + ", delete count = " + count);
-		} catch (RecordNotFoundException e) {
-			throw new BusinessException("B0000001", "processCode", e);
-		} catch (PersistenceException e) {
-			throw new BusinessException("B0000002", "processCode", e);
-		} catch (FrameworkException e) {
-			throw new BusinessException("B0000002", "processCode", e);
+		} catch (NewRecordNotFoundException e) {
+			throw new NewBusinessException("B0000001", "processCode", e);
+		} catch (NewPersistenceException e) {
+			throw new NewBusinessException("B0000002", "processCode", e);
+		} catch (NewFrameworkException e) {
+			throw new NewBusinessException("B0000002", "processCode", e);
 		}
 	}
 
@@ -161,30 +161,30 @@ public class DCAccount implements IDomainComponent {
 	 *                    </ul>
 	 * @return void
 	 */
-	public void createAccount(AccountDDTO accountDDTO) throws BusinessException {
+	public void createAccount(AccountDDTO accountDDTO) throws NewBusinessException {
 		try {
-			SqlMapper.getSqlMapClient().insert("account.createAccount",
-					ObjectUtil.copyForClass(Account.class, accountDDTO));
-		} catch (RecordNotFoundException e) {
-			throw new BusinessException("B0000001", "processCode", e);
-		} catch (PersistenceException e) {
-			throw new BusinessException("B0000002", "processCode", e);
-		} catch (FrameworkException e) {
-			throw new BusinessException("B0000002", "processCode", e);
+			NewSqlMapper.getSqlMapClient().insert("account.createAccount",
+					NewObjectUtil.copyForClass(Account.class, accountDDTO));
+		} catch (NewRecordNotFoundException e) {
+			throw new NewBusinessException("B0000001", "processCode", e);
+		} catch (NewPersistenceException e) {
+			throw new NewBusinessException("B0000002", "processCode", e);
+		} catch (NewFrameworkException e) {
+			throw new NewBusinessException("B0000002", "processCode", e);
 		}
 	}
 
-	public List<AccountDDTO> getListAccount(AccountDDTO accountDDTO) throws BusinessException {
+	public List<AccountDDTO> getListAccount(AccountDDTO accountDDTO) throws NewBusinessException {
 		try {
-			List<Account> accountList = SqlMapper.getSqlMapClient().queryForList("account.getListAccount",
-					ObjectUtil.copyForClass(Account.class, accountDDTO));
-			return ObjectUtil.copyForList(AccountDDTO.class, accountList);
-		} catch (RecordNotFoundException e) {
-			throw new BusinessException("B0000001", "processCode", e);
-		} catch (PersistenceException e) {
-			throw new BusinessException("B0000002", "processCode", e);
-		} catch (FrameworkException e) {
-			throw new BusinessException("B0000002", "processCode", e);
+			List<Account> accountList = NewSqlMapper.getSqlMapClient().queryForList("account.getListAccount",
+					NewObjectUtil.copyForClass(Account.class, accountDDTO));
+			return NewObjectUtil.copyForList(AccountDDTO.class, accountList);
+		} catch (NewRecordNotFoundException e) {
+			throw new NewBusinessException("B0000001", "processCode", e);
+		} catch (NewPersistenceException e) {
+			throw new NewBusinessException("B0000002", "processCode", e);
+		} catch (NewFrameworkException e) {
+			throw new NewBusinessException("B0000002", "processCode", e);
 		}
 	}
 
