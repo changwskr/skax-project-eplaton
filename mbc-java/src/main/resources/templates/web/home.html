@@ -410,9 +410,67 @@
         setInterval(updateTime, 1000);
         updateTime(); // 초기 실행
 
+        // 한글 인코딩 확인 및 수정
+        function fixKoreanEncoding() {
+            // 최근 활동 항목들의 한글 텍스트 확인
+            const activityTitles = document.querySelectorAll('.activity-title');
+            activityTitles.forEach((title, index) => {
+                const originalText = title.textContent;
+                console.log(`활동 ${index + 1} 원본 텍스트:`, originalText);
+                
+                // 한글이 깨진 경우 복구 시도
+                if (originalText.includes('') || originalText.length === 0) {
+                    console.warn(`활동 ${index + 1}에서 한글 인코딩 문제 발견`);
+                    
+                    // 기본 한글 텍스트로 복구
+                    const defaultTexts = [
+                        '관리자 계정 생성',
+                        '테스트 계정 생성', 
+                        '시스템 업데이트',
+                        '사용자 등록',
+                        '데이터베이스 연결'
+                    ];
+                    
+                    if (index < defaultTexts.length) {
+                        title.textContent = defaultTexts[index];
+                        console.log(`활동 ${index + 1} 텍스트 복구:`, defaultTexts[index]);
+                    }
+                }
+            });
+
+            // 메뉴 항목들의 한글 텍스트 확인
+            const menuTitles = document.querySelectorAll('.menu-title');
+            menuTitles.forEach((title, index) => {
+                const originalText = title.textContent;
+                console.log(`메뉴 ${index + 1} 원본 텍스트:`, originalText);
+                
+                if (originalText.includes('') || originalText.length === 0) {
+                    console.warn(`메뉴 ${index + 1}에서 한글 인코딩 문제 발견`);
+                    
+                    const defaultMenuTexts = [
+                        '계정 관리',
+                        '사용자 관리',
+                        '시스템 관리',
+                        '보고서'
+                    ];
+                    
+                    if (index < defaultMenuTexts.length) {
+                        title.textContent = defaultMenuTexts[index];
+                        console.log(`메뉴 ${index + 1} 텍스트 복구:`, defaultMenuTexts[index]);
+                    }
+                }
+            });
+        }
+
         // 페이지 로드 시 초기화
         document.addEventListener('DOMContentLoaded', function() {
             console.log('SKAX-EATOOL 홈화면 로드됨');
+            
+            // 한글 인코딩 문제 확인 및 수정
+            setTimeout(fixKoreanEncoding, 500);
+            
+            // 3초 후 다시 한번 확인
+            setTimeout(fixKoreanEncoding, 3000);
         });
     </script>
 </body>

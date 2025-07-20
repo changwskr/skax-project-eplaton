@@ -12,6 +12,11 @@ server:
       charset: UTF-8
       force: true
       enabled: true
+  # 추가 인코딩 설정
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
 
 spring:
   application:
@@ -50,7 +55,9 @@ spring:
     cache: false
     mode: HTML
     servlet:
-      content-type: text/html
+      content-type: text/html;charset=UTF-8
+    prefix: classpath:/templates/
+    suffix: .html
 
   # Jackson Configuration
   jackson:
@@ -59,9 +66,8 @@ spring:
     default-property-inclusion: non_null
     serialization:
       write-dates-as-timestamps: false
-    encoding:
-      charset: UTF-8
-      force: true
+    deserialization:
+      fail-on-unknown-properties: false
 
 # MyBatis Configuration
 mybatis:
