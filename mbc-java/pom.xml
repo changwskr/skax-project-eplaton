@@ -125,6 +125,12 @@
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
 
+        <!-- Thymeleaf Template Engine -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
         <!-- Swagger/OpenAPI Documentation -->
         <dependency>
             <groupId>org.springdoc</groupId>
@@ -169,6 +175,10 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
+                    <compilerArgs>
+                        <arg>-encoding</arg>
+                        <arg>UTF-8</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
             <plugin>

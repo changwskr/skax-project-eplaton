@@ -25,6 +25,23 @@ spring:
     time-zone: Asia/Seoul
     default-property-inclusion: non_null
 
+  # Thymeleaf Configuration
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+    mode: HTML
+    servlet:
+      content-type: text/html;charset=UTF-8
+
+  # HTTP Encoding Configuration
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
   # DevTools Configuration (비활성화)
   devtools:
     restart:
@@ -37,6 +54,10 @@ server:
   port: 8080
   servlet:
     context-path: /mbc
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
 
 # Logging Configuration
 logging:
