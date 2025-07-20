@@ -31,7 +31,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
+            <artifactId>spring-core</artifactId
         </dependency>
 
         <!-- Logging -->
@@ -120,6 +120,7 @@
                                 </copy>
                                 <copy todir="${project.basedir}/bin" failonerror="false">
                                     <fileset dir="${project.build.directory}/test-classes" includes="**/*.class" />
+                                    <presentselector present="srconly" />
                                 </copy>
                             </target>
                         </configuration>
