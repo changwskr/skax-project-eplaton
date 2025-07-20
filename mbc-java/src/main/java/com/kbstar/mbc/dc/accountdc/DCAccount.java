@@ -9,11 +9,13 @@ package com.kbstar.mbc.dc.accountdc;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.kbstar.ksa.das.NewPKDuplicationException;
 import com.kbstar.ksa.das.NewPersistenceException;
 import com.kbstar.ksa.das.NewRecordNotFoundException;
 import com.kbstar.ksa.das.NewTooManyRowsException;
-import com.kbstar.ksa.das.ibatis.NewSqlMapper;
 import com.kbstar.ksa.exception.NewBusinessException;
 import com.kbstar.ksa.exception.NewFrameworkException;
 import com.kbstar.ksa.logger.NewIKesaLogger;
@@ -21,6 +23,7 @@ import com.kbstar.ksa.logger.NewKesaLogHelper;
 import com.kbstar.ksa.oltp.biz.NewIDomainComponent;
 import com.kbstar.ksa.util.NewObjectUtil;
 import com.kbstar.mbc.dc.accountdc.dto.AccountDDTO;
+import com.kbstar.mbc.dc.accountdc.mapper.AccountMapper;
 
 /**
  * <br>
@@ -33,10 +36,15 @@ import com.kbstar.mbc.dc.accountdc.dto.AccountDDTO;
  * [변경이력]
  * <ul>
  * <li>2008-08-26::전체::최초작성
+ * <li>2024-01-01::전체::MyBatis 마이그레이션
  * </ul>
  */
+@Repository
 public class DCAccount implements NewIDomainComponent {
 	NewIKesaLogger logger = NewKesaLogHelper.getBiz();
+
+	@Autowired
+	private AccountMapper accountMapper;
 
 	/**
 	 * <br>
@@ -63,8 +71,7 @@ public class DCAccount implements NewIDomainComponent {
 	 */
 	public AccountDDTO getAccount(AccountDDTO accountDDTO) throws NewBusinessException {
 		try {
-			Account account = (Account) NewSqlMapper.getSqlMapClient()
-					.queryForObject("account.getAccount", NewObjectUtil.copyForClass(Account.class, accountDDTO));
+			Account account = accountMapper.getAccount(accountDDTO);
 			return NewObjectUtil.copyForClass(AccountDDTO.class, account);
 		} catch (Exception e) {
 			throw new NewBusinessException("B0100001", "processCode", e);
@@ -93,8 +100,7 @@ public class DCAccount implements NewIDomainComponent {
 	 */
 	public void updateAccount(AccountDDTO accountDDTO) throws NewBusinessException {
 		try {
-			int count = NewSqlMapper.getSqlMapClient().update("account.updateAccount",
-					NewObjectUtil.copyForClass(Account.class, accountDDTO));
+			int count = accountMapper.updateAccount(accountDDTO);
 			if (logger.isDebugEnabled())
 				logger.debug(this.getClass().getName() + ", update count = " + count);
 		} catch (Exception e) {
@@ -118,8 +124,7 @@ public class DCAccount implements NewIDomainComponent {
 	 */
 	public void deleteAccount(AccountDDTO accountDDTO) throws NewBusinessException {
 		try {
-			int count = NewSqlMapper.getSqlMapClient().delete("account.deleteAccount",
-					NewObjectUtil.copyForClass(Account.class, accountDDTO));
+			int count = accountMapper.deleteAccount(accountDDTO);
 			if (logger.isDebugEnabled())
 				logger.debug(this.getClass().getName() + ", delete count = " + count);
 		} catch (Exception e) {
@@ -149,8 +154,7 @@ public class DCAccount implements NewIDomainComponent {
 	 */
 	public void createAccount(AccountDDTO accountDDTO) throws NewBusinessException {
 		try {
-			NewSqlMapper.getSqlMapClient().insert("account.createAccount",
-					NewObjectUtil.copyForClass(Account.class, accountDDTO));
+			accountMapper.createAccount(accountDDTO);
 		} catch (Exception e) {
 			throw new NewBusinessException("B0000002", "processCode", e);
 		}
@@ -158,9 +162,7 @@ public class DCAccount implements NewIDomainComponent {
 
 	public List<AccountDDTO> getListAccount(AccountDDTO accountDDTO) throws NewBusinessException {
 		try {
-			List<Account> accountList = (List<Account>) NewSqlMapper.getSqlMapClient().queryForList(
-					"account.getListAccount",
-					NewObjectUtil.copyForClass(Account.class, accountDDTO));
+			List<Account> accountList = accountMapper.getListAccount(accountDDTO);
 			return NewObjectUtil.copyForList(AccountDDTO.class, accountList);
 		} catch (Exception e) {
 			throw new NewBusinessException("B0000002", "processCode", e);

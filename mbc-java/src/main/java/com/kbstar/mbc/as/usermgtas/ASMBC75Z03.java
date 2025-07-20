@@ -48,7 +48,11 @@ public class ASMBC75Z03 implements NewIApplicationService {
 			idcuser = new com.kbstar.mbc.dc.usermgtdc.DCUser();
 
 			// DC call
-			resPage = idcuser.getListPage(pageDdto);
+			try {
+				resPage = idcuser.getListPage(pageDdto);
+			} catch (Exception e) {
+				throw new NewBusinessException("getListUser", "B0000001", e);
+			}
 
 			// Output DDTO total line count and output line count setting
 			if (resPage.size() > 0) {

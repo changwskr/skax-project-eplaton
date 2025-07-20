@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.kbstar.ksa.das.NewPersistenceException;
 import com.kbstar.ksa.das.NewRecordNotFoundException;
-import com.kbstar.ksa.das.ibatis.NewSqlMapper;
 import com.kbstar.ksa.exception.NewBusinessException;
 import com.kbstar.ksa.exception.NewFrameworkException;
 import com.kbstar.ksa.logger.NewIKesaLogger;
@@ -15,11 +17,32 @@ import com.kbstar.ksa.util.NewObjectUtil;
 import com.kbstar.mbc.dc.usermgtdc.dto.PageDDTO;
 import com.kbstar.mbc.dc.usermgtdc.dto.TreeDDTO;
 import com.kbstar.mbc.dc.usermgtdc.dto.UserDDTO;
+import com.kbstar.mbc.dc.usermgtdc.repository.UserRepository;
 import com.kbstar.mbc.fc.foundation.bzcrudbus.transfer.ICommonDTO;
 
+/**
+ * 사용자 관리 도메인 컴포넌트
+ * 
+ * 프로그램명: DCUser.java
+ * 설명: 사용자 관리 관련 데이터베이스 작업을 수행하는 도메인 컴포넌트
+ * 작성일: 2024-01-01
+ * 작성자: SKAX Project Team
+ * 
+ * 주요 기능:
+ * - 사용자 CRUD 작업
+ * - 페이징 처리
+ * - 트리 구조 데이터 조회
+ * - MyBatis/JPA 유연한 전환 지원
+ * 
+ * @version 1.0
+ */
+@Repository
 public class DCUser implements IDCUser {
 
 	protected NewIKesaLogger logger = NewKesaLogHelper.getBiz();
+
+	@Autowired
+	private UserRepository userRepository;
 
 	// IDCUser interface methods
 	@Override
@@ -72,14 +95,11 @@ public class DCUser implements IDCUser {
 				logger.debug("crud = " + crud);
 
 				if (crud.equals("C")) {
-					NewSqlMapper.getSqlMapClient().insert("user.insertUser",
-							userDDTOs[i]);
+					userRepository.insertUser(userDDTOs[i]);
 				} else if (crud.equals("U")) {
-					NewSqlMapper.getSqlMapClient().update("user.updateUser",
-							userDDTOs[i]);
+					userRepository.updateUser(userDDTOs[i]);
 				} else if (crud.equals("D")) {
-					NewSqlMapper.getSqlMapClient().update("user.deleteUser",
-							userDDTOs[i]);
+					userRepository.deleteUser(userDDTOs[i]);
 				}
 			}
 		} catch (Exception e) {
@@ -92,9 +112,7 @@ public class DCUser implements IDCUser {
 		List<User> UserList = null;
 
 		try {
-			UserList = (List<User>) NewSqlMapper.getSqlMapClient().queryForList(
-					"user.getListUser", userDDTO);
-
+			UserList = userRepository.getListUser(userDDTO);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -109,11 +127,9 @@ public class DCUser implements IDCUser {
 		String outptLineCnt;
 		try {
 			// Query page data that matches the request conditions
-			pageList = (List<Page>) NewSqlMapper.getSqlMapClient().queryForList(
-					"user.getListPage", pageDDTO);
+			pageList = userRepository.getListPage(pageDDTO);
 			// Get total count
-			pageCount = (String) NewSqlMapper.getSqlMapClient().queryForObject(
-					"user.getPageCount", pageDDTO);
+			pageCount = userRepository.getPageCount(pageDDTO);
 			// Get output count: may need to be calculated separately
 			outptLineCnt = String.valueOf(pageList.size());
 			// Set total count and output count in the first item of the List
@@ -135,8 +151,7 @@ public class DCUser implements IDCUser {
 		List<Tree> TreeList = null;
 
 		try {
-			TreeList = (List<Tree>) NewSqlMapper.getSqlMapClient().queryForList(
-					"user.getListTree", treeDDTO);
+			TreeList = userRepository.getListTree(treeDDTO);
 		} catch (Exception e) {
 
 			// TODO Auto-generated catch block
