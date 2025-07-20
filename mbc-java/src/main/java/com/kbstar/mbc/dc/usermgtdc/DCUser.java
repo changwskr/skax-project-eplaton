@@ -3,8 +3,11 @@ package com.kbstar.mbc.dc.usermgtdc;
 import java.util.List;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.kbstar.ksa.das.NewPersistenceException;
@@ -17,7 +20,6 @@ import com.kbstar.ksa.util.NewObjectUtil;
 import com.kbstar.mbc.dc.usermgtdc.dto.PageDDTO;
 import com.kbstar.mbc.dc.usermgtdc.dto.TreeDDTO;
 import com.kbstar.mbc.dc.usermgtdc.dto.UserDDTO;
-import com.kbstar.mbc.dc.usermgtdc.repository.UserRepository;
 import com.kbstar.mbc.fc.foundation.bzcrudbus.transfer.ICommonDTO;
 
 /**
@@ -32,7 +34,7 @@ import com.kbstar.mbc.fc.foundation.bzcrudbus.transfer.ICommonDTO;
  * - 사용자 CRUD 작업
  * - 페이징 처리
  * - 트리 구조 데이터 조회
- * - MyBatis/JPA 유연한 전환 지원
+ * - JDBC Template 기반 데이터 접근
  * 
  * @version 1.0
  */
@@ -42,7 +44,18 @@ public class DCUser implements IDCUser {
 	protected NewIKesaLogger logger = NewKesaLogHelper.getBiz();
 
 	@Autowired
-	private UserRepository userRepository;
+	private JdbcTemplate jdbcTemplate;
+
+	private final RowMapper<User> userRowMapper = (rs, rowNum) -> {
+		User user = new User();
+		user.setUserId(rs.getString("USER_ID"));
+		user.setUserName(rs.getString("USER_NAME"));
+		user.setEmail(rs.getString("EMAIL"));
+		user.setPhone(rs.getString("PHONE"));
+		user.setRole(rs.getString("ROLE"));
+		user.setStatus(rs.getString("STATUS"));
+		return user;
+	};
 
 	// IDCUser interface methods
 	@Override
@@ -84,10 +97,9 @@ public class DCUser implements IDCUser {
 	@Override
 	public User selectUser(String userId) throws Exception {
 		try {
-			return userRepository.getUserById(userId);
-		} catch (NewBusinessException e) {
-			logger.error("Error selecting user with ID: " + userId, String.valueOf(e));
-			throw e;
+			String sql = "SELECT * FROM USER_INFO WHERE USER_ID = ?";
+			List<User> users = jdbcTemplate.query(sql, userRowMapper, userId);
+			return users.isEmpty() ? null : users.get(0);
 		} catch (Exception e) {
 			logger.error("Unexpected error selecting user with ID: " + userId, String.valueOf(e));
 			throw new NewBusinessException("B0000001", "selectUser", e);
@@ -108,11 +120,11 @@ public class DCUser implements IDCUser {
 				logger.debug("crud = " + crud);
 
 				if (crud.equals("C")) {
-					userRepository.insertUser(userDDTOs[i]);
+					insertUser(userDDTOs[i]);
 				} else if (crud.equals("U")) {
-					userRepository.updateUser(userDDTOs[i]);
+					updateUser(userDDTOs[i]);
 				} else if (crud.equals("D")) {
-					userRepository.deleteUser(userDDTOs[i]);
+					deleteUser(userDDTOs[i]);
 				}
 			}
 		} catch (Exception e) {
@@ -125,7 +137,8 @@ public class DCUser implements IDCUser {
 		List<User> UserList = null;
 
 		try {
-			UserList = userRepository.getListUser(userDDTO);
+			String sql = "SELECT * FROM USER_INFO";
+			UserList = jdbcTemplate.query(sql, userRowMapper);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -140,9 +153,20 @@ public class DCUser implements IDCUser {
 		String outptLineCnt;
 		try {
 			// Query page data that matches the request conditions
-			pageList = userRepository.getListPage(pageDDTO);
+			String sql = "SELECT * FROM USER_INFO LIMIT ? OFFSET ?";
+			int limit = pageDDTO.getPageSize() != null ? pageDDTO.getPageSize() : 10;
+			int offset = pageDDTO.getOffset() != null ? pageDDTO.getOffset() : 0;
+			pageList = jdbcTemplate.query(sql, (rs, rowNum) -> {
+				Page page = new Page();
+				page.setUserId(rs.getString("USER_ID"));
+				page.setUserName(rs.getString("USER_NAME"));
+				page.setEmail(rs.getString("EMAIL"));
+				return page;
+			}, limit, offset);
+
 			// Get total count
-			pageCount = userRepository.getPageCount(pageDDTO);
+			String countSql = "SELECT COUNT(*) FROM USER_INFO";
+			pageCount = jdbcTemplate.queryForObject(countSql, String.class);
 			// Get output count: may need to be calculated separately
 			outptLineCnt = String.valueOf(pageList.size());
 			// Set total count and output count in the first item of the List
@@ -164,7 +188,13 @@ public class DCUser implements IDCUser {
 		List<Tree> TreeList = null;
 
 		try {
-			TreeList = userRepository.getListTree(treeDDTO);
+			String sql = "SELECT * FROM USER_INFO";
+			TreeList = jdbcTemplate.query(sql, (rs, rowNum) -> {
+				Tree tree = new Tree();
+				tree.setUserId(rs.getString("USER_ID"));
+				tree.setUserName(rs.getString("USER_NAME"));
+				return tree;
+			});
 		} catch (Exception e) {
 
 			// TODO Auto-generated catch block
@@ -174,5 +204,33 @@ public class DCUser implements IDCUser {
 
 		return NewObjectUtil.copyForList(Tree.class, TreeList);
 
+	}
+
+	// Helper methods for CRUD operations
+	private void insertUser(UserDDTO userDDTO) {
+		String sql = "INSERT INTO USER_INFO (USER_ID, USER_NAME, EMAIL, PHONE, ROLE, STATUS) VALUES (?, ?, ?, ?, ?, ?)";
+		jdbcTemplate.update(sql,
+				userDDTO.getUserId(),
+				userDDTO.getUserName(),
+				userDDTO.getEmail(),
+				userDDTO.getPhone(),
+				userDDTO.getRole(),
+				userDDTO.getStatus());
+	}
+
+	private void updateUser(UserDDTO userDDTO) {
+		String sql = "UPDATE USER_INFO SET USER_NAME = ?, EMAIL = ?, PHONE = ?, ROLE = ?, STATUS = ? WHERE USER_ID = ?";
+		jdbcTemplate.update(sql,
+				userDDTO.getUserName(),
+				userDDTO.getEmail(),
+				userDDTO.getPhone(),
+				userDDTO.getRole(),
+				userDDTO.getStatus(),
+				userDDTO.getUserId());
+	}
+
+	private void deleteUser(UserDDTO userDDTO) {
+		String sql = "DELETE FROM USER_INFO WHERE USER_ID = ?";
+		jdbcTemplate.update(sql, userDDTO.getUserId());
 	}
 }

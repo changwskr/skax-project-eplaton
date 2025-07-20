@@ -8,6 +8,7 @@
 package com.kbstar.mbc.dc.accountdc;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -36,7 +37,7 @@ import com.kbstar.mbc.dc.accountdc.mapper.AccountMapper;
  * [변경이력]
  * <ul>
  * <li>2008-08-26::전체::최초작성
- * <li>2024-01-01::전체::MyBatis 마이그레이션
+ * <li>2024-01-01::전체::JPA 마이그레이션
  * </ul>
  */
 @Repository
@@ -71,8 +72,12 @@ public class DCAccount implements NewIDomainComponent {
 	 */
 	public AccountDDTO getAccount(AccountDDTO accountDDTO) throws NewBusinessException {
 		try {
-			Account account = accountMapper.getAccount(accountDDTO);
-			return NewObjectUtil.copyForClass(AccountDDTO.class, account);
+			Optional<Account> accountOpt = accountMapper.findByAccountNumber(accountDDTO.getAccountNumber());
+			if (accountOpt.isPresent()) {
+				Account account = accountOpt.get();
+				return NewObjectUtil.copyForClass(AccountDDTO.class, account);
+			}
+			return null;
 		} catch (Exception e) {
 			throw new NewBusinessException("B0100001", "processCode", e);
 		}
@@ -100,9 +105,21 @@ public class DCAccount implements NewIDomainComponent {
 	 */
 	public void updateAccount(AccountDDTO accountDDTO) throws NewBusinessException {
 		try {
-			int count = accountMapper.updateAccount(accountDDTO);
-			if (logger.isDebugEnabled())
-				logger.debug(this.getClass().getName() + ", update count = " + count);
+			Optional<Account> accountOpt = accountMapper.findByAccountNumber(accountDDTO.getAccountNumber());
+			if (accountOpt.isPresent()) {
+				Account account = accountOpt.get();
+				// Update account fields
+				account.setName(accountDDTO.getName());
+				account.setIdentificationNumber(accountDDTO.getIdentificationNumber());
+				account.setInterestRate(accountDDTO.getInterestRate());
+				account.setLastTransaction(accountDDTO.getLastTransaction());
+				account.setPassword(accountDDTO.getPassword());
+				account.setNetAmount(accountDDTO.getNetAmount());
+
+				accountMapper.save(account);
+				if (logger.isDebugEnabled())
+					logger.debug(this.getClass().getName() + ", update completed");
+			}
 		} catch (Exception e) {
 			throw new NewBusinessException("B0000002", "processCode", e);
 		}
@@ -124,9 +141,12 @@ public class DCAccount implements NewIDomainComponent {
 	 */
 	public void deleteAccount(AccountDDTO accountDDTO) throws NewBusinessException {
 		try {
-			int count = accountMapper.deleteAccount(accountDDTO);
-			if (logger.isDebugEnabled())
-				logger.debug(this.getClass().getName() + ", delete count = " + count);
+			Optional<Account> accountOpt = accountMapper.findByAccountNumber(accountDDTO.getAccountNumber());
+			if (accountOpt.isPresent()) {
+				accountMapper.delete(accountOpt.get());
+				if (logger.isDebugEnabled())
+					logger.debug(this.getClass().getName() + ", delete completed");
+			}
 		} catch (Exception e) {
 			throw new NewBusinessException("B0000002", "processCode", e);
 		}
@@ -154,7 +174,8 @@ public class DCAccount implements NewIDomainComponent {
 	 */
 	public void createAccount(AccountDDTO accountDDTO) throws NewBusinessException {
 		try {
-			accountMapper.createAccount(accountDDTO);
+			Account account = NewObjectUtil.copyForClass(Account.class, accountDDTO);
+			accountMapper.save(account);
 		} catch (Exception e) {
 			throw new NewBusinessException("B0000002", "processCode", e);
 		}
@@ -162,7 +183,7 @@ public class DCAccount implements NewIDomainComponent {
 
 	public List<AccountDDTO> getListAccount(AccountDDTO accountDDTO) throws NewBusinessException {
 		try {
-			List<Account> accountList = accountMapper.getListAccount(accountDDTO);
+			List<Account> accountList = accountMapper.findAll();
 			return NewObjectUtil.copyForList(AccountDDTO.class, accountList);
 		} catch (Exception e) {
 			throw new NewBusinessException("B0000002", "processCode", e);

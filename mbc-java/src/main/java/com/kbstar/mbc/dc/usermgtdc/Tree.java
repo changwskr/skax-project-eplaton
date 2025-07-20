@@ -8,12 +8,30 @@ import com.kbstar.ksa.infra.po.NewAbstractDTO;
  */
 public class Tree extends NewAbstractDTO {
 
+    private String userId;
+    private String userName;
     private String treeId;
     private String treeName;
     private String parentId;
 
     public Tree() {
         // Default constructor
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getTreeId() {

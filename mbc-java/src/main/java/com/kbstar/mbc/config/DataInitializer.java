@@ -111,29 +111,62 @@ public class DataInitializer implements CommandLineRunner {
     private void logInitializationSummary() {
         logger.info("=== 초기화 요약 ===", "DataInitializer");
 
-        // 계정 타입별 통계
-        String accountTypeSql = "SELECT ACCOUNT_TYPE, COUNT(*) FROM ACCOUNT GROUP BY ACCOUNT_TYPE";
-        jdbcTemplate.query(accountTypeSql, (rs, rowNum) -> {
-            String type = rs.getString("ACCOUNT_TYPE");
-            int count = rs.getInt("COUNT(*)");
-            logger.info("계정 타입 " + type + ": " + count + "건", "DataInitializer");
-            return null;
-        });
+        // 계정별 통계 (ACCOUNT_TYPE 대신 실제 컬럼 사용)
+        String accountSql = "SELECT COUNT(*) FROM ACCOUNT";
+        int accountCount = jdbcTemplate.queryForObject(accountSql, Integer.class);
+        logger.info("총 계정 수: " + accountCount + "건", "DataInitializer");
 
         // 사용자 역할별 통계
         String userRoleSql = "SELECT ROLE, COUNT(*) FROM USER_INFO GROUP BY ROLE";
-        jdbcTemplate.query(userRoleSql, (rs, rowNum) -> {
-            String role = rs.getString("ROLE");
-            int count = rs.getInt("COUNT(*)");
-            logger.info("사용자 역할 " + role + ": " + count + "건", "DataInitializer");
-            return null;
-        });
+        try {
+            jdbcTemplate.query(userRoleSql, (rs, rowNum) -> {
+                String role = rs.getString("ROLE");
+                int count = rs.getInt("COUNT(*)");
+                logger.info("사용자 역할 " + role + ": " + count + "건", "DataInitializer");
+                return null;
+            });
+        } catch (Exception e) {
+            logger.warn("사용자 역할별 통계 조회 실패: " + e.getMessage(), "DataInitializer");
+        }
 
-        // 총 잔액 통계
-        String balanceSql = "SELECT SUM(BALANCE) FROM ACCOUNT WHERE STATUS = 'ACTIVE'";
-        Double totalBalance = jdbcTemplate.queryForObject(balanceSql, Double.class);
-        String balanceStr = totalBalance != null ? String.valueOf(totalBalance.longValue()) : "0";
-        logger.info("총 계좌 잔액: " + balanceStr + "원", "DataInitializer");
+        // 사용자 상태별 통계
+        String userStatusSql = "SELECT STATUS, COUNT(*) FROM USER_INFO GROUP BY STATUS";
+        try {
+            jdbcTemplate.query(userStatusSql, (rs, rowNum) -> {
+                String status = rs.getString("STATUS");
+                int count = rs.getInt("COUNT(*)");
+                logger.info("사용자 상태 " + status + ": " + count + "건", "DataInitializer");
+                return null;
+            });
+        } catch (Exception e) {
+            logger.warn("사용자 상태별 통계 조회 실패: " + e.getMessage(), "DataInitializer");
+        }
+
+        // 거래 내역 통계
+        String transactionSql = "SELECT TRANSACTION_TYPE, COUNT(*) FROM TRANSACTION GROUP BY TRANSACTION_TYPE";
+        try {
+            jdbcTemplate.query(transactionSql, (rs, rowNum) -> {
+                String type = rs.getString("TRANSACTION_TYPE");
+                int count = rs.getInt("COUNT(*)");
+                logger.info("거래 타입 " + type + ": " + count + "건", "DataInitializer");
+                return null;
+            });
+        } catch (Exception e) {
+            logger.warn("거래 내역 통계 조회 실패: " + e.getMessage(), "DataInitializer");
+        }
+
+        // 시스템 코드 통계
+        String codeTypeSql = "SELECT CODE_TYPE, COUNT(*) FROM SYSTEM_CODE GROUP BY CODE_TYPE";
+        try {
+            jdbcTemplate.query(codeTypeSql, (rs, rowNum) -> {
+                String type = rs.getString("CODE_TYPE");
+                int count = rs.getInt("COUNT(*)");
+                logger.info("시스템 코드 타입 " + type + ": " + count + "건", "DataInitializer");
+                return null;
+            });
+        } catch (Exception e) {
+            logger.warn("시스템 코드 통계 조회 실패: " + e.getMessage(), "DataInitializer");
+        }
 
         logger.info("=== 초기화 요약 완료 ===", "DataInitializer");
     }

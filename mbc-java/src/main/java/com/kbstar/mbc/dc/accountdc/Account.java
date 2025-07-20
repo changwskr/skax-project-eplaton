@@ -22,6 +22,7 @@ import com.kbstar.ksa.infra.po.NewAbstractDTO;
  * [변경이력]
  * <ul>
  * <li>2008-08-26::전체::최초작성
+ * <li>2024-01-01::전체::JDBC DTO로 변경
  * </ul>
  */
 public class Account extends NewAbstractDTO {

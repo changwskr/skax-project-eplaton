@@ -244,6 +244,15 @@ public class UserDDTO extends NewAbstractDTO {
 		this.userID = userID;
 	}
 
+	// Alias method for backward compatibility
+	public String getUserId() {
+		return userID;
+	}
+
+	public void setUserId(String userId) {
+		this.userID = userId;
+	}
+
 	public String getUserDstcd() {
 		return userDstcd;
 	}
@@ -266,6 +275,39 @@ public class UserDDTO extends NewAbstractDTO {
 
 	public void setUserPwd(String userPwd) {
 		this.userPwd = userPwd;
+	}
+
+	// Alias methods for backward compatibility
+	public String getEmail() {
+		return emad;
+	}
+
+	public void setEmail(String email) {
+		this.emad = email;
+	}
+
+	public String getPhone() {
+		return cphnNo;
+	}
+
+	public void setPhone(String phone) {
+		this.cphnNo = phone;
+	}
+
+	public String getRole() {
+		return jobclDstcd;
+	}
+
+	public void setRole(String role) {
+		this.jobclDstcd = role;
+	}
+
+	public String getStatus() {
+		return useYn;
+	}
+
+	public void setStatus(String status) {
+		this.useYn = status;
 	}
 
 	public String getUseYn() {

@@ -2,6 +2,8 @@ package com.kbstar.mbc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import com.kbstar.ksa.logger.NewIKesaLogger;
@@ -17,7 +19,10 @@ import com.kbstar.ksa.logger.NewKesaLoggerFactory;
  * @version 1.0.0
  * @since 2024
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = {
+        HibernateJpaAutoConfiguration.class,
+        JpaRepositoriesAutoConfiguration.class
+})
 @ComponentScan(basePackages = {
         "com.kbstar.mbc",
         "com.kbstar.mbc.as",

@@ -17,7 +17,10 @@ public class User extends NewAbstractDTO implements IDCUser {
 
 	private String userId;
 	private String userName;
-	private String userEmail;
+	private String email;
+	private String phone;
+	private String role;
+	private String status;
 
 	public User() {
 		// Default constructor
@@ -39,12 +42,45 @@ public class User extends NewAbstractDTO implements IDCUser {
 		this.userName = userName;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	// Legacy method for backward compatibility
 	public String getUserEmail() {
-		return userEmail;
+		return email;
 	}
 
 	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+		this.email = userEmail;
 	}
 
 	public List<HashMap> getUserList(ICommonDTO commonDto) throws NewBusinessException {
