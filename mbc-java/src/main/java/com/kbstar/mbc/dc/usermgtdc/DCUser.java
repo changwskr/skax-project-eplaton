@@ -82,11 +82,7 @@ public class DCUser implements IDCUser {
 							userDDTOs[i]);
 				}
 			}
-		} catch (NewRecordNotFoundException e) {
-			throw new NewBusinessException("B0000001", "processCode", e);
-		} catch (NewPersistenceException e) {
-			throw new NewBusinessException("B0000002", "processCode", e);
-		} catch (NewFrameworkException e) {
+		} catch (Exception e) {
 			throw new NewBusinessException("B0000002", "processCode", e);
 		}
 	}
@@ -99,9 +95,7 @@ public class DCUser implements IDCUser {
 			UserList = (List<User>) NewSqlMapper.getSqlMapClient().queryForList(
 					"user.getListUser", userDDTO);
 
-		} catch (NewPersistenceException e) {
-			e.printStackTrace();
-		} catch (NewFrameworkException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -128,10 +122,7 @@ public class DCUser implements IDCUser {
 				((Page) pageList.get(0)).setOutptLineCnt(Integer.parseInt(outptLineCnt));
 			}
 
-		} catch (NewPersistenceException e) {
-			// TODO Add proper catch handling
-			e.printStackTrace();
-		} catch (NewFrameworkException e) {
+		} catch (Exception e) {
 			// TODO Add proper catch handling
 			e.printStackTrace();
 		}
@@ -146,12 +137,7 @@ public class DCUser implements IDCUser {
 		try {
 			TreeList = (List<Tree>) NewSqlMapper.getSqlMapClient().queryForList(
 					"user.getListTree", treeDDTO);
-		} catch (NewPersistenceException e) {
-
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		} catch (NewFrameworkException e) {
+		} catch (Exception e) {
 
 			// TODO Auto-generated catch block
 			e.printStackTrace();
