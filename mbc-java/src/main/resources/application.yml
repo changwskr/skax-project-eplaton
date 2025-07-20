@@ -35,6 +35,12 @@ spring:
     servlet:
       content-type: text/html;charset=UTF-8
 
+  # Static Resources Configuration
+  web:
+    resources:
+      static-locations: classpath:/static/
+      add-mappings: false
+
   # HTTP Encoding Configuration
   http:
     encoding:
@@ -53,7 +59,6 @@ spring:
 server:
   port: 8080
   servlet:
-    context-path: /mbc
     encoding:
       charset: UTF-8
       enabled: true

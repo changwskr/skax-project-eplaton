@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import com.kbstar.ksa.logger.NewIKesaLogger;
 import com.kbstar.ksa.logger.NewKesaLoggerFactory;
 
@@ -21,16 +22,24 @@ import com.kbstar.ksa.logger.NewKesaLoggerFactory;
  */
 @SpringBootApplication(exclude = {
         HibernateJpaAutoConfiguration.class,
-        JpaRepositoriesAutoConfiguration.class
+        JpaRepositoriesAutoConfiguration.class,
+        org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration.class,
+        org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration.class
 })
 @ComponentScan(basePackages = {
-        "com.kbstar.mbc",
         "com.kbstar.mbc.as",
         "com.kbstar.mbc.dc",
-        "com.kbstar.mbc.ic",
         "com.kbstar.mbc.pc",
+        "com.kbstar.mbc.ic",
+        // "com.kbstar.mbc.fc", // mbc01-java의 UserServiceImpl 오류 방지를 위해 제거
+        "com.kbstar.mbc.web",
         "com.kbstar.mbc.config",
         "com.kbstar.mbc.controller"
+}, excludeFilters = {
+        @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*mbc01.*"),
+        @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*UserServiceImpl.*"),
+        @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*fc\\.foundation\\.service\\.impl.*"),
+        @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*DataAccessTest.*")
 })
 public class MbcApplication {
 

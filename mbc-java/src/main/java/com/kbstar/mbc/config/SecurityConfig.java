@@ -22,23 +22,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/").permitAll() // Welcome 페이지 허용
-                .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/actuator/**").permitAll()
-                .antMatchers("/api/public/**").permitAll()
-                .antMatchers("/css/**", "/js/**", "/images/**", "/favicon.ico").permitAll() // 정적 리소스 허용
-                .anyRequest().authenticated()
+                .antMatchers("/**").permitAll() // 모든 요청 허용
                 .and()
                 .csrf().disable()
                 .headers().frameOptions().disable() // For H2 console
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .logoutSuccessUrl("/")
-                .permitAll();
+                .formLogin().disable() // 로그인 페이지 비활성화
+                .httpBasic().disable(); // HTTP Basic 인증 비활성화
     }
 
     @Bean

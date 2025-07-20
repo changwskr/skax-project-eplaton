@@ -33,10 +33,11 @@
 
     <dependencies>
         <!-- Internal dependencies -->
-        <dependency>
+        <!-- mbc01-java 의존성 제거 - UserServiceImpl 오류 방지 -->
+        <!-- <dependency>
             <groupId>com.kbstar.mbc</groupId>
             <artifactId>mbc01-java</artifactId>
-        </dependency>
+        </dependency> -->
         <dependency>
             <groupId>com.kbstar.mbc</groupId>
             <artifactId>mbc-config</artifactId>

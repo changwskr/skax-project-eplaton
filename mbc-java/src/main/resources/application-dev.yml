@@ -4,8 +4,9 @@
 
 server:
   port: 8080
-  servlet:
-    context-path: /mbc
+  # context-path 제거 - URL 중복 방지
+  # servlet:
+  #   context-path: /mbc
 
 spring:
   application:

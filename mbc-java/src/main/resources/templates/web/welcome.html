@@ -2,168 +2,192 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MBC 시스템 - Welcome</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            padding: 2rem 0;
         }
-
+        
         .header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 3rem;
+        }
+        
+        .header h1 {
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+        }
+        
+        .current-time {
+            text-align: center;
+            margin-bottom: 2rem;
             color: white;
         }
-
-        .header h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        
+        .current-time h3 {
+            margin-bottom: 0.5rem;
         }
-
-        .header p {
-            font-size: 1.2rem;
+        
+        .current-time p {
+            font-size: 1.1rem;
             opacity: 0.9;
         }
-
-        .current-time {
-            background: rgba(255,255,255,0.1);
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            margin-bottom: 30px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
+        
         .dashboard {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
-
+        
         .card {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
+            border: none;
             border-radius: 15px;
-            padding: 25px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            padding: 2rem;
         }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-        }
-
+        
         .card h3 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.3rem;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 10px;
-        }
-
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid #667eea;
-        }
-
-        .stat-number {
-            font-size: 2rem;
+            color: #333;
+            margin-bottom: 1.5rem;
             font-weight: bold;
-            color: #667eea;
-            display: block;
         }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: #666;
-            margin-top: 5px;
-        }
-
-        .system-info {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-        }
-
-        .system-info h3 {
-            color: white;
-            border-bottom-color: rgba(255,255,255,0.3);
-        }
-
+        
         .info-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
         }
-
+        
         .info-item:last-child {
             border-bottom: none;
         }
-
+        
+        .info-item span:first-child {
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .info-item span:last-child {
+            color: #333;
+            font-weight: bold;
+        }
+        
         .status-badge {
-            padding: 5px 15px;
+            padding: 0.25rem 0.75rem;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: bold;
         }
-
+        
         .status-normal {
-            background: #28a745;
-            color: white;
+            background: #d4edda;
+            color: #155724;
         }
-
+        
         .status-error {
-            background: #dc3545;
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .stat-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .quick-actions {
+            margin-bottom: 30px;
+        }
+        
+        .quick-actions h3 {
             color: white;
+            text-align: center;
+            margin-bottom: 1.5rem;
         }
-
+        
+        .quick-actions .btn {
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 0 0.5rem;
+        }
+        
+        .quick-actions .btn:hover {
+            transform: translateY(-2px);
+        }
+        
         .recent-activities {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
-            padding: 25px;
+            padding: 2rem;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
         }
-
+        
+        .recent-activities h3 {
+            color: #333;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+        
         .activity-item {
             display: flex;
             align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #f0f0f0;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
         }
-
+        
         .activity-item:last-child {
             border-bottom: none;
         }
-
+        
         .activity-icon {
             width: 40px;
             height: 40px;
@@ -176,29 +200,29 @@
             margin-right: 15px;
             font-weight: bold;
         }
-
+        
         .activity-content {
             flex: 1;
         }
-
+        
         .activity-title {
             font-weight: bold;
             color: #333;
         }
-
+        
         .activity-date {
             font-size: 0.8rem;
             color: #666;
             margin-top: 5px;
         }
-
+        
         .footer {
             text-align: center;
             margin-top: 40px;
             color: white;
             opacity: 0.8;
         }
-
+        
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 2rem;
@@ -226,6 +250,29 @@
         <div class="current-time">
             <h3>🕐 현재 시간</h3>
             <p th:text="${currentTime}">2024년 01월 01일 12:00:00</p>
+        </div>
+
+        <!-- 빠른 액션 -->
+        <div class="quick-actions">
+            <h3>⚡ 빠른 액션</h3>
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                <a href="/mbc/account/create" class="btn btn-primary" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; color: white;">
+                    <i class="fas fa-plus-circle me-2"></i>
+                    계정 생성
+                </a>
+                <a href="/mbc/account/list" class="btn btn-outline-light" style="border: 2px solid white; color: white;">
+                    <i class="fas fa-list me-2"></i>
+                    계정 목록
+                </a>
+                <a href="/mbc/h2-console" class="btn btn-outline-light" style="border: 2px solid white; color: white;">
+                    <i class="fas fa-database me-2"></i>
+                    데이터베이스
+                </a>
+                <a href="/mbc/home" class="btn btn-outline-light" style="border: 2px solid white; color: white;">
+                    <i class="fas fa-home me-2"></i>
+                    SKAX-EATOOL 홈
+                </a>
+            </div>
         </div>
 
         <!-- 대시보드 -->

@@ -17,6 +17,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -37,8 +39,8 @@ import java.util.Map;
  * 
  * @version 1.0
  */
-@RestController
-@RequestMapping("/api/account/create")
+@Controller
+@RequestMapping({ "/api/account/create", "/mbc/account/create" })
 @CrossOrigin(origins = "*")
 @Tag(name = "계정 관리", description = "계정 생성 관련 API")
 public class ACMBC71001 implements NewIApplicationService {
@@ -46,13 +48,31 @@ public class ACMBC71001 implements NewIApplicationService {
     protected NewIKesaLogger logger = NewKesaLogHelper.getBiz();
 
     /**
-     * 계정 생성 처리 (POST)
+     * 계정 생성 웹 페이지 표시
+     * 
+     * @param model 모델
+     * @return 뷰 이름
+     */
+    @GetMapping("/page")
+    public String showAccountCreatePage(Model model) {
+        logger.info("ACMBC71001 - 계정 생성 웹 페이지 요청", "ACMBC71001");
+
+        model.addAttribute("pageTitle", "계정 생성");
+        model.addAttribute("apiEndpoint", "/api/account/create");
+        model.addAttribute("controllerName", "ACMBC71001");
+
+        return "account/create";
+    }
+
+    /**
+     * 계정 생성 처리 (POST) - REST API
      * 
      * @param accountPDTO 계정 정보
      * @return 응답 데이터
      * @throws NewBusinessException 비즈니스 예외
      */
     @PostMapping
+    @ResponseBody
     @Operation(summary = "계정 생성", description = "새로운 계정을 생성합니다.", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "계정 정보", required = true, content = @Content(mediaType = "application/json", schema = @Schema(implementation = AccountPDTO.class), examples = @ExampleObject(name = "계정 생성 예시", value = "{\"accountId\": \"ACC001\", \"accountName\": \"테스트 계정\"}"))))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "계정 생성 성공", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Map.class), examples = @ExampleObject(name = "성공 응답", value = "{\"success\": true, \"message\": \"계정이 성공적으로 생성되었습니다.\", \"data\": {}}"))),
