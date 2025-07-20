@@ -44,6 +44,8 @@ echo.
 echo Application started!
 echo Access URLs:
 echo - Application: http://localhost:8080/mbc
+echo - Swagger UI: http://localhost:8080/mbc/swagger-ui.html
+echo - OpenAPI JSON: http://localhost:8080/mbc/api-docs
 echo - H2 Console: http://localhost:8080/mbc/h2-console
 echo - Actuator: http://localhost:8080/mbc/actuator
 echo.

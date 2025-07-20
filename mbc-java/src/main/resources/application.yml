@@ -78,3 +78,16 @@ app:
   data-access:
     type: mybatis # mybatis 또는 jpa
     description: "데이터 접근 방식 설정 (mybatis/jpa)"
+
+# Swagger/OpenAPI Configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    doc-expansion: none
+    disable-swagger-default-url: true
+  packages-to-scan: com.kbstar.mbc.ac
+  paths-to-match: /api/**
