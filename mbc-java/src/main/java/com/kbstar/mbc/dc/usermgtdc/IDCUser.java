@@ -28,6 +28,8 @@ public interface IDCUser {
     List<HashMap> getUserList(ICommonDTO commonDto) throws NewBusinessException;
 
     // Add missing methods
+    User selectUser(String userId) throws Exception;
+
     void crudUser(UserDDTO[] userDDTOs) throws NewBusinessException;
 
     List<User> getListUser(UserDDTO userDDTO) throws NewBusinessException;

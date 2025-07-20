@@ -82,6 +82,19 @@ public class DCUser implements IDCUser {
 	}
 
 	@Override
+	public User selectUser(String userId) throws Exception {
+		try {
+			return userRepository.getUserById(userId);
+		} catch (NewBusinessException e) {
+			logger.error("Error selecting user with ID: " + userId, String.valueOf(e));
+			throw e;
+		} catch (Exception e) {
+			logger.error("Unexpected error selecting user with ID: " + userId, String.valueOf(e));
+			throw new NewBusinessException("B0000001", "selectUser", e);
+		}
+	}
+
+	@Override
 	public void crudUser(UserDDTO[] userDDTOs) throws NewBusinessException {
 		logger.debug("crudUser method started");
 

@@ -5,8 +5,8 @@ package com.kbstar.mbc.pc.user;
 
 import java.util.List;
 
-import com.kbstar.mbc.dc.user.IDCUser;
-import com.kbstar.mbc.dc.user.User;
+import com.kbstar.mbc.dc.usermgtdc.IDCUser;
+import com.kbstar.mbc.dc.usermgtdc.User;
 import com.kbstar.ksa.exception.NewBusinessException;
 import com.kbstar.mbc.fc.foundation.bzcrudbus.transfer.ICommonDTO;
 

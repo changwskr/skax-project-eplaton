@@ -1,8 +1,8 @@
 package com.kbstar.mbc.pc.userpc;
 
-import com.kbstar.mbc.dc.user.IDCUser;
-import com.kbstar.mbc.dc.user.User;
-import com.kbstar.mbc.dc.user.DCUser;
+import com.kbstar.mbc.dc.usermgtdc.IDCUser;
+import com.kbstar.mbc.dc.usermgtdc.User;
+import com.kbstar.mbc.dc.usermgtdc.DCUser;
 
 /**
  * PCUser class

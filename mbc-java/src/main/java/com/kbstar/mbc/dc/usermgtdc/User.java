@@ -53,6 +53,12 @@ public class User extends NewAbstractDTO implements IDCUser {
 	}
 
 	@Override
+	public User selectUser(String userId) throws Exception {
+		// Stub implementation
+		return null;
+	}
+
+	@Override
 	public void crudUser(UserDDTO[] userDDTOs) throws NewBusinessException {
 		// Stub implementation
 	}
