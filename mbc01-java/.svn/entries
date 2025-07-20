@@ -1,64 +1,0 @@
-8
-
-dir
-177
-svn://172.28.186.105/ifrs_repository/ifrs.project/mbc01-java
-svn://172.28.186.105/ifrs_repository
-
-
-
-2008-11-21T17:27:11.066738Z
-177
-kspark
-
-
-svn:special svn:externals svn:needs-lock
-
-
-
-
-
-
-
-
-
-
-
-4748a35f-f0fb-4a19-b827-a4bf6ff651a3
-
-.classpath
-file
-309
-
-
-
-2009-01-13T06:42:43.074183Z
-8ac085be763309be2f62968d02f3ae17
-2009-01-13T19:15:37.638749Z
-309
-kspark
-
-.project
-file
-178
-
-
-
-2008-11-20T00:35:01.483650Z
-7efdd563d87e1fb3665d8170feeb4abd
-2008-11-21T17:27:27.551900Z
-178
-kspark
-
-lib
-dir
-
-src
-dir
-
-bin
-dir
-
-.settings
-dir
-

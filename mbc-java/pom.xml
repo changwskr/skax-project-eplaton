@@ -21,11 +21,344 @@
         <!-- Internal dependencies -->
         <dependency>
             <groupId>com.kbstar.mbc</groupId>
+            <artifactId>ksa-lib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kbstar.mbc</groupId>
             <artifactId>mbc01-java</artifactId>
         </dependency>
         <dependency>
             <groupId>com.kbstar.mbc</groupId>
             <artifactId>mbc-config</artifactId>
+        </dependency>
+
+        <!-- KSA Framework Libraries from ksa-lib/runtime -->
+        <dependency>
+            <groupId>com.kbstar.ksa</groupId>
+            <artifactId>kesa-app-container</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/kesa-app-container.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.kbstar.ksa</groupId>
+            <artifactId>kesa-model</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/kesa-model.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.kbstar.ksa</groupId>
+            <artifactId>KESA_CRYPTO</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/KESA_CRYPTO.jar</systemPath>
+        </dependency>
+        
+        <!-- iBatis -->
+        <dependency>
+            <groupId>com.ibatis</groupId>
+            <artifactId>ibatis</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/ibatis.jar</systemPath>
+        </dependency>
+        
+        <!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate3</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/hibernate3.jar</systemPath>
+        </dependency>
+        
+        <!-- Apache Commons -->
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/commons-httpclient.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/commons-lang.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/commons-logging.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/commons-dbcp.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-pool</groupId>
+            <artifactId>commons-pool</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/commons-pool.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/commons-beanutils.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/commons-codec.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/commons-collections.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/commons-net.jar</systemPath>
+        </dependency>
+        
+        <!-- XML Processing -->
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xerces</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/xerces.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/xercesImpl.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/xml-apis.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/dom4j.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>jaxen</groupId>
+            <artifactId>jaxen</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/jaxen.jar</systemPath>
+        </dependency>
+        
+        <!-- JAXB -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/jaxb-api.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/jaxb-impl.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-libs</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/jaxb-libs.jar</systemPath>
+        </dependency>
+        
+        <!-- Other Libraries -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/log4j.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/ehcache.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>antlr</groupId>
+            <artifactId>antlr</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/antlr.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/asm.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/cglib.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>dependency</groupId>
+            <artifactId>dependency</artifactId>
+            <version>0.2</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/dependency-0.2.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>relaxngDatatype</groupId>
+            <artifactId>relaxngDatatype</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/relaxngDatatype.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>trailor</groupId>
+            <artifactId>trailor</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/trailor.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>WSE_BASE64</groupId>
+            <artifactId>WSE_BASE64</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/WSE_BASE64.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>jta</groupId>
+            <artifactId>jta</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/jta.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>xsdlib</groupId>
+            <artifactId>xsdlib</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../ksa-lib/runtime/xsdlib.jar</systemPath>
+        </dependency>
+
+        <!-- Local JAR files from mbc-java/lib -->
+        <dependency>
+            <groupId>com.kbstar.ifrs</groupId>
+            <artifactId>ifrs_foundation</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/ifrs_foundation.jar</systemPath>
+        </dependency>
+
+        <!-- Local JAR files from mbc01-lib/runtime -->
+        <dependency>
+            <groupId>net.sourceforge.rtf</groupId>
+            <artifactId>rtftemplate</artifactId>
+            <version>1.0.1-b14</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../mbc01-lib/runtime/rtftemplate-1.0.1-b14.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-dep</artifactId>
+            <version>1.5</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../mbc01-lib/runtime/velocity-dep-1.5.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../mbc01-lib/runtime/jdom.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-digester</groupId>
+            <artifactId>commons-digester</artifactId>
+            <version>1.7</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../mbc01-lib/runtime/commons-digester-1.7.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../mbc01-lib/runtime/commons-io-1.1.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.ibatis</groupId>
+            <artifactId>ibatis-sqlmap</artifactId>
+            <version>2.3.4.726</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../mbc01-lib/runtime/ibatis-sqlmap-2.3.4.726.jar</systemPath>
         </dependency>
 
         <!-- Spring Boot Starters -->
@@ -116,9 +449,35 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                 </configuration>
+            </plugin>
+            <!-- bin 디렉터리로 클래스 파일 복사 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-classes-to-bin</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <copy todir="${project.basedir}/bin" failonerror="false">
+                                    <fileset dir="${project.build.directory}/classes" includes="**/*.class" />
+                                </copy>
+                                <copy todir="${project.basedir}/bin" failonerror="false">
+                                    <fileset dir="${project.build.directory}/test-classes" includes="**/*.class" />
+                                </copy>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

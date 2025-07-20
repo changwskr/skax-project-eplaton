@@ -101,6 +101,31 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+            <!-- bin 디렉터리로 클래스 파일 복사 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-classes-to-bin</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <copy todir="${project.basedir}/bin" failonerror="false">
+                                    <fileset dir="${project.build.directory}/classes" includes="**/*.class" />
+                                </copy>
+                                <copy todir="${project.basedir}/bin" failonerror="false">
+                                    <fileset dir="${project.build.directory}/test-classes" includes="**/*.class" />
+                                </copy>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project> 
