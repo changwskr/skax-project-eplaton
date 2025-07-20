@@ -9,7 +9,7 @@ spring:
 
   # Profile Configuration
   profiles:
-    active: mybatis # 기본값: mybatis, jpa로 변경 가능
+    active: dev # 기본값: dev, prod로 변경 가능
 
   # Database Configuration
   datasource:

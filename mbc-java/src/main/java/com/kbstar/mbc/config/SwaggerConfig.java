@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
+import java.util.Arrays;
 
 /**
  * Swagger/OpenAPI 설정
@@ -28,31 +29,31 @@ import java.util.List;
 @Configuration
 public class SwaggerConfig {
 
-    /**
-     * OpenAPI 설정
-     * 
-     * @return OpenAPI 설정 객체
-     */
-    @Bean
-    public OpenAPI customOpenAPI() {
-        return new OpenAPI()
-                .info(new Info()
-                        .title("MBC Project API Documentation")
-                        .description("SKAX Project Eplaton - MBC 시스템 API 문서")
-                        .version("1.0.0")
-                        .contact(new Contact()
-                                .name("SKAX Project Team")
-                                .email("skax@kbstar.com")
-                                .url("https://www.kbstar.com"))
-                        .license(new License()
-                                .name("KB Star License")
-                                .url("https://www.kbstar.com/license")))
-                .servers(List.of(
-                        new Server()
-                                .url("http://localhost:8080")
-                                .description("개발 서버"),
-                        new Server()
-                                .url("https://api.mbc.kbstar.com")
-                                .description("운영 서버")));
-    }
+        /**
+         * OpenAPI 설정
+         * 
+         * @return OpenAPI 설정 객체
+         */
+        @Bean
+        public OpenAPI customOpenAPI() {
+                return new OpenAPI()
+                                .info(new Info()
+                                                .title("MBC Project API Documentation")
+                                                .description("SKAX Project Eplaton - MBC 시스템 API 문서")
+                                                .version("1.0.0")
+                                                .contact(new Contact()
+                                                                .name("SKAX Project Team")
+                                                                .email("skax@kbstar.com")
+                                                                .url("https://www.kbstar.com"))
+                                                .license(new License()
+                                                                .name("KB Star License")
+                                                                .url("https://www.kbstar.com/license")))
+                                .servers(Arrays.asList(
+                                                new Server()
+                                                                .url("http://localhost:8080")
+                                                                .description("개발 서버"),
+                                                new Server()
+                                                                .url("https://api.mbc.kbstar.com")
+                                                                .description("운영 서버")));
+        }
 }
