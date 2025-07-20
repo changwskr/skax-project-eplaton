@@ -1,42 +1,32 @@
 package com.kbstar.ksa.logger;
 
 /**
- * New KesaLogHelper class
- * 
- * This is a stub implementation to replace the missing KSA framework
- * KesaLogHelper
+ * Stub class for KesaLogHelper
  */
 public class NewKesaLogHelper {
 
-    public static NewIKesaLogger getBiz() {
-        return new NewIKesaLogger() {
-            @Override
-            public void info(String seqNo, String message) {
-                // Stub implementation
-            }
-
-            @Override
-            public void debug(String seqNo, String message) {
-                // Stub implementation
-            }
-
-            @Override
-            public void error(String seqNo, String message) {
-                // Stub implementation
-            }
-
-            @Override
-            public void warn(String seqNo, String message) {
-                // Stub implementation
-            }
-        };
+    public NewKesaLogHelper() {
+        // Stub constructor
     }
 
-    public static NewIKesaLogger getServer() {
-        return getBiz();
+    // Add stub methods as needed
+    public static void debug(NewIKesaLogger logger, String message) {
+        // Stub method
     }
 
-    public static NewIKesaLogger getWaf() {
-        return getBiz();
+    public static void info(NewIKesaLogger logger, String message) {
+        // Stub method
+    }
+
+    public static void warn(NewIKesaLogger logger, String message) {
+        // Stub method
+    }
+
+    public static void error(NewIKesaLogger logger, String message) {
+        // Stub method
+    }
+
+    public static void error(NewIKesaLogger logger, String message, Throwable throwable) {
+        // Stub method
     }
 }

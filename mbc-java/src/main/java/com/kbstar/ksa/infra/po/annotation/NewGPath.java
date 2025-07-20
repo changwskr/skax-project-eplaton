@@ -6,13 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * New GPath annotation
- * 
- * This is a stub implementation to replace the missing KSA framework GPath
- * annotation
+ * Stub annotation for GPath
  */
-@Target(ElementType.TYPE)
+@Target({ ElementType.FIELD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface NewGPath {
-    // Annotation elements can be added here as needed
+    String name() default "";
 }

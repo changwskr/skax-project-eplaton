@@ -9,7 +9,7 @@ package com.kbstar.mbc.dc.accountdc;
 
 import java.util.Date;
 
-import com.kbstar.ksa.infra.po.AbstractDTO;
+import com.kbstar.ksa.infra.po.NewAbstractDTO;
 
 /**
  * <br>
@@ -24,7 +24,7 @@ import com.kbstar.ksa.infra.po.AbstractDTO;
  * <li>2008-08-26::전체::최초작성
  * </ul>
  */
-public class Account extends AbstractDTO {
+public class Account extends NewAbstractDTO {
 
 	private static final long serialVersionUID = 1L;
 

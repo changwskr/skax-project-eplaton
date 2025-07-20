@@ -1,15 +1,24 @@
 package com.kbstar.ksa.infra.po;
 
 /**
- * New KBData class
- * 
- * This is a stub implementation to replace the missing KSA framework KBData
+ * Stub class for KBData
  */
 public class NewKBData {
 
     public NewKBData() {
-        // Default constructor
+        // Stub constructor
     }
 
-    // KBData methods can be added here as needed
+    // Add stub methods as needed
+    public String toString() {
+        return super.toString();
+    }
+
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

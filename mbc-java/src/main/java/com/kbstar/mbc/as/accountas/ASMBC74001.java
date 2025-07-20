@@ -7,14 +7,18 @@
 
 package com.kbstar.mbc.as.accountas;
 
-import com.kbstar.ksa.exception.BusinessException;
-import com.kbstar.ksa.infra.po.GenericDto;
-import com.kbstar.ksa.infra.po.KBData;
-import com.kbstar.ksa.logger.IKesaLogger;
-import com.kbstar.ksa.logger.KesaLogHelper;
-import com.kbstar.ksa.oltp.biz.IApplicationService;
+import com.kbstar.mbc.dc.accountdc.IDCAccount;
+import com.kbstar.mbc.dc.accountdc.Account;
+import com.kbstar.mbc.dc.accountdc.dto.AccountDDTO;
+import com.kbstar.mbc.pc.accountpc.IPCAccount;
 import com.kbstar.mbc.pc.accountpc.PCAccount;
 import com.kbstar.mbc.pc.dto.AccountPDTO;
+import com.kbstar.ksa.exception.NewBusinessException;
+import com.kbstar.ksa.infra.po.NewGenericDto;
+import com.kbstar.ksa.infra.po.NewKBData;
+import com.kbstar.ksa.logger.NewIKesaLogger;
+import com.kbstar.ksa.logger.NewKesaLogHelper;
+import com.kbstar.ksa.oltp.biz.NewIApplicationService;
 
 /**
  * <br>
@@ -29,9 +33,9 @@ import com.kbstar.mbc.pc.dto.AccountPDTO;
  * <li>2008-08-26::전체::최초작성
  * </ul>
  */
-public class ASMBC74001 implements IApplicationService {
+public class ASMBC74001 implements NewIApplicationService {
 
-	protected IKesaLogger logger = KesaLogHelper.getBiz();
+	protected NewIKesaLogger logger = NewKesaLogHelper.getBiz();
 
 	/**
 	 * <br>
@@ -47,10 +51,10 @@ public class ASMBC74001 implements IApplicationService {
 	 *               </ul>
 	 * @return KBData
 	 */
-	public KBData execute(KBData reqData) throws BusinessException {
+	public NewKBData execute(NewKBData reqData) throws NewBusinessException {
 
 		// 1.AccountPDTO 생성
-		AccountPDTO accountPDTO = reqData.getInputGenericDto().using(GenericDto.INDATA).get(AccountPDTO.class);
+		AccountPDTO accountPDTO = reqData.getInputGenericDto().using(NewGenericDto.INDATA).get(AccountPDTO.class);
 
 		// 2.PC호출
 		new PCAccount().deleteAccount(accountPDTO);

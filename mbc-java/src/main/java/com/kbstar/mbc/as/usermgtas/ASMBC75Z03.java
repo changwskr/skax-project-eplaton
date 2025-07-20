@@ -3,36 +3,35 @@ package com.kbstar.mbc.as.usermgtas;
 import java.util.List;
 import java.util.Map;
 
-import com.kbstar.ksa.exception.BusinessException;
-import com.kbstar.ksa.infra.po.ApplicationContext;
-import com.kbstar.ksa.infra.po.GenericDto;
-import com.kbstar.ksa.infra.po.KBData;
-import com.kbstar.ksa.logger.IKesaLogger;
-import com.kbstar.ksa.logger.KesaLogHelper;
-import com.kbstar.ksa.oltp.biz.IApplicationService;
-import com.kbstar.mbc.dc.usermgtdc.DCUser;
+import com.kbstar.ksa.exception.NewBusinessException;
+import com.kbstar.ksa.infra.po.NewApplicationContext;
+import com.kbstar.ksa.infra.po.NewGenericDto;
+import com.kbstar.ksa.infra.po.NewKBData;
+import com.kbstar.ksa.logger.NewIKesaLogger;
+import com.kbstar.ksa.logger.NewKesaLogHelper;
+import com.kbstar.ksa.oltp.biz.NewIApplicationService;
 import com.kbstar.mbc.dc.usermgtdc.IDCUser;
 import com.kbstar.mbc.dc.usermgtdc.Page;
 import com.kbstar.mbc.dc.usermgtdc.dto.PageDDTO;
 import com.kbstar.mbc.pc.dto.UserPilotPDTO;
 
-public class ASMBC75Z03 implements IApplicationService {
+public class ASMBC75Z03 implements NewIApplicationService {
 
-	protected IKesaLogger logger = KesaLogHelper.getBiz();
+	protected NewIKesaLogger logger = NewKesaLogHelper.getBiz();
 
-	public KBData execute(KBData reqData) throws BusinessException {
+	public NewKBData execute(NewKBData reqData) throws NewBusinessException {
 
 		IDCUser idcuser = null;
 		PageDDTO pageDdto = new PageDDTO();
 		List<Page> resPage = null;
 
-		GenericDto outDto = reqData.getOutputGenericDto().using(
-				GenericDto.OUTDATA);
-		GenericDto inDto = reqData.getInputGenericDto()
-				.using(GenericDto.INDATA);
+		NewGenericDto outDto = reqData.getOutputGenericDto().using(
+				NewGenericDto.OUTDATA);
+		NewGenericDto inDto = reqData.getInputGenericDto()
+				.using(NewGenericDto.INDATA);
 
-		String TransactionId = ApplicationContext
-				.get(ApplicationContext.Key.StndTelgmRecvTranCd);
+		String TransactionId = NewApplicationContext
+				.get(NewApplicationContext.Key.StndTelgmRecvTranCd);
 		String rsux = TransactionId.substring(8, 10);
 
 		// Transaction code R/S/U/X inquiry
@@ -46,7 +45,7 @@ public class ASMBC75Z03 implements IApplicationService {
 
 			logger.debug("TotalLineCount = " + attrMap.get("totalLineCnt"));
 
-			idcuser = new DCUser();
+			idcuser = new com.kbstar.mbc.dc.usermgtdc.User();
 
 			// DC call
 			resPage = idcuser.getListPage(pageDdto);
@@ -62,7 +61,7 @@ public class ASMBC75Z03 implements IApplicationService {
 			outDto.addAttribute("dmndPageNo", attrMap.get("dmndPageNo"));
 
 			// Page information list data output
-			reqData.getOutputGenericDto().using(GenericDto.OUTDATA)
+			reqData.getOutputGenericDto().using(NewGenericDto.OUTDATA)
 					.add(resPage);
 
 		}

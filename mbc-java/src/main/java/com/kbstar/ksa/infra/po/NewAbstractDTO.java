@@ -1,16 +1,24 @@
 package com.kbstar.ksa.infra.po;
 
 /**
- * New Abstract DTO class
- * 
- * This is a stub implementation to replace the missing KSA framework
- * AbstractDTO
+ * Stub class for AbstractDTO
  */
-public class NewAbstractDTO {
+public abstract class NewAbstractDTO {
 
     public NewAbstractDTO() {
-        // Default constructor
+        // Stub constructor
     }
 
-    // Common DTO methods can be added here as needed
+    // Add stub methods as needed
+    public String toString() {
+        return super.toString();
+    }
+
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    public int hashCode() {
+        return super.hashCode();
+    }
 }

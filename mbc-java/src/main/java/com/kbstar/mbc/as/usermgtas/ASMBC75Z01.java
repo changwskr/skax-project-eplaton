@@ -3,18 +3,20 @@ package com.kbstar.mbc.as.usermgtas;
 import java.util.List;
 import java.util.Map;
 
-import com.kbstar.ksa.exception.BusinessException;
-import com.kbstar.ksa.infra.po.ApplicationContext;
-import com.kbstar.ksa.infra.po.GenericDto;
-import com.kbstar.ksa.infra.po.KBData;
-import com.kbstar.ksa.logger.IKesaLogger;
-import com.kbstar.ksa.logger.KesaLogHelper;
-import com.kbstar.ksa.oltp.biz.IApplicationService;
-import com.kbstar.mbc.dc.usermgtdc.DCUser;
 import com.kbstar.mbc.dc.usermgtdc.IDCUser;
 import com.kbstar.mbc.dc.usermgtdc.User;
 import com.kbstar.mbc.dc.usermgtdc.dto.UserDDTO;
-import com.kbstar.mbc.dc.usermgtpilotdc.dto.UserPilotDDTO;
+import com.kbstar.mbc.pc.userpc.IPCUser;
+import com.kbstar.mbc.pc.userpc.PCUser;
+import com.kbstar.ksa.exception.NewBusinessException;
+import com.kbstar.ksa.infra.po.NewApplicationContext;
+import com.kbstar.ksa.infra.po.NewGenericDto;
+import com.kbstar.ksa.infra.po.NewKBData;
+import com.kbstar.ksa.logger.NewIKesaLogger;
+import com.kbstar.ksa.logger.NewKesaLogHelper;
+import com.kbstar.ksa.oltp.biz.NewIApplicationService;
+import com.kbstar.mbc.dc.usermgtdc.DCUser;
+import com.kbstar.mbc.dc.usermgtdc.dto.UserPilotDDTO;
 
 /**
  * 사용자 관리 Application Service
@@ -22,11 +24,11 @@ import com.kbstar.mbc.dc.usermgtpilotdc.dto.UserPilotDDTO;
  * @author KBSTAR
  * @version 1.0.0
  */
-public class ASMBC75Z01 implements IApplicationService {
+public class ASMBC75Z01 implements NewIApplicationService {
 
-	protected IKesaLogger logger = KesaLogHelper.getBiz();
+	protected NewIKesaLogger logger = NewKesaLogHelper.getBiz();
 
-	public KBData execute(KBData reqData) throws BusinessException {
+	public NewKBData execute(NewKBData reqData) throws NewBusinessException {
 
 		if (logger.isDebugEnabled())
 			logger.debug(this.getClass().getName() + ", log test입니다.");
@@ -35,7 +37,7 @@ public class ASMBC75Z01 implements IApplicationService {
 		IDCUser idcuser = null;
 
 		// 표준전문 Common 영역의 거래코드를 가져온다.
-		String TransactionId = ApplicationContext.get(ApplicationContext.Key.StndTelgmRecvTranCd);
+		String TransactionId = NewApplicationContext.get(NewApplicationContext.Key.StndTelgmRecvTranCd);
 		String rsux = TransactionId.substring(8, 10);
 
 		// 거래코드가 R/S/U/X 중 어떤 것인지 판단
@@ -46,9 +48,9 @@ public class ASMBC75Z01 implements IApplicationService {
 			// UserDDTO [] userDDTOs = (UserDDTO[])reqData.getInputGenericDto()
 			// .using(GenericDto.INDATA).getArray(UserDDTO.class);
 
-			GenericDto input = reqData.getInputGenericDto().using(GenericDto.INDATA);
+			NewGenericDto input = reqData.getInputGenericDto().using(NewGenericDto.INDATA);
 
-			List<GenericDto> userList = input.getGenericDtos("User");
+			List<NewGenericDto> userList = input.getGenericDtos("User");
 			UserDDTO[] userDDTOs = new UserDDTO[userList.size()];
 			UserDDTO userDDTO = null;
 			Map<String, String> userAttr = null;
@@ -98,7 +100,7 @@ public class ASMBC75Z01 implements IApplicationService {
 		} else if (rsux != null && rsux.equals("S0")) {
 
 			UserDDTO userDDTO = new UserDDTO();
-			GenericDto subDto = reqData.getInputGenericDto().using(GenericDto.INDATA);
+			NewGenericDto subDto = reqData.getInputGenericDto().using(NewGenericDto.INDATA);
 
 			Map<String, String> attrMap = subDto.getAttributeMap();
 			if (subDto != null) {
@@ -110,7 +112,7 @@ public class ASMBC75Z01 implements IApplicationService {
 			}
 			idcuser = new DCUser();
 			resUsers = idcuser.getListUser(userDDTO);
-			reqData.getOutputGenericDto().using(GenericDto.OUTDATA).add(resUsers);
+			reqData.getOutputGenericDto().using(NewGenericDto.OUTDATA).add(resUsers);
 
 		}
 

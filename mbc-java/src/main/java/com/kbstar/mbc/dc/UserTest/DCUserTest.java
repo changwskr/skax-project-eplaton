@@ -3,12 +3,14 @@ package com.kbstar.mbc.dc.UserTest;
 import java.util.HashMap;
 import java.util.List;
 
-import com.kbstar.ksa.das.PKDuplicationException;
-import com.kbstar.ksa.das.PersistenceException;
-import com.kbstar.ksa.das.TooManyRowsException;
-import com.kbstar.ksa.das.ibatis.SqlMapper;
-import com.kbstar.ksa.exception.BusinessException;
-import com.kbstar.ksa.exception.FrameworkException;
+import com.kbstar.mbc.dc.UserTest.IDCUserTest;
+import com.kbstar.mbc.dc.UserTest.UserTest;
+import com.kbstar.ksa.das.NewPKDuplicationException;
+import com.kbstar.ksa.das.NewPersistenceException;
+import com.kbstar.ksa.das.NewTooManyRowsException;
+import com.kbstar.ksa.das.ibatis.NewSqlMapper;
+import com.kbstar.ksa.exception.NewBusinessException;
+import com.kbstar.ksa.exception.NewFrameworkException;
 import com.kbstar.mbc.fc.foundation.bzcrudbus.transfer.IFRSCommonDTO;
 
 public class DCUserTest implements IDCUserTest {
@@ -16,7 +18,8 @@ public class DCUserTest implements IDCUserTest {
 	public List<HashMap> getUserList(IFRSCommonDTO commonDto) throws BusinessException {
 		List result = null;
 		try {
-			result = (List) SqlMapper.getSqlMapClient().queryForList("userpilot2.getListUser", commonDto.getParameterMap());
+			result = (List) SqlMapper.getSqlMapClient().queryForList("userpilot2.getListUser",
+					commonDto.getParameterMap());
 		} catch (TooManyRowsException e) {
 			throw new BusinessException("D9005101", e.toString());
 		} catch (PKDuplicationException e) {
