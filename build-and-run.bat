@@ -42,12 +42,29 @@ if "%choice%"=="1" (
 
 echo.
 echo Application started!
-echo Access URLs:
+echo.
+echo ========================================
+echo Database Information
+echo ========================================
+echo - H2 Console: http://localhost:8080/mbc/h2-console
+echo - JDBC URL: jdbc:h2:mem:mbcdb
+echo - Username: sa
+echo - Password: (empty)
+echo.
+echo ========================================
+echo API Documentation
+echo ========================================
 echo - Application: http://localhost:8080/mbc
 echo - Swagger UI: http://localhost:8080/mbc/swagger-ui.html
 echo - OpenAPI JSON: http://localhost:8080/mbc/api-docs
-echo - H2 Console: http://localhost:8080/mbc/h2-console
 echo - Actuator: http://localhost:8080/mbc/actuator
+echo.
+echo ========================================
+echo Test Data Summary
+echo ========================================
+echo - Users: 10 (ADMIN: 1, MANAGER: 2, USER: 7)
+echo - Accounts: 15 (NORMAL: 6, VIP: 5, ENTERPRISE: 4)
+echo - Total Balance: 89,500,000 KRW
 echo.
 echo Press Ctrl+C to stop the application
 pause 
