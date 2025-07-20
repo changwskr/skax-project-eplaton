@@ -1,0 +1,168 @@
+/*
+ * (@)# DCAccount.java
+ *
+ * Copyright KB Kookmin Bank Inc. All rights reserved.
+ * PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+ */
+
+package com.kbstar.mbc.dc.accountdc;
+
+import java.util.List;
+
+import com.kbstar.mbc.dc.accountdc.dto.AccountDDTO;
+import com.kbstar.mbc.pc.dto.AccountPDTO;
+import com.kbstar.ksa.das.PKDuplicationException;
+import com.kbstar.ksa.das.PersistenceException;
+import com.kbstar.ksa.das.RecordNotFoundException;
+import com.kbstar.ksa.das.TooManyRowsException;
+import com.kbstar.ksa.das.ibatis.SqlMapper;
+import com.kbstar.ksa.exception.BusinessException;
+import com.kbstar.ksa.exception.FrameworkException;
+import com.kbstar.ksa.logger.IKesaLogger;
+import com.kbstar.ksa.logger.KesaLogHelper;
+import com.kbstar.ksa.oltp.biz.IDomainComponent;
+import com.kbstar.ksa.util.ObjectUtil;
+
+/**
+ * <br> [프로그램명] DC계좌
+ * <br> [요약] 계좌관련 데이터를 관장하는 도메인 컴포넌트
+ * <br> [상세설명] 
+ * <br> [변경이력]
+ * <ul>
+ *   <li>2008-08-26::홍길동::신규작성
+ * </ul>
+ */
+public class DCAccount implements IDomainComponent{
+	IKesaLogger logger = KesaLogHelper.getBiz();
+	/**
+	 * <br> [오퍼레이션명] 계좌조회
+	 * <br> [요약] 
+	 * <br> [상세내용] 
+	 * @param AccountDDTO
+	 * <ul>
+	 * <li> accountNumber //계좌번호
+	 * </ul>
+	 * @return AccountDDTO
+	 * <ul>
+	 * <li> accountNumber //계좌번호
+	 * <li> name //이름
+	 * <li> identificationNumber //주민번호
+	 * <li> interestRate //이자율
+	 * <li> lastTransaction //최종거래일
+	 * <li> password //패스워드
+	 * <li> netAmount //금액
+	 * </ul>
+	 */
+	public AccountDDTO getAccount(AccountDDTO accountDDTO) throws BusinessException {
+		try {
+			Account account  = (Account) SqlMapper.getSqlMapClient()
+					.queryForObject("account.getAccount", ObjectUtil.copyForClass(Account.class, accountDDTO));
+			return ObjectUtil.copyForClass(AccountDDTO.class, account);
+		} catch (TooManyRowsException e) {
+			throw new BusinessException("B0100001", "processCode", e);
+		} catch (PKDuplicationException e) {
+			throw new BusinessException("B0100001", "processCode", e);
+		} catch (PersistenceException e) {
+			throw new BusinessException("B0100001", "processCode", e);
+		} catch (FrameworkException e) {
+			throw new BusinessException("B0100001", "processCode", e);
+		}
+	}
+
+
+
+	/**
+	 * <br> [오퍼레이션명] 계좌변경
+	 * <br> [요약] 
+	 * <br> [상세내용] 
+	 * @param AccountDDTO
+	 * <ul>
+	 * <li> accountNumber //계좌번호
+	 * <li> name //이름
+	 * <li> identificationNumber //주민번호
+	 * <li> interestRate //이자율
+	 * <li> lastTransaction //최종거래일
+	 * <li> password //패스워드
+	 * <li> netAmount //금액
+	 * </ul>
+	 * @return void
+	 */
+	public void updateAccount(AccountDDTO accountDDTO) throws BusinessException {
+		try {
+			int count = SqlMapper.getSqlMapClient().update("account.updateAccount", ObjectUtil.copyForClass(Account.class, accountDDTO));
+			if(logger.isDebugEnabled())logger.debug(this.getClass().getName() + ", update count = " + count);
+		} catch (PKDuplicationException e) {
+			throw new BusinessException("B0000002", "processCode", e);
+		} catch (PersistenceException e) {
+			throw new BusinessException("B0000002", "processCode", e);
+		} catch (FrameworkException e) {
+			throw new BusinessException("B0000002", "processCode", e);
+		}
+	}
+
+
+	/**
+	 * <br> [오퍼레이션명] 계좌삭제
+	 * <br> [요약] 
+	 * <br> [상세내용] 
+	 * @param AccountDDTO
+	 * <ul>
+	 * <li> accountNumber //계좌번호
+	 * </ul>
+	 * @return void
+	 */
+	public void deleteAccount(AccountDDTO accountDDTO) throws BusinessException {
+		try {
+			int count = SqlMapper.getSqlMapClient().delete("account.deleteAccount", ObjectUtil.copyForClass(Account.class, accountDDTO));
+			if(logger.isDebugEnabled())logger.debug(this.getClass().getName() + ", delete count = " + count);
+		} catch (RecordNotFoundException e) {
+			throw new BusinessException("B0000001", "processCode", e);
+		} catch (PersistenceException e) {
+			throw new BusinessException("B0000002", "processCode", e);
+		} catch (FrameworkException e) {
+			throw new BusinessException("B0000002", "processCode", e);
+		}
+	}
+	
+	/**
+	 * <br> [오퍼레이션명] 계좌등록
+	 * <br> [요약] 
+	 * <br> [상세내용] 
+	 * @param AccountDDTO
+	 * <ul>
+	 * <li> accountNumber //계좌번호
+	 * <li> name //이름
+	 * <li> identificationNumber //주민번호
+	 * <li> interestRate //이자율
+	 * <li> lastTransaction //최종거래일
+	 * <li> password //패스워드
+	 * <li> netAmount //금액
+	 * </ul>
+	 * @return void
+	 */
+	public void createAccount(AccountDDTO accountDDTO) throws BusinessException {
+		try {
+			SqlMapper.getSqlMapClient().insert("account.createAccount", ObjectUtil.copyForClass(Account.class, accountDDTO));
+		} catch (RecordNotFoundException e) {
+			throw new BusinessException("B0000001", "processCode", e);
+		} catch (PersistenceException e) {
+			throw new BusinessException("B0000002", "processCode", e);
+		} catch (FrameworkException e) {
+			throw new BusinessException("B0000002", "processCode", e);
+		}
+	}
+	
+	public List<AccountDDTO> getListAccount(AccountDDTO accountDDTO) throws BusinessException{
+		try{
+			List<Account> accountList = SqlMapper.getSqlMapClient().queryForList("account.getListAccount", ObjectUtil.copyForClass(Account.class, accountDDTO));
+			return ObjectUtil.copyForList(AccountDDTO.class, accountList);
+		} catch (RecordNotFoundException e) {
+			throw new BusinessException("B0000001", "processCode", e);
+		} catch (PersistenceException e) {
+			throw new BusinessException("B0000002", "processCode", e);
+		} catch (FrameworkException e) {
+			throw new BusinessException("B0000002", "processCode", e);
+		}
+	}
+
+}

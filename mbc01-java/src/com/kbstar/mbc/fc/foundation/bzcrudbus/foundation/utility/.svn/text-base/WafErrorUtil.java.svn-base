@@ -1,0 +1,27 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.foundation.utility;
+
+import java.util.HashMap;
+
+import com.kbstar.mbc.fc.foundation.bzcrudbus.constant.Constants;
+
+public class WafErrorUtil {
+
+	public static HashMap setErrorInfo(HashMap errorMap, String errorCd, Exception ex) {
+				
+		if (errorMap == null) {
+			errorMap = new HashMap();
+		}
+		
+		if(ex == null) {
+			return errorMap;
+		}
+		
+		errorMap.put(Constants.ERROR_OCCUR_VAR, "Y");
+		errorMap.put(Constants.ERROR_MSG_CD_VAR, errorCd);
+		errorMap.put(Constants.ERROR_MSG_TEXT_VAR, ex.getMessage());
+		errorMap.put(Constants.ERROR_OBJECT, ex);
+		
+		return errorMap;
+	}
+	
+}

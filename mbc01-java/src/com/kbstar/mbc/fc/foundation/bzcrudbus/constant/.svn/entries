@@ -1,0 +1,52 @@
+8
+
+dir
+346
+svn://172.28.186.105/ifrs_repository/ifrs.project/mbc01-java/src/com/kbstar/mbc/fc/foundation/bzcrudbus/constant
+svn://172.28.186.105/ifrs_repository
+
+
+
+2008-11-25T14:18:30.699063Z
+192
+kspark
+
+
+svn:special svn:externals svn:needs-lock
+
+TCFConstants.java
+file
+
+
+
+
+2008-11-25T05:14:35.355635Z
+815a7538ccc4633910fea5fe3ce0f5ee
+2008-11-25T14:18:30.699063Z
+192
+kspark
+
+TCFConstantErrcode.java
+file
+
+
+
+
+2008-11-25T05:14:35.340010Z
+cc9dcc903e76099b8517e83f311f7a96
+2008-11-25T14:18:30.699063Z
+192
+kspark
+
+Constants.java
+file
+
+
+
+
+2008-11-25T05:14:35.340010Z
+93b72e8103fd6806a6574aa36e106c55
+2008-11-25T14:18:30.699063Z
+192
+kspark
+

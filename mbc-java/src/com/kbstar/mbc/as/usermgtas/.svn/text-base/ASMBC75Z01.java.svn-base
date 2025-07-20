@@ -1,0 +1,72 @@
+package com.kbstar.mbc.as.usermgtas;
+
+import java.util.List;
+import java.util.Map;
+
+import com.kbstar.ksa.exception.BusinessException;
+import com.kbstar.ksa.infra.po.ApplicationContext;
+import com.kbstar.ksa.infra.po.GenericDto;
+import com.kbstar.ksa.infra.po.KBData;
+import com.kbstar.ksa.logger.IKesaLogger;
+import com.kbstar.ksa.logger.KesaLogHelper;
+import com.kbstar.ksa.oltp.biz.IApplicationService;
+import com.kbstar.mbc.dc.usermgtdc.DCUser;
+import com.kbstar.mbc.dc.usermgtdc.IDCUser;
+import com.kbstar.mbc.dc.usermgtdc.User;
+import com.kbstar.mbc.dc.usermgtdc.dto.UserDDTO;
+import com.kbstar.mbc.dc.usermgtpilotdc.dto.UserPilotDDTO;
+
+
+public class ASMBC75Z01 implements IApplicationService {
+	
+	protected IKesaLogger logger = KesaLogHelper.getBiz();
+
+	public KBData execute(KBData reqData) throws BusinessException {
+		
+		if(logger.isDebugEnabled())logger.debug(this.getClass().getName() + ", log test입니다.");
+		
+		List<User> resUsers = null;
+		IDCUser idcuser = null;
+		
+		// 전문의 Common 영역의 거래코드를 가져온다.
+		String TransactionId = ApplicationContext.get(ApplicationContext.Key.StndTelgmRecvTranCd);
+		String rsux = TransactionId.substring(8, 10);
+		
+		
+		//거래코드의 R/S/U/X 에 따라 분기
+		if (rsux != null && rsux.equals("R0")) {
+			
+			logger.debug("R0 process");
+			
+	//		UserDDTO [] userDDTOs = (UserDDTO[])reqData.getInputGenericDto()
+	//		.using(GenericDto.INDATA).getArray(UserDDTO.class);
+			
+			UserDDTO [] userDDTOs = null;
+			
+			
+			idcuser = new DCUser();
+			idcuser.crudUser(userDDTOs);
+			
+		}else if(rsux != null && rsux.equals("S0")) {
+			
+			UserDDTO userDDTO = new UserDDTO();
+			GenericDto subDto = reqData.getInputGenericDto().using(GenericDto.INDATA);
+			
+			Map<String,String> attrMap = subDto.getAttributeMap();
+			if (subDto!=null){
+				userDDTO.setUserDstcd(attrMap.get("userDstcd"));
+				userDDTO.setUserName(attrMap.get("userName"));
+				userDDTO.setUserID(attrMap.get("uID"));
+				userDDTO.setDvsnName(attrMap.get("dvsnName"));
+				userDDTO.setUseYn(attrMap.get("useYn"));
+			}
+			idcuser = new DCUser();
+			resUsers = idcuser.getListUser(userDDTO);
+			reqData.getOutputGenericDto().using(GenericDto.OUTDATA).add(resUsers);
+						
+		}
+		
+		return reqData;
+	}
+
+}

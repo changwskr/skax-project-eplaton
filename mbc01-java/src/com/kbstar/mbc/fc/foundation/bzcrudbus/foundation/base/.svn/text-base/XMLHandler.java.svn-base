@@ -1,0 +1,47 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.foundation.base;
+
+import java.io.*;
+import org.jdom.*;
+import org.jdom.input.*;
+import org.jdom.output.*;
+
+/**
+ * <p>XML File을 읽기 위한 Handler에서 사용할 기본 Interface를 정의한 abstract Class</p>
+ * @author 
+ * @version 1.0
+ */
+
+public abstract class XMLHandler
+{
+  protected HandlerOption option;
+
+  /**
+   *
+   * @param option XML File을 읽을 때 사용하는 옵션을 정의한 HandlerOption Object
+   */
+  public XMLHandler(HandlerOption option)
+  {
+    this.option = option;
+  }
+
+  /**
+   *
+   * @return Object JDOM API 내의 SAXBuilder 또는 DOMBuilder Object
+   */
+  protected abstract Object createBuilder();
+
+  /**
+   *
+   * @param xmlFile
+   * @return Document
+   */
+  public abstract Document parse(File xmlFile);
+
+  /**
+   *
+   * @param xmlFileName
+   * @return Document
+   */
+  public abstract Document parse(String xmlFileName);
+
+}

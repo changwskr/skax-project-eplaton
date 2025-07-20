@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="euc-kr" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="userpilot2">
+
+		
+	<delete id="deleteUser" parameterClass="java.util.HashMap">
+		delete from USERDATA
+		where USR_ID = #USERID#
+	</delete>
+	
+	<update id="updateUser" parameterClass="java.util.HashMap">
+		update USERDATA     
+		<dynamic prepend="SET">
+			<isNotNull property="USERNAME" prepend=",">
+			USR_NM =#USERNAME#
+			</isNotNull>
+			<isNotNull property="USERPASSWORD" prepend=",">
+			USR_PSWD =#USERPASSWORD#
+			</isNotNull>
+			<isNotNull property="IDENTIFICATIONNUMBER" prepend=",">
+			RNO =#IDENTIFICATIONNUMBER#
+			</isNotNull>
+			<isNotNull property="USERCODE" prepend=",">
+			USR_DIV_CD =#USERCODE#
+			</isNotNull>
+			<isNotNull property="USERCODENAME" prepend=",">
+			USR_DIV_NM =#USERCODENAME#
+			</isNotNull>
+			<isNotNull property="DEPTCODE" prepend=",">
+			DEPT_CD =#DEPTCODE#
+			</isNotNull>
+			<isNotNull property="DEPTNAME" prepend=","> 
+			DEPT_NM  =#DEPTNAME#
+			</isNotNull>
+			<isNotNull property="RANKCODE" prepend=",">
+			PSIT_CD  =#RANKCODE#
+			</isNotNull>
+			<isNotNull property="RANKNAME" prepend=",">
+			PSIT_NM =#RANKNAME#
+			</isNotNull>
+			<isNotNull property="BIRTHDATE" prepend=",">
+			BMD =#BIRTHDATE#
+			</isNotNull>
+			<isNotNull property="MOBILENO" prepend=",">
+			CP_NO =#MOBILENO#
+			</isNotNull>
+			<isNotNull property="EMAIL" prepend=",">
+			EMAIL =#EMAIL#
+			</isNotNull>
+			<isNotNull property="ADDRESS" prepend=",">
+			ADDR =#ADDRESS#
+			</isNotNull>
+			<isNotNull property="USAGE" prepend=",">
+			USE_YN =#USAGE#
+			</isNotNull>
+			</dynamic>
+		where 
+			USR_ID = #USERID#
+	</update>
+	
+	<insert id="insertUser" parameterClass="java.util.HashMap">
+		insert into USERDATA(
+			USR_ID,
+			USR_NM,
+			USR_PSWD,
+			RNO,
+			USR_DIV_CD,
+			USR_DIV_NM,
+			DEPT_CD,
+			DEPT_NM,
+			PSIT_CD,
+			PSIT_NM,
+			ENTER_DT,
+			BMD,
+			CP_NO,
+			EMAIL,
+			ADDR,
+			USE_YN
+		) values (
+			#USERID#,
+			#USERNAME#,
+			#USERPASSWORD#,
+			#IDENTIFICATIONNUMBER#,
+			#USERCODE#,
+			#USERCODENAME#,
+			#DEPTCODE#,
+			#DEPTNAME#,
+			#RANKCODE#,
+			#RANKNAME#,
+			CURRENT DATE,
+			#BIRTHDATE#,
+			#MOBILENO#,
+			#EMAIL#,
+			#ADDRESS#,
+			#USAGE#
+		)
+	</insert>
+	
+	
+	
+	<select id="getListDept" resultClass="java.util.HashMap">
+		select
+			DEPT_CD as deptCode, 
+			DEPT_NM  as deptName
+			from DEPTDATA 
+			<dynamic prepend="where" >
+				 <isNotEmpty property="DEPTNAME" prepend="AND">
+				 	DEPT_NM = #DEPTNAME#
+				 </isNotEmpty>
+			</dynamic>      			
+		</select>				
+	
+	
+		
+	<select id="getListUser" resultClass="java.util.HashMap">
+		select
+			USR_ID as userID,
+			USR_NM  as userName,
+			USR_PSWD as userPassword,
+			RNO as identificationNumber,
+			USR_DIV_CD as userCode,
+			USR_DIV_NM as userCodeName,
+			DEPT_CD as deptCode, 
+			DEPT_NM  as deptName,
+			PSIT_CD  as rankCode,
+			PSIT_NM as rankName,
+			ENTER_DT as enterDate,
+			BMD as birthDate,
+			CP_NO as mobileNo,
+			EMAIL as email,
+			ADDR as address,
+			USE_YN as usage
+			from USERDATA       			
+			<dynamic prepend="where" >
+				 <isNotEmpty property="USRDIVCD" prepend="AND">
+				 	USR_DIV_CD = #USRDIVCD#
+				 </isNotEmpty>
+				 <isNotEmpty property="USERID" prepend="AND">
+				 	USR_ID = #USERID#
+				 </isNotEmpty>
+				 <isNotEmpty property="USERCODE" prepend="AND">
+				 	USR_DIV_CD = #USERCODE#
+				 </isNotEmpty>
+				 <isNotEmpty property="DEPTCODE" prepend="AND">
+				 	DEPT_CD = #DEPTCODE#
+				 </isNotEmpty>
+				 <isNotEmpty property="USERNAME" prepend="AND">
+				 	USR_NM = #USERNAME#
+				 </isNotEmpty>
+				 <isNotEmpty property="USAGE" prepend="AND">
+				 	USE_YN = #USAGE#
+				 </isNotEmpty>
+			</dynamic>
+	</select>
+	
+	<select id="getAllListUser" resultClass="java.util.HashMap">
+		select
+			USR_ID as userID,
+			USR_NM  as userName,
+			USR_PSWD as userPassword,
+			RNO as identificationNumber,
+			USR_DIV_CD as userCode,
+			USR_DIV_NM as userCodeName,
+			DEPT_CD as deptCode, 
+			DEPT_NM  as deptName,
+			PSIT_CD  as rankCode,
+			PSIT_NM as rankName,
+			ENTER_DT as enterDate,
+			BMD as birthDate,
+			CP_NO as mobileNo,
+			EMAIL as email,
+			ADDR as address,
+			USE_YN as usage
+			from USERDATA       			
+	</select>								
+			
+	<select id="getListRank" resultClass="java.util.HashMap">
+		select
+			RANKKEY  as RANKKEY,
+			RANKVALUE as RANKVALUE
+			from RANKDATA       			
+	</select>
+			
+	
+</sqlMap>

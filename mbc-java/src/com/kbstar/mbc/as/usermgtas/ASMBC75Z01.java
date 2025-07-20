@@ -1,0 +1,120 @@
+package com.kbstar.mbc.as.usermgtas;
+
+import java.util.List;
+import java.util.Map;
+
+import com.kbstar.ksa.exception.BusinessException;
+import com.kbstar.ksa.infra.po.ApplicationContext;
+import com.kbstar.ksa.infra.po.GenericDto;
+import com.kbstar.ksa.infra.po.KBData;
+import com.kbstar.ksa.logger.IKesaLogger;
+import com.kbstar.ksa.logger.KesaLogHelper;
+import com.kbstar.ksa.oltp.biz.IApplicationService;
+import com.kbstar.mbc.dc.usermgtdc.DCUser;
+import com.kbstar.mbc.dc.usermgtdc.IDCUser;
+import com.kbstar.mbc.dc.usermgtdc.User;
+import com.kbstar.mbc.dc.usermgtdc.dto.UserDDTO;
+import com.kbstar.mbc.dc.usermgtpilotdc.dto.UserPilotDDTO;
+
+/**
+ * 사용자 관리 Application Service
+ * 
+ * @author KBSTAR
+ * @version 1.0.0
+ */
+public class ASMBC75Z01 implements IApplicationService {
+
+	protected IKesaLogger logger = KesaLogHelper.getBiz();
+
+	public KBData execute(KBData reqData) throws BusinessException {
+
+		if (logger.isDebugEnabled())
+			logger.debug(this.getClass().getName() + ", log test입니다.");
+
+		List<User> resUsers = null;
+		IDCUser idcuser = null;
+
+		// 표준전문 Common 영역의 거래코드를 가져온다.
+		String TransactionId = ApplicationContext.get(ApplicationContext.Key.StndTelgmRecvTranCd);
+		String rsux = TransactionId.substring(8, 10);
+
+		// 거래코드가 R/S/U/X 중 어떤 것인지 판단
+		if (rsux != null && rsux.equals("R0")) {
+
+			logger.debug("R0 process");
+
+			// UserDDTO [] userDDTOs = (UserDDTO[])reqData.getInputGenericDto()
+			// .using(GenericDto.INDATA).getArray(UserDDTO.class);
+
+			GenericDto input = reqData.getInputGenericDto().using(GenericDto.INDATA);
+
+			List<GenericDto> userList = input.getGenericDtos("User");
+			UserDDTO[] userDDTOs = new UserDDTO[userList.size()];
+			UserDDTO userDDTO = null;
+			Map<String, String> userAttr = null;
+			logger.debug("userList.size() = " + userList.size());
+			for (int i = 0; i < userList.size(); i++) {
+				userDDTO = new UserDDTO();
+				userAttr = userList.get(i).getAttributeMap();
+				logger.debug("uID =" + userAttr.get("uID"));
+
+				userDDTO.setUserID(userAttr.get("uID"));
+				userDDTO.setUserName(userAttr.get("userName"));
+				userDDTO.setUserPwd(userAttr.get("userPwd"));
+				userDDTO.setUserDstcd(userAttr.get("userDstcd"));
+				userDDTO.setSsno(userAttr.get("ssno"));
+				userDDTO.setLangDstcd(userAttr.get("langDstcd"));
+				userDDTO.setDvsnNo(userAttr.get("dvsnNo"));
+				userDDTO.setDvsnName(userAttr.get("dvsnName"));
+				userDDTO.setJobclDstcd(userAttr.get("jobclDstcd"));
+				userDDTO.setJobclName(userAttr.get("jobclName"));
+				userDDTO.setInstiCd(userAttr.get("instiCd"));
+				userDDTO.setInstiName(userAttr.get("instiName"));
+				userDDTO.setTelno(userAttr.get("telno"));
+				userDDTO.setCphnNo(userAttr.get("cphnNo"));
+				userDDTO.setEmad(userAttr.get("emad"));
+				userDDTO.setFaxNo(userAttr.get("faxNo"));
+				userDDTO.setBrdt(userAttr.get("brdt"));
+				userDDTO.setAddr(userAttr.get("addr"));
+				userDDTO.setZip(userAttr.get("zip"));
+				userDDTO.setEmalRecvYn(userAttr.get("emalRecvYn"));
+				userDDTO.setSmsRecvYn(userAttr.get("sMSRecvYn"));
+				userDDTO.setUseYn(userAttr.get("useYn"));
+				userDDTO.setPrcssStusDstcd(userAttr.get("prcssStusDstcd"));
+				userDDTO.setEntcoYmd(userAttr.get("entcoYmd"));
+				userDDTO.setRtireYmd(userAttr.get("rtireYmd"));
+				userDDTO.setRegiYmd(userAttr.get("regiYmd"));
+				userDDTO.setRegsntID(userAttr.get("regsntID"));
+				userDDTO.setAmndrID(userAttr.get("amndrID"));
+				userDDTO.setAmndYmd(userAttr.get("amndYmd"));
+				userDDTO.setCrud(userAttr.get("crud"));
+
+				userDDTOs[i] = userDDTO;
+			}
+
+			idcuser = new DCUser();
+			idcuser.crudUser(userDDTOs);
+
+		} else if (rsux != null && rsux.equals("S0")) {
+
+			UserDDTO userDDTO = new UserDDTO();
+			GenericDto subDto = reqData.getInputGenericDto().using(GenericDto.INDATA);
+
+			Map<String, String> attrMap = subDto.getAttributeMap();
+			if (subDto != null) {
+				userDDTO.setUserDstcd(attrMap.get("userDstcd"));
+				userDDTO.setUserName(attrMap.get("userName"));
+				userDDTO.setUserID(attrMap.get("uID"));
+				userDDTO.setDvsnName(attrMap.get("dvsnName"));
+				userDDTO.setUseYn(attrMap.get("useYn"));
+			}
+			idcuser = new DCUser();
+			resUsers = idcuser.getListUser(userDDTO);
+			reqData.getOutputGenericDto().using(GenericDto.OUTDATA).add(resUsers);
+
+		}
+
+		return reqData;
+	}
+
+}

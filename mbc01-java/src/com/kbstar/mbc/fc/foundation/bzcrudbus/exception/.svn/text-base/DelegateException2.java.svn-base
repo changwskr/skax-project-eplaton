@@ -1,0 +1,21 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.exception;
+
+import com.kbstar.mbc.fc.foundation.bzcrudbus.waf.form.ErrorForm;
+
+public class DelegateException extends Exception {
+	
+	protected ErrorForm errForm = null;
+	
+	public DelegateException() {
+		super();
+	}
+
+	public DelegateException(String errMsg) {
+		super(errMsg);
+	}
+		
+	public DelegateException(String errMsg, ErrorForm errForm) {
+		super(errMsg);
+		this.errForm = errForm;
+	}
+}

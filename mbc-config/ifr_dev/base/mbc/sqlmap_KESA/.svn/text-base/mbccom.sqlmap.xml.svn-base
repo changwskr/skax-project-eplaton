@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="euc-kr" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="com">
+
+	<select id="getAccount" resultClass="java.util.HashMap">
+		select
+			계좌번호 as accountNumber,
+			이름 as name,
+			주민번호 as identificationNumber,
+			이자율 as interestRate,
+			최종거래일 as lastTransaction,
+			패스워드 as password,
+			금액 as netAmount
+			from ACCOUNT2 
+		where
+			계좌번호 = #accountNumber#
+	</select>
+
+	<delete id="deleteAccount" parameterClass="java.util.HashMap">
+		delete from ACCOUNT2 where 계좌번호 =
+			#accountNumber:VARCHAR#
+	</delete>
+	
+	
+	<update id="updateAccount" parameterClass="java.util.HashMap">
+		update ACCOUNT2
+		<dynamic prepend="SET"> 
+			<isNotNull property="name" prepend=",">
+			이름 = #name#
+			</isNotNull>
+			<isNotNull property="identificationNumber" prepend=",">
+			주민번호= #identificationNumber#
+			</isNotNull>
+			<isNotNull property="interestRate" prepend=",">
+			이자율 = #interestRate#
+			</isNotNull>
+			<isNotNull property="lastTransaction" prepend=",">
+			최종거래일 =	#lastTransaction#
+			</isNotNull>
+			<isNotNull property="password" prepend=",">
+			패스워드 = #password#
+			</isNotNull>
+			<isNotNull property="netAmount" prepend=",">
+			금액 = #netAmount#
+			</isNotNull>
+		</dynamic>
+		where 
+			계좌번호 = #accountNumber#
+	</update>
+		
+	
+	<insert id="createAccount" parameterClass="java.util.HashMap">
+		insert into ACCOUNT2(
+			계좌번호,
+			이름,
+			주민번호,
+			이자율,
+			최종거래일,
+			패스워드,
+			금액
+		) values (
+			#accountNumber#,
+			#name#,
+			#identificationNumber#,
+			#interestRate#,
+			#lastTransaction#,
+			#password#,
+			#netAmount#
+		)
+	</insert>
+	
+	
+	<select id="getListAccount" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		select
+			계좌번호 as accountNumber,
+			이름 as name,
+			주민번호 as identificationNumber,
+			이자율 as interestRate,
+			최종거래일 as lastTransaction,
+			패스워드 as password,
+			금액 as netAmount
+			from ACCOUNT2 
+			<dynamic prepend="where" >
+				 <isNotEmpty property="accountNumber" prepend="AND">
+				 	계좌번호 = #accountNumber#
+				 </isNotEmpty>
+				 <isNotEmpty property="name" prepend="AND">
+				 	이름 like '%'||#name#||'%'
+				 </isNotEmpty>
+				</dynamic>
+	</select>		
+	
+</sqlMap>

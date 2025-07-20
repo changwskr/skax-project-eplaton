@@ -1,0 +1,113 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.config;
+
+
+import java.io.InputStream;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.input.SAXBuilder;
+
+/**
+ * TrustForm에서 받은 데이터에 대한 정보 저장
+ * 
+ * @author 장우승
+ * @version 1.0
+ * @see
+ *  
+ */
+public class ParameterInfo {
+
+    private static ParameterInfo parameterInfo; /* Singleton 객체 */
+
+    private static final String CONFIG_FILE = "/componentMappingInfo.xml"; /* 설정파일 */
+
+    private Map mappingMap = null; /* 매핑정보를 담고 있는 맵 */
+
+    /**
+     * 생성자
+     */
+    private ParameterInfo() {
+        loadConfig();
+    }
+
+    /**
+     * getInstance 메소드
+     * 
+     * @return ParameterInfo
+     */
+    public static ParameterInfo getInstance() {
+        try {
+            if (parameterInfo == null) {
+                synchronized (ParameterInfo.class) {
+                    if (parameterInfo == null) {
+                        parameterInfo = new ParameterInfo();
+                    }
+                }
+            }
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
+        return parameterInfo;
+    }
+
+    /**
+     * 설정파일 로드
+     *  
+     */
+    public void loadConfig() {
+        mappingMap = Collections.synchronizedMap(new HashMap());
+
+        try {
+            InputStream inputStream = ParameterInfo.class.getResourceAsStream(CONFIG_FILE);
+            SAXBuilder saxBuilder = new SAXBuilder();
+            Document componentMappingDoc = saxBuilder.build(inputStream);
+
+            //맵핑정보 세팅
+            Element rootElement = componentMappingDoc.getRootElement();
+            List elementList = rootElement.getChildren();
+            for (int i = 0; i < elementList.size(); i++) {
+                Element element = (Element) elementList.get(i);
+                String fileName = element.getText();
+                Document doc = getComponentDocument(fileName);
+                mappingMap.put(element.getName(), doc);
+
+            }
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+    }
+
+    /**
+     * JDOM 객체 생성
+     *  
+     */
+    private Document getComponentDocument(String fileName) {
+
+        Document doc = null;
+
+        try {
+            InputStream in = ParameterInfo.class.getResourceAsStream(fileName);
+            SAXBuilder saxBuilder = new SAXBuilder();
+            doc = saxBuilder.build(in);
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+
+        return doc;
+    }
+
+    /**
+     * 컴포넌트명을 받아 해당 매핑 Document 객체를 받아온다.
+     * 
+     * @return doc을 리턴합니다.
+     */
+    public Document getDoc(String componentName) {
+        return (Document) mappingMap.get(componentName);
+    }
+
+}

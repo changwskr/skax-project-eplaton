@@ -1,0 +1,29 @@
+8
+
+dir
+173
+svn://172.28.186.105/ifrs_repository/ifrs.project/mbc-java/lib
+svn://172.28.186.105/ifrs_repository
+
+
+
+2008-11-21T17:25:54.289712Z
+173
+kspark
+
+
+svn:special svn:externals svn:needs-lock
+
+ifrs_foundation.jar
+file
+311
+
+
+
+2009-01-13T09:37:25.212643Z
+ae23044199084ddc06e1647f53ce336c
+2009-01-14T17:26:35.482304Z
+311
+kspark
+has-props
+

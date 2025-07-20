@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:./data/mbcdb_prod
+    username: sa
+    password: ${DB_PASSWORD:}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+logging:
+  level:
+    com.kbstar.mbc: INFO
+    org.springframework.security: WARN
+    org.mybatis: WARN
+  file:
+    name: logs/mbc-application-prod.log
+
+# Production specific settings
+mbc:
+  environment: production
+  debug: false

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DCRptMeta">
+
+	<select id="select_obj01" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		SELECT
+			기준 AS K_CGRID_01,
+			기준_기준일자 AS K_CGRID_02, 
+			기준_기준일자 AS K_CGRID_03,
+			기준_기준일 AS K_CGRID_04,
+			기준_기준일자 AS K_CGRID_05,
+			기준_기준일자 AS K_CGRID_06,
+			기준_기준일 AS K_CGRID_07 
+		FROM TMMBCS005
+	</select>
+	
+	<select id="select_obj02" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		SELECT
+			기준 AS K_CGRID_03,
+			기준 AS K_CGRID_04,
+			기준 AS K_CGRID_05
+		FROM TMMBCS007
+	</select>
+
+
+	<typeAlias alias="ReportMeta" type="com.kbstar.mbc.fc.foundation.bzcrudbus.report.ReportMeta"/>
+
+	<select id="getListReporting" parameterClass="java.util.HashMap" resultClass="ReportMeta">
+		SELECT
+			기준월 AS baseYm,
+			보고서ID AS rptdocId,
+			보고서명 AS rptdocName,
+			보고서형태 AS fxdfmType, 
+			변수명 AS varName, 
+			변수값 AS varValue 
+		FROM TMMBCS003      
+		WHERE 기준월 = #baseYm# AND 
+				 보고서ID = #rptdocId#
+	</select>
+
+	<insert id="insertRptMeta" parameterClass="java.util.HashMap">
+		insert into TMMBCS003 (
+			기준월,
+			보고서ID,
+			보고서명,
+			순번,
+			보고서형태,
+			변수명,
+			변수값,
+			설명		
+		) values (
+			#baseYm#,
+			#rptdocId#,
+			#rptdocName#,
+			#seq#,
+			#fxdfmType#,
+			#varName#,
+			#varValue#,
+			#desc#
+		)
+	</insert>
+			
+	<select id="getListRptMeta" parameterClass="java.util.HashMap" resultClass="java.util.HashMap">
+		SELECT
+			기준월 AS baseYm,
+			보고서ID AS rptdocId,
+			보고서명 AS rptdocName,
+			순번 AS seq, 
+			보고서형태 AS fxdfmType, 
+			변수명 AS varName, 
+			변수값 AS varValue, 
+			설명 as desc
+		FROM TMMBCS003      
+		 	<dynamic prepend="WHERE" >
+		 	     기준월 = #baseYm# 
+				 <isNotEmpty property="rptdocId">
+				 	AND 보고서ID = #rptdocId#
+				 </isNotEmpty>
+				 <isNotEmpty property="rptdocName">
+				 	AND 보고서명 LIKE CONCAT('%', CONCAT(#rptdocName#,'%'))
+				 </isNotEmpty>
+			</dynamic>	
+		ORDER BY 기준월, 보고서ID, INT(순번)		
+	</select>
+	
+	<update id="updateRptMeta" parameterClass="java.util.HashMap">
+		UPDATE TMMBCS003
+		<dynamic prepend="SET">
+			보고서명 = #rptdocName#
+			, 변수값 = #varValue#
+			<isNotNull property="seq">
+			, 순번 = #seq#
+			</isNotNull>
+			<isNotNull property="fxdfmType">
+			, 보고서형태 = #fxdfmType#
+			</isNotNull>
+			<isNotNull property="desc">
+			, 설명 = #desc#
+			</isNotNull>
+		</dynamic>
+		where 
+			기준월 = #baseYm# AND 보고서ID = #rptdocId# AND 변수명 = #varName#
+	</update>
+	
+			
+	<delete id="deleteRptMeta" parameterClass="java.util.HashMap">
+		DELETE FROM TMMBCS003
+			WHERE 기준월 = #baseYm# AND 보고서ID = #rptdocId# AND 변수명 = #varName#
+	</delete>
+	
+	
+</sqlMap>

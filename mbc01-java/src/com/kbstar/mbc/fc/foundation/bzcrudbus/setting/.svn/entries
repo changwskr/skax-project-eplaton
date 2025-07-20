@@ -1,0 +1,100 @@
+8
+
+dir
+347
+svn://172.28.186.105/ifrs_repository/ifrs.project/mbc01-java/src/com/kbstar/mbc/fc/foundation/bzcrudbus/setting
+svn://172.28.186.105/ifrs_repository
+
+
+
+2009-02-02T05:57:57.999632Z
+347
+kspark
+
+
+svn:special svn:externals svn:needs-lock
+
+hdd
+dir
+
+mba
+dir
+
+mbb
+dir
+
+mbc
+dir
+
+env.properties
+file
+
+
+
+
+2009-02-02T05:56:14.225659Z
+5df7c7444cd4254079e9c5c96f0eb2fb
+2009-02-02T05:57:57.999632Z
+347
+kspark
+
+common.sqlmap.xml
+file
+
+
+
+
+2009-02-02T05:41:46.127396Z
+7f49c083db1066b71998c16b36d2b485
+2009-02-02T05:57:57.999632Z
+347
+kspark
+
+class-loader.xml
+file
+
+
+
+
+2009-02-02T05:41:45.252407Z
+e6d1187e602987cd008af977f1b16eb2
+2009-02-02T05:57:57.999632Z
+347
+kspark
+
+IFRSConfig.xml
+file
+
+
+
+
+2009-02-02T05:57:35.505869Z
+3efb0855ce55033f86ed8fb0923229e0
+2009-02-02T05:57:57.999632Z
+347
+kspark
+
+waf-command-config.xml
+file
+
+
+
+
+2009-02-02T05:41:48.127370Z
+093a2370fe2ff1374929b8b467f6bb85
+2009-02-02T05:57:57.999632Z
+347
+kspark
+
+sql-map-config.xml
+file
+349
+
+
+
+2009-02-02T06:04:28.813078Z
+812d1e655de240439b9328f1002c0b9b
+2009-02-03T01:13:09.906170Z
+349
+kspark
+

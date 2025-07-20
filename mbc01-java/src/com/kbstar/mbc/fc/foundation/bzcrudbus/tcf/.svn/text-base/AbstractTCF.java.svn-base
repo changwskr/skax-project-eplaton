@@ -1,0 +1,30 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.tcf;
+
+/**
+ * <p>Title: </p>
+ * <p>Description: This is oversea banking package.</p>
+ * 실제 트랜잭션을 관리하면서 각 업무시스템으로의 주 업무 클래스를 호출한다
+ * 전체 구조는 3개의 부분으로 구성되어져 있다
+ * 1. STF
+ *    트랜잭션을 시작하기 전의 기본적인 정보를 관리한다
+ * 2. BTF
+ *    업무로직을 처리하기 위해서 관리한다
+ * 3. ETF
+ *    트랜잭션의 완료를 처리하기 위해서 관리되는 모듈이다.
+ * <p>Copyright: Copyright (c) 2008 SKC&C Co. Ltd.</p>
+ * @author Jang Woo Sung
+ * @version 1.0
+ */
+
+public abstract class AbstractTCF {
+	protected String ctx;
+
+	/**
+	 * 생성자.
+	 * @see java.lang.Object#Object().
+	 */
+	public AbstractTCF() {
+		ctx = null;
+	}
+
+}

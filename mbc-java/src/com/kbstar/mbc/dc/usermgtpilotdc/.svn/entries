@@ -1,0 +1,55 @@
+8
+
+dir
+173
+svn://172.28.186.105/ifrs_repository/ifrs.project/mbc-java/src/com/kbstar/mbc/dc/usermgtpilotdc
+svn://172.28.186.105/ifrs_repository
+
+
+
+2008-11-21T17:25:54.289712Z
+173
+kspark
+
+
+svn:special svn:externals svn:needs-lock
+
+dto
+dir
+
+UserPilot.java
+file
+
+
+
+
+2008-11-06T08:33:05.134394Z
+a75fb73184cf4407da1b1d6aad84e86a
+2008-11-21T17:25:54.289712Z
+173
+kspark
+
+IDCUserPilot.java
+file
+
+
+
+
+2008-11-12T01:45:26.830728Z
+caf2219a3bd6a43aca47b2566d1464ab
+2008-11-21T17:25:54.289712Z
+173
+kspark
+
+DCUserPilot.java
+file
+
+
+
+
+2008-11-12T01:35:10.444917Z
+3f0d43934224ed9a1ee8b13c65067390
+2008-11-21T17:25:54.289712Z
+173
+kspark
+

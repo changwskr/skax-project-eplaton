@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="screenmgmt">
+	<insert id="insertScreen" parameterClass="java.util.HashMap">
+		insert into TMMBCCM04(
+			화면번호,
+			화면명,
+			업무구분코드,
+			하위업무명,
+			설명,
+			등록자ID,
+			등록일자,
+			수정자ID,
+			수정일자		
+		) values (
+			#screnNo#,
+			#screnName#,
+			#uapplCd#,
+			#subBzwkName#,
+			#desc#,
+			#userId#,
+			CURRENT DATE,
+			#userId#,
+			CURRENT DATE
+		)
+	</insert>
+			
+	<select id="getListScreen" resultClass="java.util.HashMap">
+		select
+			화면번호 as screnNo,
+			화면명 as screnName,
+			업무구분코드 as uapplCd,
+			하위업무명 as subBzwkName ,
+			설명 as desc,
+			등록일자 as regYmd
+			from TMMBCCM04      
+		 	<dynamic prepend="where" >
+				 <isNotEmpty property="screnNo" prepend="AND">
+				 	화면번호 = #screnNo#
+				 </isNotEmpty>
+				 <isNotEmpty property="screnName" prepend="AND">
+				 	화면명 = #screnName#
+				 </isNotEmpty>
+				 <isNotEqual property="uapplCd" compareValue="000">
+					 <isNotEmpty property="uapplCd" prepend="AND">
+					 	업무구분코드 = #uapplCd#
+					 </isNotEmpty>
+				 </isNotEqual>
+			</dynamic>		
+	</select>
+	
+	<update id="updateScreen" parameterClass="java.util.HashMap">
+		update TMMBCCM04     
+			수정자ID = #userId#,
+			수정일자 = CURRENT DATE, 
+		<dynamic prepend="SET">
+			<isNotNull property="screnName" prepend=",">
+			화면명 = #screnName#
+			</isNotNull>
+			<isNotNull property="uapplCd" prepend=",">
+			업무구분코드 =#uapplCd#
+			</isNotNull>
+			<isNotNull property="subBzwkName" prepend=",">
+			하위업무명 =#subBzwkName#
+			</isNotNull>
+			<isNotNull property="desc" prepend=",">
+			설명 =#desc#
+			</isNotNull>
+		</dynamic>
+		where 
+			화면번호 = #screnNo#
+	</update>
+	
+			
+	<delete id="deleteScreen" parameterClass="java.util.HashMap">
+		delete from TMMBCCM04
+		where 화면번호 = #screnNo#
+	</delete>
+	
+	
+</sqlMap>

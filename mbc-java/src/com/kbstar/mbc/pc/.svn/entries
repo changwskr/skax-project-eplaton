@@ -1,0 +1,48 @@
+8
+
+dir
+313
+svn://172.28.186.105/ifrs_repository/ifrs.project/mbc-java/src/com/kbstar/mbc/pc
+svn://172.28.186.105/ifrs_repository
+
+
+
+2008-11-21T17:25:54.289712Z
+173
+kspark
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+incomplete
+
+accountpc
+dir
+
+userpc
+dir
+
+dto
+dir
+
+usermanagementpilotpc
+dir
+
+commonpc
+dir
+
+user
+dir
+
+UserTest
+dir
+

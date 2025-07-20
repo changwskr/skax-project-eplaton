@@ -1,0 +1,52 @@
+8
+
+dir
+346
+svn://172.28.186.105/ifrs_repository/ifrs.project/mbc01-java/src/com/kbstar/mbc/fc/foundation/bzcrudbus/business/ic
+svn://172.28.186.105/ifrs_repository
+
+
+
+2009-01-07T19:50:53.516883Z
+302
+kspark
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+4748a35f-f0fb-4a19-b827-a4bf6ff651a3
+
+ICComExec.java
+file
+
+
+
+
+2009-01-07T10:48:32.730882Z
+74488eec05e31c54efaa84816a47b2fa
+2009-01-07T19:50:53.516883Z
+302
+kspark
+
+IICComExec.java
+file
+
+
+
+
+2009-01-07T10:48:03.418569Z
+0b7e8780a4b63e4205900abc63059522
+2009-01-07T19:50:53.516883Z
+302
+kspark
+

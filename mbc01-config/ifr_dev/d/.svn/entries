@@ -1,0 +1,76 @@
+8
+
+dir
+342
+svn://172.28.186.105/ifrs_repository/ifrs.project/mbc01-config/ifr_dev/d
+svn://172.28.186.105/ifrs_repository
+
+
+
+2009-02-02T04:49:14.294794Z
+342
+kspark
+
+
+svn:special svn:externals svn:needs-lock
+
+prefs.dynamic.xml
+file
+
+
+
+
+2009-02-02T04:46:55.392637Z
+38b7740707c9657fde50455f163733db
+2009-02-02T04:49:14.294794Z
+342
+kspark
+
+cache.xml
+file
+
+
+
+
+2009-02-02T04:46:55.377013Z
+09029b4bfa3b68eabbf2672c5776c242
+2009-02-02T04:49:14.294794Z
+342
+kspark
+
+app_containers.xml
+file
+
+
+
+
+2009-02-02T04:46:55.361388Z
+ce3d8dabbf1ff75f49dd87e530ab09d9
+2009-02-02T04:49:14.294794Z
+342
+kspark
+
+server_nodes.xml
+file
+
+
+
+
+2009-02-02T04:46:55.408262Z
+eb46ed9eaf306db5388072deb512c9bd
+2009-02-02T04:49:14.294794Z
+342
+kspark
+
+prefs.batch.xml
+file
+
+
+
+
+2009-02-02T04:46:55.377013Z
+d41d8cd98f00b204e9800998ecf8427e
+2009-02-02T04:49:14.294794Z
+342
+kspark
+

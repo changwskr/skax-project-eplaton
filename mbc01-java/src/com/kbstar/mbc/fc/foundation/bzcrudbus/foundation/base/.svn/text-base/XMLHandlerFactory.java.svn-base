@@ -1,0 +1,53 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.foundation.base;
+
+/**
+ * XMLHandler를 조건에 맞게 생성해서 반환한다.
+ * @author 
+ * @version 1.0
+ */
+
+public class XMLHandlerFactory
+{
+  private static XMLHandlerFactory instance;
+
+  /**
+   * A private constructor
+   */
+  private XMLHandlerFactory() {}
+
+  /**
+   * <p>자기 자신의 Instance를 생성해서 반환한다.</p>
+   *
+   * @return XMLHandlerFactory  A singleton instance of XMLHandlerFactory
+   */
+  public static synchronized XMLHandlerFactory getInstance()
+  {
+    if (instance == null)
+    {
+      instance = new XMLHandlerFactory();
+    }
+    return instance;
+  }
+
+  /**
+   * <p>옵션 조건에 맞게 새로운 XMLHandler를 생성한다.</p>
+   *
+   * @param  handlerCondition XMLHandler 생성시의 옵션
+   * @return XMLHandler       생성된 XMLHandler
+   */
+  public XMLHandler createHandler(HandlerOption handlerCondition)
+  {
+    if (handlerCondition == null)
+    {
+      handlerCondition = new HandlerOption();
+    }
+    if (handlerCondition.getHandlerType() == 1)
+    {  //SAX
+      return new SAXXMLHandler(handlerCondition);
+    }
+    else
+    {                                         //DOM
+      return new DOMXMLHandler(handlerCondition);
+    }
+  }
+}

@@ -1,0 +1,43 @@
+8
+
+dir
+340
+svn://172.28.186.105/ifrs_repository/ifrs.project/mbc01-lib
+svn://172.28.186.105/ifrs_repository
+
+
+
+2009-01-22T17:04:58.685229Z
+340
+kspark
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+4748a35f-f0fb-4a19-b827-a4bf6ff651a3
+
+runtime
+dir
+
+.project
+file
+341
+
+
+
+2009-01-22T04:36:12.026941Z
+752e1ab9337d4e6cfa03678632420243
+2009-01-22T17:05:01.518719Z
+341
+kspark
+

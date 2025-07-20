@@ -1,0 +1,225 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.tcf;
+
+/**
+ *
+ * <p>Title: </p>
+ * <p>Description: This is oversea banking package.</p>
+ * 
+ * 프로그램 설명:
+ * =============================================================================
+ * 실제 트랜잭션을 관리하면서 각 업무시스템으로의 주 업무 클래스를 호출한다
+ * 전체 구조는 3개의 부분으로 구성되어져 있다
+ * 1. STF
+ *    트랜잭션을 시작하기 전의 기본적인 정보를 관리한다
+ * 2. BTF
+ *    업무로직을 처리하기 위해서 관리한다
+ * 3. ETF
+ *    트랜잭션의 완료를 처리하기 위해서 관리되는 모듈이다.
+
+ * <p>Copyright: Copyright (c) 2008 SKC&C Co. Ltd.</p>
+ * @author Jang Woo Sung
+ * @version 1.0
+ */
+
+import javax.naming.NamingException;
+
+import com.kbstar.mbc.fc.foundation.bzcrudbus.constant.Constants;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.constant.TCFConstantErrcode;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.foundation.utility.ErrorCheckUtil;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.log.IIfrsLogger;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.log.IfrsLogHelper;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.transfer.IFRSEvent;
+
+public class TCF extends AbstractTCF {
+
+	private static TCF instance;
+
+	//트랜잭션모드는 WAF단에서 처리와 서버단에서의 처리구분을 위해서 사용한다.
+	//transactionMode=waf,server
+	//public static String transactionMode = ComExecAS.transactionMode;
+	public static String transactionMode;
+
+	private STF stf;
+
+	private ETF etf;
+
+	private BTF btf;
+
+	private IFRSEvent ifrsEvent;
+	
+	private IIfrsLogger logger;
+
+	/**
+	 * TCF 인스턴스를 반환하는 함수.
+	 * @return TCF
+	 */
+	/*
+	public static synchronized TCF getInstance() {
+		if (instance == null) {
+			try {
+				instance = new TCF();
+			} catch (Exception igex) {
+				igex.printStackTrace();
+			}
+		}
+		return instance;
+	}
+
+	public static synchronized TCF getInstance(String transactionMode) {
+		if (instance == null) {
+			try {
+				instance = new TCF(transactionMode);
+			} catch (Exception igex) {
+				igex.printStackTrace();
+			}
+		}
+		return instance;
+	}
+	*/
+	
+	/**
+	 * 생성자 함수.
+	 *
+	 * @throws NamingException
+	 */
+	public TCF(String transactionMode) {
+		TCF.transactionMode = transactionMode;
+
+		if(transactionMode.equals(Constants.TRANSACTION_MODE_WAF)) {
+			logger = IfrsLogHelper.getWaf();
+		}
+		else {
+			logger = IfrsLogHelper.getServer();
+		}
+	}
+
+	/**
+	 * 생성자 함수.
+	 *
+	 * @throws NamingException
+	 */
+	public TCF() {
+
+	}
+
+	/*
+	 * desc : 실제 트랜잭션이 관리되는 부분이다.
+	 * @param transactionMode : container,usertransaction타입 두가지가 있다. 이값에
+	 *                           대해선 환경파일로 관리할 것이다.
+	 * @return IFRSEvent
+	 */
+	/**
+	 * desc : 실제 트랜잭션이 관리되는 부분이다.
+	 * @return IFRSEvent
+	 */
+	public IFRSEvent execute(IFRSEvent ppifrsEvent) {
+		try {
+
+			this.ifrsEvent = ppifrsEvent;
+
+			//	TCF 시작
+			logger.info(ifrsEvent.getCommonDto().getSeqNo(), "[TCF] begin");
+			
+			 // STF 시작
+			logger.info(ifrsEvent.getCommonDto().getSeqNo(), "[STF] begin");
+
+			//	STF 실행
+			this.ifrsEvent = (this.stf = new STF(transactionMode)).execute(ifrsEvent);
+
+			/*
+			 * STF에서의 에러가 발생 했는지 조사한다
+			 * 정상적일 경우에만 업무로직 BTF을 수행하고 나머지는 에러를 클라이언트로 리턴한다
+			 *
+			 */
+
+			if(isError()) {
+				logger.info(ifrsEvent.getCommonDto().getSeqNo(), "[STF] error");
+				logger.info(ifrsEvent.getCommonDto().getSeqNo(), "[STF] end");
+			}
+			else {
+				logger.info(ifrsEvent.getCommonDto().getSeqNo(), "[STF] success");
+				logger.info(ifrsEvent.getCommonDto().getSeqNo(), "[STF] end");
+				logger.info(ifrsEvent.getCommonDto().getSeqNo(), "[BTF] begin");
+				
+				//업무트랜잭션 로직을 시작한다.
+				this.ifrsEvent = (this.btf = new BTF(transactionMode)).execute(ifrsEvent);
+				
+				
+				// 업무가 정상적으로 호출되었는지 확인한다.
+				if (isError()) {
+					logger.info(ifrsEvent.getCommonDto().getSeqNo(), "[BTF] error");
+				} 
+				else {
+					logger.info(ifrsEvent.getCommonDto().getSeqNo(), "[BTF] success");
+				}
+				logger.info(ifrsEvent.getCommonDto().getSeqNo(), "[BTF] end");
+			}
+			
+			
+			/*
+			 * 트랜잭션을 종료한다.
+			 */
+			logger.info(ifrsEvent.getCommonDto().getSeqNo(), "[ETF] begin");
+
+			this.ifrsEvent = (this.etf = new ETF(transactionMode)).execute(ifrsEvent);
+
+			logger.info(ifrsEvent.getCommonDto().getSeqNo(), "[ETF] end");
+
+		} catch (Exception ex) {
+			
+			setTCFError(TCFConstantErrcode.ETCF004, TCFConstantErrcode.ETCF004_MSG);
+
+		}
+
+		logger.info(ifrsEvent.getCommonDto().getSeqNo(), "[TCF] end");
+
+		return ifrsEvent;
+
+	}
+
+	/**
+	 * 에러확인 모듈.
+	 * @return boolean
+	 */
+	private boolean isError() {
+		
+		return ErrorCheckUtil.getInstance().isError(ifrsEvent.getCommonDto().getErrorCode().charAt(0));
+		/*
+		switch (ifrsEvent.getCommonDto().getErrorCode().charAt(0)) {
+			case 'e':
+			case 'b':
+			case 's':
+			case 'd':
+			case 'E':
+			case 'B':
+			case 'S':
+			case 'D':
+				return true;
+			default:
+				return false;
+		}
+		*/
+	}
+
+	/**
+	 * TCF 모듈에서의 에러 확인 모듈.
+	 * @param errorcode String
+	 * @param message String
+	 */
+	private void setTCFError(String errorCode, String errorMsg) {
+		// 에러가 아닌경우 에러코드 설정
+		if(!isError()) {
+			ifrsEvent.getCommonDto().setErrorCode(errorCode);
+			ifrsEvent.getCommonDto().setErrorMsg(errorMsg);
+		}
+	}
+
+	/**
+	 * IFRSEvent 반환 모듈.
+	 * @return IFRSEvent
+	 */
+	public IFRSEvent getIfrsEvent() {
+		return ifrsEvent;
+	}
+
+}

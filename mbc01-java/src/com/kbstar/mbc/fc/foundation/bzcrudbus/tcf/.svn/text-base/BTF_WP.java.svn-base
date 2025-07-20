@@ -1,0 +1,320 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.tcf;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+
+import com.kbstar.mbc.fc.foundation.bzcrudbus.config.ActionConfig;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.config.CommandObj;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.constant.Constants;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.constant.TCFConstantErrcode;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.foundation.utility.ErrorCheckUtil;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.foundation.utility.SsnBean;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.foundation.utility.Utils;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.foundation.utility.WafErrorUtil;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.log.IIfrsLogger;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.log.IfrsLogHelper;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.tpm.TPMUtil;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.transfer.IFRSCommonDTO;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.transfer.IFRSEvent;
+
+/**
+ * <p>
+ * Title:
+ * </p>
+ * 
+ * <p>
+ * Description: This is oversea banking package.
+ * </p>
+ * 
+ * 
+ * @version 1.0
+ * 
+ */
+
+public class BTF_WP {
+
+	private static BTF_WP instance;
+
+	private IFRSEvent ifrsEvent;
+
+	private IFRSCommonDTO commonDTO;
+
+	private String transactionMode = null;
+	
+	private String workType;
+
+	private IIfrsLogger logger = IfrsLogHelper.getWaf();
+	
+	/**
+	 * 
+	 * BTF에 대한 인스턴스를 생성한다.
+	 * 
+	 * @return BTF
+	 * 
+	 */
+
+	public static synchronized BTF_WP getInstance() {
+
+		if (instance == null) {
+			try {
+				instance = new BTF_WP();
+			} catch (Exception igex) {
+			}
+		}
+		return instance;
+
+	}
+
+	
+	public BTF_WP() {
+	}
+
+	
+
+	/**
+	 * IFRSEvent을 가져오는 함수.
+	 * 
+	 * @return IFRSEvent
+	 */
+
+	public IFRSEvent getIFRSEvent() {
+		return ifrsEvent;
+
+	}
+
+	/**
+	 * 실행함수.
+	 * 
+	 * @param ppifrsevent
+	 *            IFRSEvent
+	 * @return IFRSEvent
+	 */
+
+	public IFRSEvent execute(IFRSEvent ifrsEvent) {
+
+		try {
+
+			logger.info(ifrsEvent.getCommonDto().getWafSeq(), "[BTF_WP] begin");
+
+			/*
+			 * PC 단으로의 메소드 인보크를 실시한다.
+			 */
+			
+			//	command id 로 처리정보를 가져옴
+			ArrayList arrList = ActionConfig.getInstance("WAF").getCmdList(ifrsEvent.getCommonDto().getCommandId());
+						
+			CommandObj cmdObj = null;
+			String resultXml = null;
+	
+        	
+			//	멀티 호출일 경우 복수 처리
+			for (Iterator itr = Utils.snapshotIterator(arrList); itr.hasNext(); ) {
+				
+				cmdObj =  (CommandObj) itr.next();
+
+				ifrsEvent.getCommonDto().setKey(cmdObj.key);
+				ifrsEvent.getCommonDto().setHostServer(cmdObj.server);
+				ifrsEvent.getCommonDto().setHostAs(cmdObj.name);
+				
+				resultXml = TPMUtil.getInstance().TPCSendRecv(ifrsEvent);
+			
+				// XML파싱후 에러여부 확인
+				boolean bError = checkXmlError(resultXml);
+				
+				// 에러가 있는 경우
+				if(bError) {
+					
+					setBTFError(TCFConstantErrcode.EBTF003, TCFConstantErrcode.EBTF003_MSG);
+					
+					ifrsEvent.getCommonDto().setErrorMap(WafErrorUtil.setErrorInfo(null, TCFConstantErrcode.EBTF003, new Exception(TCFConstantErrcode.EBTF003_MSG)));
+					
+					break;
+					
+				}
+				else {
+					
+					// 결과 XML 값 설정
+					ifrsEvent.getCommonDto().setResultXml(resultXml);
+				}
+				
+			}
+			
+			String forwardName = ifrsEvent.getCommonDto().getForwardName();
+			
+			//	에러발생여부 확인
+			String errOccur = (String) ifrsEvent.getCommonDto().getToMap().get(Constants.ERROR_OCCUR_VAR);
+			
+			//	에러가 발생한 경우 에러 처리
+			if (errOccur != null && errOccur.equals("Y")) {
+				
+				processError(ifrsEvent);
+				
+			}
+			
+
+		} catch (Exception ex) {
+
+			//ex.printStackTrace();
+
+			setBTFError(TCFConstantErrcode.EBTF003, TCFConstantErrcode.EBTF003_MSG);
+
+			// Added by 박기석
+			ifrsEvent.getCommonDto().setErrorMap(WafErrorUtil.setErrorInfo(null, TCFConstantErrcode.EBTF003, ex));
+						
+			logger.info(ifrsEvent.getCommonDto().getWafSeq(), "[BTF_WP] end");
+
+		}
+
+		return ifrsEvent;
+
+	}
+
+//	 에러 처리 (DB에 있는 에러메시지 조회 및 에러 XML 생성)
+	protected String processError(IFRSEvent ifrsEvent) {
+
+		//BaseForm baseForm = (BaseForm) form;
+		
+		String errCd = (String) ifrsEvent.getCommonDto().getErrorMap().get(Constants.ERROR_MSG_CD_VAR);
+		String errMsg = (String) ifrsEvent.getCommonDto().getErrorMap().get(Constants.ERROR_MSG_TEXT_VAR);
+		
+		//	데이터베이스에서 코드에 해당하는 메시지 데이터를 가져온다.
+		//HashMap msgMap = (new BaseDAO()).getMsgData(baseForm);
+		HashMap msgMap = new HashMap();
+		
+		if(msgMap != null) {				
+			SsnBean.setMsgData(ifrsEvent.getServletRequest(), msgMap);
+		}
+		else {		
+			msgMap = new HashMap();
+			
+			errMsg = "메시지가 정의되지 않은 에러입니다.";					
+		}
+		
+		
+		// 에러전문 생성
+		String errorXml = "";
+		
+		return errorXml;
+		
+	}
+	
+	/**
+	 * 
+	 * 에러체킹유무관리.
+	 * 
+	 * @return boolean
+	 * 
+	 */
+
+	private boolean isError() {
+		
+		return ErrorCheckUtil.getInstance().isError(ifrsEvent.getCommonDto().getErrorCode().charAt(0));
+		/*
+		switch (ifrsEvent.getCommonDto().getErrorCode().charAt(0)) {
+			case 'e':
+			case 'b':
+			case 's':
+			case 'd':
+			case 'E':
+			case 'B':
+			case 'S':
+			case 'D':
+				return true;
+			default:
+				return false;
+		}
+		*/
+	}
+
+	/**
+	 * 
+	 * BTF 모듈에서의 에러체킹. *
+	 * 
+	 * @param errorcode
+	 *            String
+	 * 
+	 * @param message
+	 *            String
+	 * 
+	 */
+
+	private void setBTFError(String errorCode, String errorMsg) {
+
+		//	에러가 아닌경우 에러코드 설정
+		if(!isError()) {
+			ifrsEvent.getCommonDto().setErrorCode(errorCode);
+			ifrsEvent.getCommonDto().setErrorMsg(errorMsg);
+		}
+
+	}
+
+	/**
+	 * 
+	 * 업무컴포턴에서 발생된 Exception객을 저장관리하는 메소드.
+	 * 
+	 * @param _e
+	 *            Throwable
+	 * 
+	 */
+
+	private void BTF_Exception(Throwable _e) {
+
+		logger.info(ifrsEvent.getCommonDto().getWafSeq(), "[BTF_Exception] begin");
+
+		Throwable cause = _e;
+
+		int count = 0;
+
+		while (cause != null) {
+
+			if (count > 100)
+				break;
+
+			if (cause instanceof InvocationTargetException) {
+
+				cause = ((InvocationTargetException) cause).getTargetException();
+
+			} else if (cause instanceof Exception) {
+
+				cause = ((Exception) cause);
+
+				break;
+
+			} else {
+
+				cause = null;
+
+			}
+
+		}
+
+		String transactionNo = "No Transaction Number";
+
+		if (cause instanceof Exception) {
+
+			cause.printStackTrace();
+
+			Exception _eee = (Exception) cause;
+
+		}
+		else {
+
+			cause.printStackTrace();
+
+			Exception ex = (Exception) cause;
+
+		}
+
+		logger.info(ifrsEvent.getCommonDto().getWafSeq(), "[BTF_Exception] end");
+
+	}
+
+	//	 XML을 파싱해서 에러여부 확인
+	protected boolean checkXmlError(String xml) {
+		
+		return false;
+	}
+
+}

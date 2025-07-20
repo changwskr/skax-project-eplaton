@@ -1,0 +1,98 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.foundation.base;
+
+import java.io.*;
+import org.jdom.*;
+import org.jdom.input.*;
+import org.jdom.output.*;
+
+/**
+ * 각각의 XML 파일을 Document 형태로 보관하고 생존주기를 관리한다.
+ * @author 
+ * @version 1.0
+ */
+
+public class Doc
+{
+    private Document doc;
+    private long lastModified;
+    private final String docFileName;
+    private HandlerOption option;
+
+    /**
+     * 생성하고자 하는 XML 파일에 대한 설정사항을 저장하고 Document 초기화를 수행한다.
+     *
+     * @param  docFileName      생성하고자 하는 XML 파일명
+     * @param  handlerCondition Document 생성시 사용하고자 하는 핸들러 옵션
+     */
+    public Doc(String docFileName, HandlerOption handlerCondition)
+    {
+        this.option = handlerCondition;
+        this.docFileName = docFileName;
+        this.lastModified = getLastModified();
+        documentInit();
+    }
+
+    /**
+     * 설정된 옵션 사항들을 기반으로 XMLHandlerFacotory로부터
+     * XMLHandler를 생성하고, XML 파일을 Document로 변환한다.
+     */
+    private void documentInit()
+    {
+        XMLHandler handler = XMLHandlerFactory.getInstance().createHandler(option);
+        doc = handler.parse(docFileName);
+        System.out.println("document init...");
+    }
+
+    /**
+     * 파일이 변경되었는지의 여부를 판단해서, 변경되었으면
+     * Document를 새롭게 갱신한 후, Document를 반환한다.
+     *
+     * @return  Document 변환된 JDOM API의 Document Object
+     */
+    public Document getDocument()
+    {
+        if (isModified()) documentInit();
+        return doc;
+    }
+
+    /**
+     * 파일의 변경여부를 반환한다.
+     *
+     * @return boolean  해당 파일의 변경여부
+     * <pre>
+     *   - 변경되지 않은 경우  false
+     *   - 변경된 경우    true
+     * </pre>
+     */
+    private boolean isModified()
+    {
+        try {
+            //System.out.println("lastModified:" + lastModified);
+            //System.out.println("getLastModified:" + getLastModified());
+            if (lastModified != getLastModified()) {
+                lastModified = getLastModified();
+                return true;
+            }
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * 파일의 변경 시간의 반환한다.
+     *
+     * @return long      해당 파일의 변경시간
+     */
+    private long getLastModified()
+    {
+        try
+        {
+            File file = new File(docFileName);
+            return file.lastModified();
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+}

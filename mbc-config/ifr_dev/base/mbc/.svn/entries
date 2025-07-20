@@ -1,0 +1,31 @@
+8
+
+dir
+343
+svn://172.28.186.105/ifrs_repository/ifrs.project/mbc-config/ifr_dev/base/mbc
+svn://172.28.186.105/ifrs_repository
+
+
+
+2009-02-02T04:49:27.465079Z
+343
+kspark
+
+
+svn:special svn:externals svn:needs-lock
+
+sqlmap_KESA
+dir
+
+Prefs.bizservice.xml
+file
+
+
+
+
+2009-02-02T04:47:18.407968Z
+6d262f056cd951c10e193f97fb62e596
+2009-02-02T04:49:27.465079Z
+343
+kspark
+

@@ -1,0 +1,28 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.business.ic;
+
+import java.util.HashMap;
+import java.util.List;
+
+import com.kbstar.ksa.oltp.biz.IProcessComponent;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.exception.CommonPCException;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.transfer.IFRSCommonDTO;
+
+public interface IICComExec extends IProcessComponent {
+
+	public String getData(IFRSCommonDTO commonDTO) throws CommonPCException;
+
+	public List<HashMap> getList(IFRSCommonDTO commonDTO) throws CommonPCException;
+
+	public int saveData(IFRSCommonDTO commonDTO) throws CommonPCException;
+	
+	public void insertList(IFRSCommonDTO commonDTO) throws CommonPCException;
+
+	public void updateList(IFRSCommonDTO commonDTO) throws CommonPCException;
+
+	public void deleteList(IFRSCommonDTO commonDTO) throws CommonPCException;
+	
+	public void saveList(IFRSCommonDTO commonDTO) throws CommonPCException;
+
+	public void saveGrid(IFRSCommonDTO commonDTO) throws CommonPCException;
+	
+}

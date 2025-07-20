@@ -1,0 +1,160 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.foundation.utility;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
+import org.dom4j.Attribute;
+import org.dom4j.Element;
+
+import com.kbstar.ksa.infra.po.GenericDto;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.config.Env;
+
+
+public class GenericDtoUtil {
+
+	public static Iterator snapshotIterator(Collection collection) {
+        return new ArrayList(collection).iterator();
+    }
+	
+	public static Element getOutDataElement(GenericDto gDto) {
+		return getGenericDtoElement(gDto, "/KB-Message/Individual", "OutData");
+	}
+	
+	public static void addMapList(GenericDto gDto, String groupName, String elementName, HashMap map, String addType) {
+		addMapList(gDto, groupName, elementName, map, addType, null);
+	}
+	
+	public static void addMapList(GenericDto gDto, String groupName, String elementName, HashMap map, String addType, HashMap metaDataMap) {
+		List<HashMap> mapList = new Vector();
+		mapList.add(map);
+		addMapList(gDto, groupName, elementName, mapList, addType, metaDataMap);
+	}
+	
+	public static void addMapList(GenericDto gDto, String groupName, String elmtName, List<HashMap> mapList, String addType) {
+		addMapList(gDto, groupName, elmtName, mapList, addType, null);
+	}
+	
+	public static void addMapList(GenericDto gDto, String groupName, String elmtName, List<HashMap> mapList, String addType, HashMap metaDataMap) {
+		
+		if(mapList.size() > 0) {
+			String elementName = elmtName;
+			if(elementName == null || elementName.equals("")) {
+				elementName = Env.getProperty("GenericDtoUtil.DATA_ELEMENT_NAME");
+			}
+			
+			List<HashMap> dupMapList = mapList;
+			
+			Element outDataElmt = getOutDataElement(gDto);
+			
+			Element grpElmt = outDataElmt.addElement(groupName);
+			
+			HashMap<String, String> sampleMap = (HashMap)dupMapList.get(0);
+			
+			Object[] keyArray = sampleMap.keySet().toArray();
+		
+			HashMap rowMap = null;
+			Element rowElmt = null;
+			String keyStr = null;
+			
+			// Element 타입으로 생성
+			if(addType != null && addType.equals("Element")) {
+			
+				Element keyElmt = null;
+				
+				for (Iterator itr = snapshotIterator(dupMapList); itr.hasNext(); ) {
+					rowMap =  (HashMap)itr.next();
+					
+					rowElmt = grpElmt.addElement(elementName);
+					
+					for(int i=0; i<keyArray.length; i++) {
+						
+						keyStr = (String)keyArray[i];
+						// keyElmt = rowElmt.addElement(keyStr.toLowerCase());
+						if(metaDataMap != null && metaDataMap.containsKey(keyStr)) {
+							keyElmt = rowElmt.addElement((String)metaDataMap.get(keyStr));
+						}
+						else {
+							keyElmt = rowElmt.addElement(keyStr);
+						}
+						keyElmt.setText(rowMap.get(keyStr).toString().trim());
+						
+					}
+					
+				}
+			
+			}
+			else {
+				
+				for (Iterator itr = snapshotIterator(dupMapList); itr.hasNext(); ) {
+					rowMap =  (HashMap)itr.next();
+					
+					rowElmt = grpElmt.addElement(elementName);
+					
+					for(int i=0; i<keyArray.length; i++) {
+						keyStr = (String)keyArray[i];
+						//rowElmt.addAttribute(keyStr.toLowerCase(), rowMap.get(keyStr).toString());
+						if(metaDataMap != null && metaDataMap.containsKey(keyStr)) {
+							rowElmt.addAttribute((String)metaDataMap.get(keyStr), rowMap.get(keyStr).toString().trim());
+						}
+						else {
+							rowElmt.addAttribute(keyStr, rowMap.get(keyStr).toString().trim());
+						}
+					}
+					
+				}
+			}
+		}
+	}
+	
+	
+	public static Element getGenericDtoElement(GenericDto gDto, String path, String elementName) {
+		List elmtList  = gDto.getElements(path);
+		
+		Element xmlElmt = null;
+		
+		for (Iterator itr = snapshotIterator(elmtList); itr.hasNext(); ) {
+			xmlElmt =  (Element)itr.next();
+			
+			if(xmlElmt.getName().equals(elementName)) {
+				return xmlElmt;
+			}
+		}
+		
+		return xmlElmt;
+	}
+	
+	public static String getHeaderAttribute(GenericDto gDto, String attrName) {
+		
+		Element headerElmt = getGenericDtoElement(gDto, "/KB-Message/Individual", "DataHeader");
+		
+		if(headerElmt != null) {
+		
+			Attribute attr = headerElmt.attribute(attrName);
+			if(attr != null) {
+				return attr.getValue();
+			}
+			
+		}
+		
+		return "";
+	}
+	
+	public static void setHeaderAttribute(GenericDto gDto, String attrName, String attrValue) {
+		
+		Element headerElmt = getGenericDtoElement(gDto, "/KB-Message/Individual", "DataHeader");
+		
+		if(headerElmt != null) {
+		
+			Attribute attr = headerElmt.attribute(attrName);
+			if(attr != null) {
+				attr.setValue(attrValue);
+			}
+			
+		}
+	}
+	
+}

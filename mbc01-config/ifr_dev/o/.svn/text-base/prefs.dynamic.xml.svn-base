@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="euc-kr"?>
+<preference>
+	<!--  jdbc connection  -->
+	<service bizCode="KESA" name="ds">
+		<!--entry name="factory">com.ibm.websphere.naming.WsnInitialContextFactory</entry-->
+		<entry name="jndi">java:comp/env/jndi/ds/KESA</entry>
+	</service>
+		
+	<!-- Async Manager Preference
+			하나의 Instance에 1개의 AsyncMgr 가 존재한다. bizCode를 KESA 로 고정한다.
+			WORKER_NUMBER : Async 요청을 처리할 worker 갯수. 0 이하이면, Async Manager는 기동되지 않음.
+	-->
+	<service name="AsyncMgrPrefs" bizCode="KESA">
+		<entry name="WORKER_NUMBER">2</entry>
+	</service>
+	
+	<!-- HTTP Manager Preference for Production mode
+			ADAPTER_NAME : adapter name
+			CONCURRENT_CONNECTION : 동시 접속 가능 connection number
+			TCP_NO_DELAY : TCP stream 설정값. true : no delay / false : buffered mode
+			TCP_LINGER : TCP linger 설정값. 0 이상의 integer
+			ACQUIRE_TIMEWAIT : HTTP connection 획득까지 대기할 시간. milliseconds
+			TRANSFER_TIMEOUT : HTTP 통신 timeout. milliseconds
+			REQ_URL : HTTP 요청 URL
+	 -->
+	<service name="HTTPMgrPrefs" bizCode="EDU">
+		<entry name="ADAPTER_NAME">EDU_PROD</entry>
+		<entry name="CONCURRENT_CONNECTION">10</entry>
+		<entry name="TCP_NO_DELAY">true</entry>
+		<entry name="TCP_LINGER">0</entry>
+		<entry name="ACQUIRE_TIMEWAIT">2000</entry>
+		<entry name="TRANSFER_TIMEOUT">60000</entry>
+		<entry name="REQ_URL">127.0.0.1:9080/ksa.web/nGiant</entry>
+	</service>
+</preference>

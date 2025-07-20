@@ -1,0 +1,81 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.transfer;
+
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.kbstar.ksa.infra.po.KBData;
+
+
+/**
+ * 
+ * 이 class는 business layer와 application layer사이에 주고 받는
+ * 정보를 담는다.<br>
+ * Application layer에서 business layer로 전달되는 정보는 request field에 저장되고,
+ * Business layer에서 application layer로 전달되는 정보는 response field에 저장된다.
+ * 또, Application layer에서 business layer로 전달되는 request에 항상 포함되는
+ * 공통 정보는 common field에 저장된다.
+ */
+
+public final class IFRSEvent  {
+
+    private IFRSCommonDTO commonDto;
+    private KBData kbData;
+    private HttpServletRequest servletRequest;   
+    private Exception exception;
+    
+	/**
+     * 기본 생성자.
+     */
+    public IFRSEvent() {
+        this.commonDto = new IFRSCommonDTO();
+    }
+
+   
+    /**
+     * 모든 request에 항상 포함되는 공통 정보를 지정한다.<br>
+     *
+     * @param common 공통 정보
+     */
+  
+    public void setKBData(KBData kbData) {
+        this.kbData = kbData;
+    }
+
+    public KBData getKbData() {
+        return kbData;
+    }
+
+	public IFRSCommonDTO getCommonDto() {
+		return commonDto;
+	}
+
+
+	public void setCommonDto(IFRSCommonDTO commondto) {
+		this.commonDto = commondto;
+	}
+
+
+	public void setKbData(KBData kbData) {
+		this.kbData = kbData;
+	}
+
+
+	public HttpServletRequest getServletRequest() {
+		return servletRequest;
+	}
+
+
+	public void setServletRequest(HttpServletRequest servletRequest) {
+		this.servletRequest = servletRequest;
+	}
+
+	public Exception getException() {
+		return exception;
+	}
+
+
+	public void setException(Exception exception) {
+		this.exception = exception;
+	}
+	
+}

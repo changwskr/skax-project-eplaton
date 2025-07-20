@@ -1,0 +1,10 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.tpm;
+
+import com.kbstar.mbc.fc.foundation.bzcrudbus.exception.DelegateException;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.transfer.IFRSEvent;
+
+public interface IServiceDelegate {
+
+	public String sendData(IFRSEvent ifrsEvent) throws DelegateException;
+		
+}

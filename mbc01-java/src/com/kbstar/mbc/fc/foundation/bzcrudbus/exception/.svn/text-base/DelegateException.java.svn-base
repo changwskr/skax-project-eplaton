@@ -1,0 +1,15 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.exception;
+
+
+public class DelegateException extends Exception {
+
+	
+	public DelegateException() {
+		super();
+	}
+
+	public DelegateException(String errMsg) {
+		super(errMsg);
+	}
+
+}

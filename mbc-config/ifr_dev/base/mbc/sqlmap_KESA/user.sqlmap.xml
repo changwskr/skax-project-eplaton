@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="user">
+
+	<typeAlias alias="user" type="com.kbstar.mbc.dc.usermgtdc.User"/>
+	<typeAlias alias="userddto" type="com.kbstar.mbc.dc.usermgtdc.dto.UserDDTO"/>		
+	<typeAlias alias="tree" type="com.kbstar.mbc.dc.usermgtdc.Tree"/>
+	<typeAlias alias="treeddto" type="com.kbstar.mbc.dc.usermgtdc.dto.TreeDDTO"/>
+	<typeAlias alias="page" type="com.kbstar.mbc.dc.usermgtdc.Page"/>
+	<typeAlias alias="pageddto" type="com.kbstar.mbc.dc.usermgtdc.dto.PageDDTO"/>
+	
+	<select id="getListPage" parameterClass="pageddto" resultClass="page">
+		<![CDATA[
+		select
+			B.*
+		from (
+			select
+				rownumber() over(order by seq asc) as rownum,
+				A.*
+			from (
+				select
+					순번 as seq,
+					순번내용 as seqCtnt
+				from pagegrid
+			) A
+		) B
+		where 	B.rownum > ((#dmndPageNo# -1)* #pageLineCnt#)
+		and 		B.rownum <= (((#dmndPageNo# +0)* #pageLineCnt#))
+		with ur
+		]]>
+	</select>
+	
+	<select id="getPageCount" resultClass="java.lang.String">
+		select count(순번) from pagegrid
+	</select>
+	
+	<select id="getListTree" parameterClass="treeddto" resultClass="tree">
+		select 
+			trim(nodeid) as nodeid,
+			CASE parentid  WHEN '0000' THEN '' ELSE trim(parentid) END as parentid,
+			trim(text) as text,
+			trim(textcolor) as textcolor,
+			trim(imageid) as imageid
+		from TREE
+		where parentid = #nodeid#
+	</select>
+		
+	<select id="getListUser" parameterClass="userddto" resultClass="user">
+		select 
+			사용자ID as userID,
+			사용자구분코드 as userDstcd,
+			사용자명 as userName,
+			사용자비밀번호 as userPwd,
+			주민번호 as ssno,
+			언어구분 as langDstcd,
+			부서번호 as dvsnNo,
+			부서명 as dvsnName,
+			직종구분코드 as jobclDstcd,
+			직종명 as jobclName,
+			기관코드 as instiCd,
+			기관명 as instiName,
+			전화번호 as telno,
+			휴대폰번호 as cphnNo,
+			이메일 as emad,
+			팩스번호 as faxNo,
+			생년월일 as brdt,
+			주소 as addr,
+			우편번호 as zip,
+			이메일수신여부 as emalRecvYn,
+			SMS수신여부 as sMSRecvYn,
+			사용여부 as useYn,
+			처리상태구분 as prcssStusDstcd,
+			입사일자 as entcoYmd,
+			퇴사일자 as rtireYmd,
+			등록자ID as regsntID,
+			등록일자 as regiYmd,
+			수정자ID as amndrID,
+			수정일자 as amndYmd
+		from TMMBCCM01
+		<dynamic prepend="where" >
+			 <isNotEmpty property="userDstcd" prepend="AND">
+			 	사용자구분코드 = #userDstcd#
+			 </isNotEmpty>
+			 <isNotEmpty property="userName" prepend="AND">
+			 	사용자명 = #userName#
+			 </isNotEmpty>
+			 <isNotEmpty property="userID" prepend="AND">
+			 	사용자ID = #userID#
+			 </isNotEmpty>
+			 <isNotEmpty property="dvsnName" prepend="AND">
+			 	부서명 = #dvsnName#
+			 </isNotEmpty>
+			 <isNotEmpty property="useYn" prepend="AND">
+			 	사용여부 = #useYn#
+			 </isNotEmpty>
+		</dynamic> 
+	</select>				
+			
+	<insert id="insertUser" parameterClass="userddto">
+		insert into TMMBCCM01(
+			사용자ID,
+			사용자구분코드,
+			사용자명,
+			사용자비밀번호,
+			주민번호,
+			언어구분,
+			부서번호,
+			부서명,
+			직종구분코드,
+			직종명,
+			기관코드,
+			기관명,
+			전화번호,
+			휴대폰번호,
+			이메일,
+			팩스번호,
+			생년월일,
+			주소,
+			우편번호,
+			이메일수신여부,
+			SMS수신여부,
+			사용여부,
+			처리상태구분,
+			입사일자,
+			퇴사일자,
+			등록자ID,
+			등록일자			
+		) values (
+			#userID#,                       
+			#userDstcd#,             
+			#userName#,              
+			#userPwd#,       
+			#ssno#,                  
+			#langDstcd#,             
+			#dvsnNo#,                
+			#dvsnName#,      
+			#jobclDstcd#,            
+			#jobclName#,     
+			#instiCd#,               
+			#instiName#,     
+			#telno#,         
+			#cphnNo#,                
+			#emad#,          
+			#faxNo#,                 
+			#brdt#,         	        
+			#addr#,                  
+			#zip#,                  
+			#emalRecvYn#,    
+			#smsRecvYn#,             
+			#useYn#,                 
+			#prcssStusDstcd#,        
+			#entcoYmd#,              
+			#rtireYmd#,              
+			#regsntID#,              
+			CURRENT DATE
+		)
+	</insert>
+	
+	<update id="updateUser" parameterClass="userddto">
+		update TMMBCCM01
+		<dynamic prepend="SET">
+			<isNotNull property="userDstcd" prepend=",">
+			사용자구분코드 = #userDstcd#
+			</isNotNull>
+			<isNotNull property="userName" prepend=",">
+			사용자명 = #userName#
+			</isNotNull>
+			<isNotNull property="userPwd" prepend=",">
+			사용자비밀번호 = #userPwd#
+			</isNotNull>
+			<isNotNull property="ssno" prepend=",">
+			주민번호 = #ssno#
+			</isNotNull>
+			<isNotNull property="langDstcd" prepend=",">
+			언어구분 = #langDstcd#
+			</isNotNull>
+			<isNotNull property="dvsnNo" prepend=",">
+			부서번호 = #dvsnNo#
+			</isNotNull>
+			<isNotNull property="dvsnName" prepend=",">
+			부서명 = #dvsnName#
+			</isNotNull>
+			<isNotNull property="jobclDstcd" prepend=",">
+			직종구분코드 = #jobclDstcd#
+			</isNotNull>
+			<isNotNull property="jobclName" prepend=",">
+			직종명 = #jobclName#
+			</isNotNull>
+			<isNotNull property="instiCd" prepend=",">
+			기관코드 = #instiCd#
+			</isNotNull>
+			<isNotNull property="instiName" prepend=",">
+			기관명 = #instiName#
+			</isNotNull>
+			<isNotNull property="telno" prepend=",">
+			전화번호 = #telno#
+			</isNotNull>
+			<isNotNull property="cphnNo" prepend=",">
+			휴대폰번호 = #cphnNo#
+			</isNotNull>
+			<isNotNull property="emad" prepend=",">
+			이메일 = #emad#
+			</isNotNull>
+			<isNotNull property="faxNo" prepend=",">
+			팩스번호 = #faxNo#
+			</isNotNull>
+			<isNotNull property="brdt" prepend=",">
+			생년월일 = #brdt#
+			</isNotNull>
+			<isNotNull property="addr" prepend=",">
+			주소 = #addr#
+			</isNotNull>
+			<isNotNull property="zip" prepend=",">
+			우편번호 = #zip#
+			</isNotNull>
+			<isNotNull property="emalRecvYn" prepend=",">
+			이메일수신여부 = #emalRecvYn#
+			</isNotNull>
+			<isNotNull property="smsRecvYn" prepend=",">
+			SMS수신여부 = #smsRecvYn#
+			</isNotNull>
+			<isNotNull property="useYn" prepend=",">
+			사용여부 = #useYn#
+			</isNotNull>
+			<isNotNull property="prcssStusDstcd" prepend=",">
+			처리상태구분 = #prcssStusDstcd#
+			</isNotNull>
+			<isNotNull property="entcoYmd" prepend=",">
+			입사일자 = #entcoYmd#
+			</isNotNull>
+			<isNotNull property="rtireYmd" prepend=",">
+			퇴사일자 = #rtireYmd#
+			</isNotNull>
+			<isNotNull property="amndrID" prepend=",">
+			수정자ID = #amndrID#
+			</isNotNull>
+			<isNotNull property="amndYmd" prepend=",">
+			수정일자 = #amndYmd#
+			</isNotNull>
+		</dynamic>
+		where 사용자ID = #userID#
+	</update>
+	
+	<delete id="deleteUser" parameterClass="userddto">
+		delete from TMMBCCM01 where 사용자ID = #userID#
+	</delete>
+	
+</sqlMap>

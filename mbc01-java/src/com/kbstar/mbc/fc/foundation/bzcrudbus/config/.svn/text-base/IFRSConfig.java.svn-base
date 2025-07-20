@@ -1,0 +1,196 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.config;
+
+
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Iterator;
+
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
+
+import com.kbstar.mbc.fc.foundation.bzcrudbus.log.IfrsLogHelper;
+
+
+/**
+ * 환경설정파일을 읽어서 해당 환경설정을 Hashtable에 저장하고 조작한다.
+ * 
+ * @author : jws
+ * @version : 1.0
+ */
+
+public class IFRSConfig {
+    /**
+     * 환경설정 파일명 환경설정 파일은 클래스 패스안에 존재해야 한다.
+     */
+    private String configFileName = null;
+	
+    //private static Log log = LogFactory.getLog(IFRSConfig.class);
+
+    private static Hashtable interfaces = new Hashtable();
+
+    private static IFRSConfig config;
+    
+    private IFRSConfig() throws Exception {
+    	init();
+    }
+
+    /**
+     * IFRSConfig 클래스의 Singletone 생성자
+     * 
+     * @return
+     */
+    public static IFRSConfig getInstance() {
+        if (config == null) {
+            try {
+            	config = new IFRSConfig();
+            } catch (Exception e) {
+                   e.printStackTrace();
+            }
+        }
+        return config;
+    }
+
+    /**
+     * 환경설정 정보를 재로딩한다.
+     */
+    public void reLoadConfig() {
+
+        try {
+            init();
+        } catch (Exception e) {
+            e.printStackTrace();
+            
+        }
+
+    } 
+
+    
+    /**
+     * XML로 정의된 환경설정파일을 읽어서 Hashtable에 저장한다.
+     * 
+     * @throws Exception
+     */
+    private void init() throws Exception {
+    	    	
+        // XMSConfig 초기화
+    	IfrsLogHelper.getCom().infoF("[IFRSConfig] init");
+    	
+        java.io.InputStream is = null;
+
+        try {
+        	
+        	if(configFileName == null) {
+        		configFileName = Env.getValue("config.default.file");
+        	}
+        	
+        	IfrsLogHelper.getCom().infoF("[IFRSConfig] init : Load Config File : " + configFileName);
+        	
+        	is = IFRSConfig.class.getResourceAsStream(configFileName);
+        	
+            SAXBuilder builder = new SAXBuilder(false);
+
+            Document doc = builder.build(is);
+
+            //2 config 파일의 요소를 구한다.
+            Element root = doc.getRootElement();
+
+            readSysConfig(root);
+
+        } catch (JDOMException jdome) {
+            
+                jdome.printStackTrace();
+            
+            throw new Exception(jdome.getMessage());
+        } catch (Exception e) {
+            
+                e.printStackTrace();
+           
+            throw new Exception(e.getMessage());
+        }
+
+    }
+
+    /**
+     * SystemInfo를 읽는다.
+     * 
+     * @param element
+     * @return
+     */
+    private static void readSysConfig(Element element) {
+        //create serviceInfo
+
+        Iterator iterator = element.getChildren("SystemInfo").iterator();
+        Element temp = null;
+        while (iterator.hasNext()) {
+            temp = (Element) iterator.next();
+            IfrsLogHelper.getCom().infoF("[IFRSConfig] Reading SystemInfo: " + temp.getAttributeValue("id"));
+            interfaces.put(temp.getAttributeValue("id"), readAttributes(temp));
+        }
+
+    }
+
+    /**
+     * XML 노드에 속성을 추가한다.
+     * 
+     * @param element
+     * @return
+     */
+    private static ConfigInfo readAttributes(Element element) {
+
+        ConfigInfo serviceInfo = new ConfigInfo();
+        Iterator iterator = element.getChildren().iterator();
+        serviceInfo.setSysConfig(makeSubSet(iterator));
+        return serviceInfo;
+
+    }
+
+    private static HashMap makeSubSet(Iterator iterator) {
+        HashMap subMap = new HashMap();
+        Element temp = null;
+        while (iterator.hasNext()) {
+            temp = (Element) iterator.next();
+            subMap.put(temp.getName(), temp.getText());
+        }
+
+        return subMap;
+    }
+
+    /**
+     * 주어진 조건으로 설정정보를 검색한다.
+     * 
+     * @param sysInfo
+     * @param confName
+     * @return
+     */
+    public String getInfo(String sysInfo, String confName) {
+        ConfigInfo info = (ConfigInfo) interfaces.get(sysInfo);
+        IfrsLogHelper.getCom().infoF("[IFRSConfig] getinfo["+info+"]");
+        return (String) info.getSysConfig().get(confName);
+    }
+
+    public String getServerIpAddress(String sysInfo, String confName) {
+        String serverUrl = getInfo(sysInfo, confName);
+        int delimeter = serverUrl.lastIndexOf(":");
+        String ip = serverUrl.substring(0, delimeter);
+        return ip;
+    }
+
+    public String getServerPort(String sysInfo, String confName) {
+        String serverUrl = getInfo(sysInfo, confName);
+        int delimeter = serverUrl.lastIndexOf(":");
+        String port = serverUrl.substring(delimeter + 1, serverUrl.length());
+        return port;
+    }
+    
+    
+    public static void main(String[] args) {
+		// TODO 자동 생성된 메소드 스텁
+    	
+    	String conv = IFRSConfig.getInstance().getInfo("ReportServerInfo", "IP");
+
+	}
+    
+
+}

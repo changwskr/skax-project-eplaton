@@ -1,0 +1,46 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.foundation.utility;
+
+import java.util.HashMap;
+
+import com.kbstar.mbc.fc.foundation.bzcrudbus.config.IFRSConfig;
+
+
+public class ErrorCheckUtil {
+	
+	private static ErrorCheckUtil instance;
+	private HashMap errorCharMap = null;
+	
+	public static synchronized ErrorCheckUtil getInstance() {
+        if (instance == null) {
+            instance = new ErrorCheckUtil();
+        }
+        return instance;
+    }
+	
+	public ErrorCheckUtil() {
+		String charList = IFRSConfig.getInstance().getInfo("ErrorCode", "CharList");
+		errorCharMap = new HashMap();
+		String[] charArray = charList.split("/");
+		
+		String charStr = null;
+		for(int i=0; i<charArray.length; i++) {
+			charStr = charArray[i];
+			errorCharMap.put(charStr, charStr);
+			errorCharMap.put(charStr.toLowerCase(), charStr);
+			errorCharMap.put(charStr.toUpperCase(), charStr);
+		}
+	}
+	
+	public boolean isError(String errCode) {
+		if(errCode == null || errCode.length() < 1) {
+			return false;
+		}
+		
+		return isError(errCode.charAt(0));
+	}
+	
+	public boolean isError(char errCode) {
+		String errorCode = Character.toString(errCode);
+		return errorCharMap.containsKey(errorCode);
+	}
+}

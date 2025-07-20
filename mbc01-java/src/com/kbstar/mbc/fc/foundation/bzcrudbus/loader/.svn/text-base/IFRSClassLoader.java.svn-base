@@ -1,0 +1,53 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.loader;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+import com.kbstar.mbc.fc.foundation.bzcrudbus.config.LoaderConfig;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.foundation.utility.Utils;
+
+public class IFRSClassLoader {
+	
+	DynamicLoader loader = null;
+	
+	private static IFRSClassLoader instance;
+	private static boolean reset = true;
+
+	private IFRSClassLoader() {
+		
+		// New ClassPath Include
+		ArrayList arrList = LoaderConfig.getInstance().getClassPathList("IFRS");
+		String location = null;
+		loader = new DynamicLoader();
+		
+		for (Iterator itr = Utils.snapshotIterator(arrList); itr.hasNext(); ) {
+			
+			location =  (String) itr.next();
+			
+			if(location != null && !location.trim().equals("")) {
+				loader.addSourceDir(new File(location));
+			}
+		}
+	}
+
+	public static synchronized IFRSClassLoader getInstance() {
+		if (reset || instance == null) {
+			instance = new IFRSClassLoader();
+			reset = false;
+		}
+		return instance;
+	}
+	
+	public static void reset() {
+		reset = true;
+	}
+	
+	public Object getClassInstance(String className) {
+		return loader.newInstance(className);
+	}
+	
+	public Object getClassInstance(Class interfaceClass, String implClassName) {
+		return loader.newProxyInstance(interfaceClass, implClassName);
+	}
+}

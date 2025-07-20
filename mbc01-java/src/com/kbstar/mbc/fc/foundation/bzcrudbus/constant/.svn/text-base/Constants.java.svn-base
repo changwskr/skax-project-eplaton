@@ -1,0 +1,27 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.constant;
+
+public class Constants {
+	
+	public static final String TRANSACTION_MODE_WAF = "WAF";
+	public static final String TRANSACTION_MODE_SERVER = "SERVER";
+	
+	public static final String INDATA = "/KB-Message/Individual/InData";
+	public static final String OUTDATA = "/KB-Message/Individual";
+	
+	public static final String KESA_XML_INNODE_NAME1 = "Individual";
+	public static final String KESA_XML_INNODE_NAME2 = "DataHeader";
+	public static final String KESA_XML_INNODE_NAME3 = "InData";
+	public static final String KESA_XML_INNODE_NAME4 = "Params";
+	
+	public static final String SERVICE_RESULT_VAR= "hashResult";
+	public static final String ERROR_OCCUR_VAR = "error.occur";
+	public static final String ERROR_OBJECT = "error.exception";
+	public static final String ERROR_MSG_TEXT_VAR = "error.msg";
+	public static final String ERROR_MSG_CD_VAR = "error.msgcd";
+	public static final String MAP_FORWARD_VAR = "map.forward";
+	public static final String RESULT_XML_VAR = "result_xml";
+	public static final String DANMAL_TYPE_TRUSTFORM = "T";
+	public static final String DANMAL_TYPE_IWORKS = "I";
+	
+	
+}

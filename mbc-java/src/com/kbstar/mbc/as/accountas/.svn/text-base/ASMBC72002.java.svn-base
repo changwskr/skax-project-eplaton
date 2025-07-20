@@ -1,0 +1,29 @@
+package com.kbstar.mbc.as.accountas;
+
+import java.util.List;
+
+import com.kbstar.ksa.exception.BusinessException;
+import com.kbstar.ksa.infra.po.GenericDto;
+import com.kbstar.ksa.infra.po.KBData;
+import com.kbstar.ksa.logger.IKesaLogger;
+import com.kbstar.ksa.logger.KesaLogHelper;
+import com.kbstar.ksa.oltp.biz.IApplicationService;
+import com.kbstar.mbc.pc.accountpc.PCAccount;
+import com.kbstar.mbc.pc.dto.AccountPDTO;
+
+public class ASMBC72002 implements IApplicationService {
+	
+	protected IKesaLogger logger = KesaLogHelper.getBiz();
+
+	public KBData execute(KBData reqData) throws BusinessException {
+		// TODO 자동 생성된 메소드 스텁
+		AccountPDTO accountPDTO = reqData.getInputGenericDto().using(GenericDto.INDATA).get(AccountPDTO.class);
+		
+		List <AccountPDTO> resAccountPDTOs = new PCAccount().getListAccount(accountPDTO);
+		
+		reqData.getOutputGenericDto().using(GenericDto.OUTDATA).add(resAccountPDTOs);
+				
+		return reqData;
+	}
+
+}

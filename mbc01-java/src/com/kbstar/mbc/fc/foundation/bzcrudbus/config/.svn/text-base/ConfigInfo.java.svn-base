@@ -1,0 +1,28 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.config;
+
+import java.util.HashMap;
+
+/**
+ * 환경설정 시스템 노드 Value Object
+ * 
+ * @author : jws
+ * @version : 1.0
+ */
+public class ConfigInfo {
+    private HashMap sysConfig;
+
+    /**
+     * @return
+     */
+    public HashMap getSysConfig() {
+        return sysConfig;
+    }
+
+    /**
+     * @param map
+     */
+    public void setSysConfig(HashMap map) {
+        sysConfig = map;
+    }
+
+}

@@ -1,0 +1,40 @@
+8
+
+dir
+325
+svn://172.28.186.105/ifrs_repository/ifrs.project/mbc-java/src/com/kbstar/mbc/pc/UserTest
+svn://172.28.186.105/ifrs_repository
+
+
+
+2009-01-22T16:06:33.173202Z
+325
+kspark
+
+
+svn:special svn:externals svn:needs-lock
+
+PCUserTest.java
+file
+
+
+
+
+2009-01-06T08:45:47.666543Z
+ada948e33d92d9dd6cd4d02a872d14de
+2009-01-22T16:06:33.173202Z
+325
+kspark
+
+IPCUserTest.java
+file
+
+
+
+
+2009-01-06T08:45:47.338418Z
+f8c19b80e9838f735b273b814355ca0f
+2009-01-22T16:06:33.173202Z
+325
+kspark
+

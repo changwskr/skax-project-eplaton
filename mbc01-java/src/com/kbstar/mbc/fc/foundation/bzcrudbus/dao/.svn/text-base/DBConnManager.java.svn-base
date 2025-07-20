@@ -1,0 +1,93 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.dao;
+
+import com.ibatis.common.resources.Resources;
+import com.ibatis.sqlmap.client.SqlMapClient;
+import com.ibatis.sqlmap.client.SqlMapClientBuilder;
+import com.kbstar.mbc.fc.foundation.bzcrudbus.config.IFRSConfig;
+
+public class DBConnManager {
+
+	private static DBConnManager instance;
+	
+	private static SqlMapClient sqlMap;
+	private static SqlMapClient sqlMapSeq;
+	
+	private static String SQL_XML = IFRSConfig.getInstance().getInfo("ConfigFile", "DAO");
+	private static String SEQ_XML = IFRSConfig.getInstance().getInfo("ConfigFile", "DAO");
+	//private static final String SEQ_XML = "kdic/ksis/common/db/etc_sql.xml";
+
+	/**
+	 * DBControlManager 인스턴스 반환
+	 * 
+	 * @return DBControlManager
+	 */
+/*
+	public static synchronized DBConnManager getInstance() {
+		if (instance == null) {
+			instance = new DBConnManager();
+		}
+		return instance;
+	}
+*/
+	public DBConnManager() {
+	}
+
+	/**
+	 * SqlMapClient 객체를 반환하는 메소드(객체생성)
+	 * 
+	 * @return SqlMapClient
+	 */
+	public SqlMapClient buildSqlMap() {
+		SqlMapClient mapClient = null;
+		try {
+			mapClient = SqlMapClientBuilder.buildSqlMapClient(Resources.getResourceAsReader(SQL_XML));						
+		}
+		catch (Exception ex) {
+		}
+		return mapClient;
+	}
+
+	/**
+	 * SqlMapClient 객체를 반환하는 메소드(기존객체반환)
+	 * 
+	 * @return SqlMapClient
+	 */
+	public static SqlMapClient getSqlMap() {
+		if (sqlMap == null) {
+			try {
+				sqlMap = SqlMapClientBuilder.buildSqlMapClient(Resources.getResourceAsReader(SQL_XML));
+			}
+			catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		return sqlMap;
+	}
+	
+	/**
+	 * 기본코드를 생성하는 SqlMapClient 객체를 반환하는 메소드(기존객체반환)
+	 * 
+	 * @return SqlMapClient
+	 */
+	public static SqlMapClient getSeqSqlMap() {
+		if (sqlMapSeq == null) {
+			try {
+				sqlMapSeq = SqlMapClientBuilder.buildSqlMapClient(Resources.getResourceAsReader(SEQ_XML));
+			}
+			catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+		return sqlMapSeq;
+	}
+
+	static {
+		try {
+			sqlMap = SqlMapClientBuilder.buildSqlMapClient(Resources.getResourceAsReader(SQL_XML));
+			sqlMapSeq = SqlMapClientBuilder.buildSqlMapClient(Resources.getResourceAsReader(SEQ_XML));
+		}
+		catch (Exception ex) {
+		}
+	}
+
+}

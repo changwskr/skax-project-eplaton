@@ -1,0 +1,314 @@
+package com.kbstar.mbc.fc.foundation.bzcrudbus.transfer;
+
+import java.util.HashMap;
+import java.util.Map;
+import com.kbstar.ksa.infra.po.AbstractDTO;
+import com.kbstar.ksa.infra.po.KBData;
+
+
+
+
+/**
+ * 
+ * @version 1.30
+ *
+ * 이 class는 모든 request에 공통으로 포함되는 정보를 표현한다.
+ */
+public class IFRSCommonDTO extends AbstractDTO implements ICommonDTO {
+
+	private KBData kbData;
+	
+    private String nation;
+    private String timeZone;
+    private String baseCurrency;
+    private String IPAddress;
+    private String language;
+    
+    private String commandId; //화면에서 셋팅
+    private String routingAS; //화면에서 셋팅가
+    private String pcClassName;
+    private String pcMethodName;
+    private String sqlId; //화면에서 셋팅가
+    private String key;
+    private String danMalType;
+    private HashMap fromMap;
+    private HashMap toMap;
+    private HashMap errorMap;
+    private HashMap metaDataMap;
+    private String resultXml;
+    private String forwardName;
+    private String[] gridName;
+    private String returnType = "XML"; // XML , Object
+        
+    private String txCd;
+	private String hostServer;
+	private String hostAs;
+	private String errorCode;
+	private String errorMsg;
+	private String danmalSeq;
+	private String wafSeq;
+	private String transactionNo;
+	private String danmalInTime;
+	private String danmalOutTime;
+	private String wafInTime;
+	private String wafOutTime;
+	private String asInTime;
+	private String asOutTime;
+	private String userId;
+	private String sysDate;
+	private String bizDate;
+	
+	private String seqNo;
+	private String bizCode;
+	
+	public String getBizCode() {
+		return bizCode;
+	}
+	public void setBizCode(String bizCode) {
+		this.bizCode = bizCode;
+	}
+	public String getAsInTime() {
+		return asInTime;
+	}
+	public void setAsInTime(String asInTime) {
+		this.asInTime = asInTime;
+	}
+	public String getAsOutTime() {
+		return asOutTime;
+	}
+	public void setAsOutTime(String asOutTime) {
+		this.asOutTime = asOutTime;
+	}
+	public String getBaseCurrency() {
+		return baseCurrency;
+	}
+	public void setBaseCurrency(String baseCurrency) {
+		this.baseCurrency = baseCurrency;
+	}
+	public String getBizDate() {
+		return bizDate;
+	}
+	public void setBizDate(String bizDate) {
+		this.bizDate = bizDate;
+	}
+	public String getCommandId() {
+		return commandId;
+	}
+	public void setCommandId(String commandId) {
+		this.commandId = commandId;
+	}
+	public String getDanmalInTime() {
+		return danmalInTime;
+	}
+	public void setDanmalInTime(String danmalInTime) {
+		this.danmalInTime = danmalInTime;
+	}
+	public String getDanmalOutTime() {
+		return danmalOutTime;
+	}
+	public void setDanmalOutTime(String danmalOutTime) {
+		this.danmalOutTime = danmalOutTime;
+	}
+	public String getDanmalSeq() {
+		return danmalSeq;
+	}
+	public void setDanmalSeq(String danmalSeq) {
+		this.danmalSeq = danmalSeq;
+	}
+	public String getDanMalType() {
+		return danMalType;
+	}
+	public void setDanMalType(String danMalType) {
+		this.danMalType = danMalType;
+	}
+	public String getErrorCode() {
+		return errorCode;
+	}
+	public void setErrorCode(String errorCode) {
+		this.errorCode = errorCode;
+	}
+	public HashMap getErrorMap() {
+		return errorMap;
+	}
+	public void setErrorMap(HashMap errorMap) {
+		this.errorMap = errorMap;
+	}
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+	}
+	public String getForwardName() {
+		return forwardName;
+	}
+	public void setForwardName(String forwardName) {
+		this.forwardName = forwardName;
+	}
+	public HashMap getFromMap() {
+		return fromMap;
+	}
+	public void setFromMap(HashMap fromMap) {
+		this.fromMap = fromMap;
+	}
+	public String[] getGridName() {
+		return gridName;
+	}
+	public void setGridName(String[] gridName) {
+		this.gridName = gridName;
+	}
+	public String getHostAs() {
+		return hostAs;
+	}
+	public void setHostAs(String hostAs) {
+		this.hostAs = hostAs;
+	}
+	public String getHostServer() {
+		return hostServer;
+	}
+	public void setHostServer(String hostServer) {
+		this.hostServer = hostServer;
+	}
+	public String getIPAddress() {
+		return IPAddress;
+	}
+	public void setIPAddress(String address) {
+		IPAddress = address;
+	}
+	public String getKey() {
+		return key;
+	}
+	public void setKey(String key) {
+		this.key = key;
+	}
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+	public String getNation() {
+		return nation;
+	}
+	public void setNation(String nation) {
+		this.nation = nation;
+	}
+	public String getPcClassName() {
+		return pcClassName;
+	}
+	public void setPcClassName(String pcClassName) {
+		this.pcClassName = pcClassName;
+	}
+	public String getPcMethodName() {
+		return pcMethodName;
+	}
+	public void setPcMethodName(String pcMethodName) {
+		this.pcMethodName = pcMethodName;
+	}
+	public String getResultXml() {
+		return resultXml;
+	}
+	public void setResultXml(String resultXml) {
+		this.resultXml = resultXml;
+	}
+	public String getRoutingAS() {
+		return routingAS;
+	}
+	public void setRoutingAS(String routingAS) {
+		this.routingAS = routingAS;
+	}
+	public String getSqlId() {
+		return sqlId;
+	}
+	public void setSqlId(String sqlId) {
+		this.sqlId = sqlId;
+	}
+	public String getSysDate() {
+		return sysDate;
+	}
+	public void setSysDate(String sysDate) {
+		this.sysDate = sysDate;
+	}
+	public String getTimeZone() {
+		return timeZone;
+	}
+	public void setTimeZone(String timeZone) {
+		this.timeZone = timeZone;
+	}
+	public HashMap getToMap() {
+		return toMap;
+	}
+	public void setToMap(HashMap toMap) {
+		this.toMap = toMap;
+	}
+	public String getTransactionNo() {
+		return transactionNo;
+	}
+	public void setTransactionNo(String transactionNo) {
+		this.transactionNo = transactionNo;
+		this.seqNo = transactionNo;
+	}
+	public String getTxCd() {
+		return txCd;
+	}
+	public void setTxCd(String txCd) {
+		this.txCd = txCd;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public String getWafInTime() {
+		return wafInTime;
+	}
+	public void setWafInTime(String wafInTime) {
+		this.wafInTime = wafInTime;
+	}
+	public String getWafOutTime() {
+		return wafOutTime;
+	}
+	public void setWafOutTime(String wafOutTime) {
+		this.wafOutTime = wafOutTime;
+	}
+	public String getWafSeq() {
+		return wafSeq;
+	}
+	public void setWafSeq(String wafSeq) {
+		this.wafSeq = wafSeq;
+		this.seqNo = wafSeq;
+	}
+	public KBData getKbData() {
+		return kbData;
+	}
+	public void setKbData(KBData kbData) {
+		this.kbData = kbData;
+	}
+	public HashMap getParameterMap() {
+		return fromMap;
+	}
+	public HashMap getResultMap() {
+		return toMap;
+	}
+	public String getReturnType() {
+		return returnType;
+	}
+	public void setReturnType(String returnType) {
+		this.returnType = returnType;
+	}
+	public String getSeqNo() {
+		return seqNo;
+	}
+	public void setSeqNo(String seqNo) {
+		this.seqNo = seqNo;
+	}
+	public HashMap getMetaDataMap() {
+		return metaDataMap;
+	}
+	public void setMetaDataMap(HashMap metaDataMap) {
+		this.metaDataMap = metaDataMap;
+	}
+	
+    
+}
