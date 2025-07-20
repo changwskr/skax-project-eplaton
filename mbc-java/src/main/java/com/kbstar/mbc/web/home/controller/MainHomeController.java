@@ -32,6 +32,7 @@ import java.util.Map;
  * @version 1.0
  */
 @Controller
+@RequestMapping("/mbc")
 public class MainHomeController {
 
     private final NewIKesaLogger logger = NewKesaLogHelper.getBiz();
@@ -193,7 +194,16 @@ public class MainHomeController {
         try {
             // 실제 데이터베이스에서 조회 시도
             String sql = "SELECT USER_NAME, ROLE, STATUS, CREATED_DATE FROM USER_INFO ORDER BY CREATED_DATE DESC LIMIT 5";
-            activities = jdbcTemplate.queryForList(sql);
+            List<Map<String, Object>> dbActivities = jdbcTemplate.queryForList(sql);
+
+            // 데이터베이스 결과에 type 속성 추가
+            for (Map<String, Object> activity : dbActivities) {
+                activity.put("type", "USER"); // 사용자 활동으로 설정
+                activity.put("name", activity.get("USER_NAME")); // name 속성 추가
+                activity.put("date", activity.get("CREATED_DATE")); // date 속성 추가
+            }
+
+            activities = dbActivities;
 
             // 데이터가 없으면 기본 데이터 제공
             if (activities.isEmpty()) {
