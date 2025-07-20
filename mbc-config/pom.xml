@@ -118,10 +118,13 @@
                                 <copy todir="${project.basedir}/bin" failonerror="false">
                                     <fileset dir="${project.build.directory}/classes" includes="**/*.class" />
                                 </copy>
+<<<<<<< HEAD
                                 <copy todir="${project.basedir}/bin" failonerror="false">
                                     <fileset dir="${project.build.directory}/test-classes" includes="**/*.class" />
                                     <presentselector present="srconly" />
                                 </copy>
+=======
+>>>>>>> master
                             </target>
                         </configuration>
                     </execution>
