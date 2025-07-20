@@ -7,6 +7,11 @@ server:
   # context-path 제거 - URL 중복 방지
   # servlet:
   #   context-path: /mbc
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
 
 spring:
   application:
@@ -14,7 +19,7 @@ spring:
 
   # Database Configuration (H2 In-Memory)
   datasource:
-    url: jdbc:h2:mem:mbcdb_dev;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:mem:mbcdb_dev;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE
     driver-class-name: org.h2.Driver
     username: sa
     password:
@@ -39,6 +44,14 @@ spring:
         web-allow-others: true
         trace: false
 
+  # Thymeleaf Configuration
+  thymeleaf:
+    encoding: UTF-8
+    cache: false
+    mode: HTML
+    servlet:
+      content-type: text/html
+
   # Jackson Configuration
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
@@ -46,6 +59,9 @@ spring:
     default-property-inclusion: non_null
     serialization:
       write-dates-as-timestamps: false
+    encoding:
+      charset: UTF-8
+      force: true
 
 # MyBatis Configuration
 mybatis:
