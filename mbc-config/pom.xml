@@ -31,7 +31,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
+            <artifactId>spring-core</artifactId
         </dependency>
 
         <!-- Logging -->
@@ -48,10 +48,12 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
+            <version>2.11.0</version>
         </dependency>
         <dependency>
-            <groupId>commons-lang3</groupId>
+            <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
+            <version>3.9</version>
         </dependency>
 
         <!-- Test Dependencies -->
@@ -94,9 +96,39 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                 </configuration>
+            </plugin>
+            <!-- bin 디렉터리로 클래스 파일 복사 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-classes-to-bin</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <copy todir="${project.basedir}/bin" failonerror="false">
+                                    <fileset dir="${project.build.directory}/classes" includes="**/*.class" />
+                                </copy>
+<<<<<<< HEAD
+                                <copy todir="${project.basedir}/bin" failonerror="false">
+                                    <fileset dir="${project.build.directory}/test-classes" includes="**/*.class" />
+                                    <presentselector present="srconly" />
+                                </copy>
+=======
+>>>>>>> master
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

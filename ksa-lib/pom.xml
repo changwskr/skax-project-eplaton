@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.kbstar.mbc</groupId>
+        <artifactId>skax-project-eplaton</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>ksa-lib</artifactId>
+    <packaging>jar</packaging>
+    <name>KSA Library</name>
+    <description>KSA Framework Library Module</description>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        
+        <!-- Project paths -->
+        <project.root.dir>C:/Programming(23-08-15)/MyProject/skax-project-eplaton</project.root.dir>
+        <ksa.lib.dir>${project.root.dir}/ksa-lib/runtime</ksa.lib.dir>
+    </properties>
+
+    <dependencies>
+        <!-- KSA Framework Core Libraries -->
+        <dependency>
+            <groupId>com.kbstar.ksa</groupId>
+            <artifactId>kesa-app-container</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/kesa-app-container.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.kbstar.ksa</groupId>
+            <artifactId>kesa-model</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/kesa-model.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.kbstar.ksa</groupId>
+            <artifactId>KESA_CRYPTO</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/KESA_CRYPTO.jar</systemPath>
+        </dependency>
+        
+        <!-- iBatis -->
+        <dependency>
+            <groupId>com.ibatis</groupId>
+            <artifactId>ibatis</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/ibatis.jar</systemPath>
+        </dependency>
+        
+        <!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate3</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/hibernate3.jar</systemPath>
+        </dependency>
+        
+        <!-- Apache Commons -->
+        <dependency>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/commons-httpclient.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/commons-lang.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/commons-logging.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/commons-dbcp.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-pool</groupId>
+            <artifactId>commons-pool</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/commons-pool.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/commons-beanutils.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/commons-codec.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/commons-collections.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/commons-net.jar</systemPath>
+        </dependency>
+        
+        <!-- XML Processing -->
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xerces</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/xerces.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>xerces</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/xercesImpl.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/xml-apis.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/dom4j.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>jaxen</groupId>
+            <artifactId>jaxen</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/jaxen.jar</systemPath>
+        </dependency>
+        
+        <!-- JAXB -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/jaxb-api.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/jaxb-impl.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-libs</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/jaxb-libs.jar</systemPath>
+        </dependency>
+        
+        <!-- Logging -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/log4j.jar</systemPath>
+        </dependency>
+        
+        <!-- Caching -->
+        <dependency>
+            <groupId>ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/ehcache.jar</systemPath>
+        </dependency>
+        
+        <!-- Hibernate Dependencies -->
+        <dependency>
+            <groupId>antlr</groupId>
+            <artifactId>antlr</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/antlr.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/asm.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/cglib.jar</systemPath>
+        </dependency>
+        
+        <!-- Other Dependencies -->
+        <dependency>
+            <groupId>dependency</groupId>
+            <artifactId>dependency</artifactId>
+            <version>0.2</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/dependency-0.2.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>relaxngDatatype</groupId>
+            <artifactId>relaxngDatatype</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/relaxngDatatype.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>trailor</groupId>
+            <artifactId>trailor</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/trailor.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>WSE_BASE64</groupId>
+            <artifactId>WSE_BASE64</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/WSE_BASE64.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>jta</groupId>
+            <artifactId>jta</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/jta.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>xsdlib</groupId>
+            <artifactId>xsdlib</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${ksa.lib.dir}/xsdlib.jar</systemPath>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <sourceDirectory>src/main/java</sourceDirectory>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project> 

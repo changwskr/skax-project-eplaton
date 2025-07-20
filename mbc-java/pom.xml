@@ -17,6 +17,20 @@
     <name>MBC Java - Spring Boot Application</name>
     <description>Main Spring Boot application for MBC project</description>
 
+    <properties>
+        <java.version>8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        
+        <!-- Project paths -->
+        <project.root.dir>C:/Programming(23-08-15)/MyProject/skax-project-eplaton</project.root.dir>
+        <ksa.lib.dir>${project.root.dir}/ksa-lib/runtime</ksa.lib.dir>
+        <mbc01.lib.dir>${project.root.dir}/mbc01-lib/runtime</mbc01.lib.dir>
+        <mbc.lib.dir>${project.root.dir}/mbc-java/lib</mbc.lib.dir>
+    </properties>
+
     <dependencies>
         <!-- Internal dependencies -->
         <dependency>
@@ -26,6 +40,64 @@
         <dependency>
             <groupId>com.kbstar.mbc</groupId>
             <artifactId>mbc-config</artifactId>
+        </dependency>
+
+        <!-- Local JAR files from mbc01-lib/runtime -->
+        <dependency>
+            <groupId>com.kbstar.ifrs</groupId>
+            <artifactId>ifrs_foundation</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${mbc.lib.dir}/ifrs_foundation.jar</systemPath>
+        </dependency>
+
+        <!-- Local JAR files from mbc01-lib/runtime -->
+        <dependency>
+            <groupId>net.sourceforge.rtf</groupId>
+            <artifactId>rtftemplate</artifactId>
+            <version>1.0.1-b14</version>
+            <scope>system</scope>
+            <systemPath>${mbc01.lib.dir}/rtftemplate-1.0.1-b14.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-dep</artifactId>
+            <version>1.5</version>
+            <scope>system</scope>
+            <systemPath>${mbc01.lib.dir}/velocity-dep-1.5.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${mbc01.lib.dir}/jdom.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-digester</groupId>
+            <artifactId>commons-digester</artifactId>
+            <version>1.7</version>
+            <scope>system</scope>
+            <systemPath>${mbc01.lib.dir}/commons-digester-1.7.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>1.1</version>
+            <scope>system</scope>
+            <systemPath>${mbc01.lib.dir}/commons-io-1.1.jar</systemPath>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.ibatis</groupId>
+            <artifactId>ibatis-sqlmap</artifactId>
+            <version>2.3.4.726</version>
+            <scope>system</scope>
+            <systemPath>${mbc01.lib.dir}/ibatis-sqlmap-2.3.4.726.jar</systemPath>
         </dependency>
 
         <!-- Spring Boot Starters -->
@@ -116,9 +188,32 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                 </configuration>
+            </plugin>
+            <!-- bin 디렉터리로 클래스 파일 복사 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-classes-to-bin</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <copy todir="${project.basedir}/bin" failonerror="false">
+                                    <fileset dir="${project.build.directory}/classes" includes="**/*.class" />
+                                </copy>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
