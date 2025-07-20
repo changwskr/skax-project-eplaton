@@ -31,7 +31,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId
+            <artifactId>spring-core</artifactId>
         </dependency>
 
         <!-- Logging -->
@@ -118,13 +118,6 @@
                                 <copy todir="${project.basedir}/bin" failonerror="false">
                                     <fileset dir="${project.build.directory}/classes" includes="**/*.class" />
                                 </copy>
-<<<<<<< HEAD
-                                <copy todir="${project.basedir}/bin" failonerror="false">
-                                    <fileset dir="${project.build.directory}/test-classes" includes="**/*.class" />
-                                    <presentselector present="srconly" />
-                                </copy>
-=======
->>>>>>> master
                             </target>
                         </configuration>
                     </execution>

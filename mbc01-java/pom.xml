@@ -77,20 +77,33 @@
             <systemPath>${mbc01.lib.dir}/commons-io-1.1.jar</systemPath>
         </dependency>
         
-        <dependency>
-            <groupId>com.ibatis</groupId>
-            <artifactId>ibatis-sqlmap</artifactId>
-            <version>2.3.4.726</version>
-            <scope>system</scope>
-            <systemPath>${mbc01.lib.dir}/ibatis-sqlmap-2.3.4.726.jar</systemPath>
-        </dependency>
-        
         <!-- Servlet API -->
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>4.0.1</version>
             <scope>provided</scope>
+        </dependency>
+        
+        <!-- MyBatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.13</version>
+        </dependency>
+        
+        <!-- MyBatis Spring -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+        
+        <!-- Spring JDBC -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>5.3.27</version>
         </dependency>
     </dependencies>
 

@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.kbstar.mbc.fc.foundation.bzcrudbus.log.IIfrsLogger;
 import com.kbstar.mbc.fc.foundation.bzcrudbus.log.IfrsLogHelper;
 
@@ -12,7 +14,7 @@ import com.kbstar.mbc.fc.foundation.bzcrudbus.log.IfrsLogHelper;
  * 공통 데이터 액세스 객체 클래스
  * 
  * 프로그램명: CommonDAO.java
- * 설명: iBatis를 사용하여 데이터베이스 CRUD 작업을 수행하는 공통 DAO 클래스
+ * 설명: MyBatis를 사용하여 데이터베이스 CRUD 작업을 수행하는 공통 DAO 클래스
  * 작성일: 2024-01-01
  * 작성자: SKAX Project Team
  * 
@@ -34,7 +36,6 @@ public class CommonDAO {
     private static CommonDAO instance;
 
     /** 로거 */
-    // private IIfrsLogger logger = IfrsLogHelper.getWaf();
     private IIfrsLogger logger = null; // TODO: Initialize when logger is available
 
     /**
@@ -57,7 +58,7 @@ public class CommonDAO {
     }
 
     /**
-     * 조회결과를 Map으로 반환한다. statementName은 iBATIS XML에 정의되어 있어야 한다.
+     * 조회결과를 Map으로 반환한다. statementName은 MyBatis XML에 정의되어 있어야 한다.
      * 
      * @param statementId SQL 문 ID
      * @param map         파라미터 맵
@@ -65,12 +66,17 @@ public class CommonDAO {
      * @throws Exception SQL 예외
      */
     public Map read(String statementId, Map map) throws Exception {
-        // return (Map) DBConnManager.getSqlMap().queryForObject(statementId, map);
-        return null; // TODO: Implement when database access is available
+        SqlSession session = null;
+        try {
+            session = DBConnManager.getSqlSession();
+            return session.selectOne(statementId, map);
+        } finally {
+            DBConnManager.closeSqlSession(session);
+        }
     }
 
     /**
-     * 조회결과를 String으로 반환한다. statementName은 iBATIS XML에 정의되어 있어야 한다.
+     * 조회결과를 String으로 반환한다. statementName은 MyBatis XML에 정의되어 있어야 한다.
      * 
      * @param statementId SQL 문 ID
      * @param map         파라미터 맵
@@ -78,12 +84,18 @@ public class CommonDAO {
      * @throws Exception SQL 예외
      */
     public String readData(String statementId, Map map) throws Exception {
-        // return (String) DBConnManager.getSqlMap().queryForObject(statementId, map);
-        return ""; // TODO: Implement when database access is available
+        SqlSession session = null;
+        try {
+            session = DBConnManager.getSqlSession();
+            Object result = session.selectOne(statementId, map);
+            return result != null ? result.toString() : "";
+        } finally {
+            DBConnManager.closeSqlSession(session);
+        }
     }
 
     /**
-     * 조회결과를 List로 반환한다. statementName은 iBATIS XML에 정의되어 있어야 한다.
+     * 조회결과를 List로 반환한다. statementName은 MyBatis XML에 정의되어 있어야 한다.
      * 
      * @param statementId SQL 문 ID
      * @param map         파라미터 맵
@@ -91,17 +103,17 @@ public class CommonDAO {
      * @throws Exception SQL 예외
      */
     public List readList(String statementId, Map map) throws Exception {
-
-        List result = null;
-
-        // result = (List) DBConnManager.getSqlMap().queryForList(statementId, map);
-        result = new java.util.ArrayList(); // TODO: Implement when database access is available
-
-        return result;
+        SqlSession session = null;
+        try {
+            session = DBConnManager.getSqlSession();
+            return session.selectList(statementId, map);
+        } finally {
+            DBConnManager.closeSqlSession(session);
+        }
     }
 
     /**
-     * 데이터를 저장/수정한다. statementName은 iBATIS XML에 정의되어 있어야 한다.
+     * 데이터를 저장/수정한다. statementName은 MyBatis XML에 정의되어 있어야 한다.
      * 
      * @param statementId SQL 문 ID
      * @param map         파라미터 맵
@@ -109,12 +121,70 @@ public class CommonDAO {
      * @throws Exception SQL 예외
      */
     public int save(String statementId, Map map) throws Exception {
+        SqlSession session = null;
+        try {
+            session = DBConnManager.getSqlSession();
+            int result = session.update(statementId, map);
+            session.commit();
+            return result;
+        } catch (Exception e) {
+            if (session != null) {
+                session.rollback();
+            }
+            throw e;
+        } finally {
+            DBConnManager.closeSqlSession(session);
+        }
+    }
 
-        int result = 0;
-        // result = (int) DBConnManager.getSqlMap().update(statementId, map);
-        result = 0; // TODO: Implement when database access is available
+    /**
+     * 데이터를 삽입한다.
+     * 
+     * @param statementId SQL 문 ID
+     * @param map         파라미터 맵
+     * @return 처리된 행 수
+     * @throws Exception SQL 예외
+     */
+    public int insert(String statementId, Map map) throws Exception {
+        SqlSession session = null;
+        try {
+            session = DBConnManager.getSqlSession();
+            int result = session.insert(statementId, map);
+            session.commit();
+            return result;
+        } catch (Exception e) {
+            if (session != null) {
+                session.rollback();
+            }
+            throw e;
+        } finally {
+            DBConnManager.closeSqlSession(session);
+        }
+    }
 
-        return result;
+    /**
+     * 데이터를 삭제한다.
+     * 
+     * @param statementId SQL 문 ID
+     * @param map         파라미터 맵
+     * @return 처리된 행 수
+     * @throws Exception SQL 예외
+     */
+    public int delete(String statementId, Map map) throws Exception {
+        SqlSession session = null;
+        try {
+            session = DBConnManager.getSqlSession();
+            int result = session.delete(statementId, map);
+            session.commit();
+            return result;
+        } catch (Exception e) {
+            if (session != null) {
+                session.rollback();
+            }
+            throw e;
+        } finally {
+            DBConnManager.closeSqlSession(session);
+        }
     }
 
     /**
@@ -126,8 +196,43 @@ public class CommonDAO {
      * @throws Exception SQL 예외
      */
     public Map callProcedure(String statementId, Map map) throws Exception {
-        // return (Map) DBConnManager.getSqlMap().queryForObject(statementId, map);
-        return new java.util.HashMap(); // TODO: Implement when database access is available
+        SqlSession session = null;
+        try {
+            session = DBConnManager.getSqlSession();
+            return session.selectOne(statementId, map);
+        } finally {
+            DBConnManager.closeSqlSession(session);
+        }
     }
 
+    /**
+     * 트랜잭션 내에서 작업을 수행한다.
+     * 
+     * @param callback 수행할 작업
+     * @return 작업 결과
+     * @throws Exception 작업 실패시
+     */
+    public <T> T executeInTransaction(SqlSessionCallback<T> callback) throws Exception {
+        SqlSession session = null;
+        try {
+            session = DBConnManager.getSqlSession();
+            T result = callback.doInSqlSession(session);
+            session.commit();
+            return result;
+        } catch (Exception e) {
+            if (session != null) {
+                session.rollback();
+            }
+            throw e;
+        } finally {
+            DBConnManager.closeSqlSession(session);
+        }
+    }
+
+    /**
+     * SqlSession 콜백 인터페이스
+     */
+    public interface SqlSessionCallback<T> {
+        T doInSqlSession(SqlSession session) throws Exception;
+    }
 }
