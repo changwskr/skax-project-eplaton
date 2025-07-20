@@ -297,9 +297,20 @@
             <div th:each="activity : ${recentActivities}" class="activity-item">
                 <div class="activity-icon" th:text="${activity.type == 'USER' ? '👤' : '📝'}">👤</div>
                 <div class="activity-content">
-                    <div class="activity-title" th:text="${activity.name}">사용자명</div>
+                    <div class="activity-title" th:text="${activity.name}" th:attr="data-original=${activity.name}">사용자명</div>
                     <div class="activity-date" th:text="${activity.date}">2024-01-01</div>
                 </div>
+            </div>
+            
+            <!-- 디버깅 정보 (개발 환경에서만 표시) -->
+            <div th:if="${#lists.isEmpty(recentActivities)}" style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px; font-size: 0.9rem; color: #666;">
+                <h4>디버깅 정보:</h4>
+                <p>활동 데이터가 없습니다. 다음을 확인해주세요:</p>
+                <ul>
+                    <li>USER_INFO 테이블에 데이터가 있는지 확인</li>
+                    <li>데이터베이스 연결 상태 확인</li>
+                    <li>SQL 쿼리 실행 결과 확인</li>
+                </ul>
             </div>
         </div>
 
@@ -329,6 +340,26 @@
         // 1초마다 시간 업데이트
         setInterval(updateTime, 1000);
         updateTime(); // 초기 실행
+
+        // 한글 인코딩 확인
+        function checkKoreanEncoding() {
+            const activityTitles = document.querySelectorAll('.activity-title');
+            activityTitles.forEach((title, index) => {
+                const text = title.textContent;
+                const original = title.getAttribute('data-original');
+                console.log(`활동 ${index + 1}:`, {
+                    '표시된 텍스트': text,
+                    '원본 데이터': original,
+                    '텍스트 길이': text.length,
+                    '인코딩 확인': text === original ? '정상' : '인코딩 문제'
+                });
+            });
+        }
+
+        // 페이지 로드 후 한글 인코딩 확인
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(checkKoreanEncoding, 1000); // 1초 후 실행
+        });
     </script>
 </body>
 </html> 

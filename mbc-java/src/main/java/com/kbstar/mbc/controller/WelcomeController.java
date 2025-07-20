@@ -162,12 +162,29 @@ public class WelcomeController {
      */
     private List<Map<String, Object>> getRecentActivities() {
         try {
-            String sql = "SELECT 'USER' as type, USER_NAME as name, CREATED_DATE as date " +
+            String sql = "SELECT 'USER' as type, USER_NAME as name, " +
+                    "CASE " +
+                    "  WHEN CREATED_DATE IS NOT NULL THEN " +
+                    "    CONCAT(YEAR(CREATED_DATE), '년 ', " +
+                    "           LPAD(MONTH(CREATED_DATE), 2, '0'), '월 ', " +
+                    "           LPAD(DAY(CREATED_DATE), 2, '0'), '일') " +
+                    "  ELSE '날짜 없음' " +
+                    "END as date " +
                     "FROM USER_INFO " +
                     "ORDER BY CREATED_DATE DESC " +
                     "LIMIT 5";
 
-            return jdbcTemplate.queryForList(sql);
+            List<Map<String, Object>> activities = jdbcTemplate.queryForList(sql);
+
+            // 한글 데이터 인코딩 확인 및 로깅
+            for (Map<String, Object> activity : activities) {
+                String userName = (String) activity.get("name");
+                if (userName != null) {
+                    logger.debug("사용자명: " + userName, "WelcomeController");
+                }
+            }
+
+            return activities;
         } catch (Exception e) {
             logger.error("최근 활동 조회 실패: " + e.getMessage(), "WelcomeController");
             return Collections.emptyList();
